@@ -1,0 +1,1772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<!-- iOS home-screen friendly -->
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Care Tracker" />
+<meta name="theme-color" content="#0f172a" />
+
+<title>Care Tracker</title>
+
+<style>
+  :root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --text: #f8fafc;
+    --muted: #94a3b8;
+    --accent: #38bdf8;
+    --accent-bg: rgba(56,189,248,0.15);
+    --radius-lg: 1rem;
+    --radius-sm: .5rem;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", Roboto, "Helvetica Neue", sans-serif;
+    margin: 0;
+    padding: 1rem;
+    line-height: 1.4;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  header {
+    display: flex;
+    flex-direction: column;
+    gap: .25rem;
+  }
+
+  header h1 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0;
+  }
+
+  header .subtitle {
+    color: var(--muted);
+    font-size: .9rem;
+    max-width: 700px;
+  }
+
+  .card {
+    background-color: var(--card);
+    border-radius: var(--radius-lg);
+    padding: 1rem 1rem 1.25rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,.6);
+    border: 1px solid rgba(148,163,184,.15);
+  }
+
+  .section-title {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    margin-bottom: .75rem;
+    flex-wrap: wrap;
+    row-gap: .5rem;
+    column-gap: .75rem;
+  }
+
+  .section-left {
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+  }
+
+  .section-left h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0;
+    display: flex;
+    align-items: baseline;
+    gap: .5rem;
+  }
+
+  .pill {
+    background: var(--accent-bg);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-size: .7rem;
+    padding: .2rem .5rem;
+    border-radius: 999px;
+    font-weight: 500;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .tiny-note {
+    font-size: .7rem;
+    color: var(--muted);
+    line-height: 1.3;
+    font-weight: 400;
+  }
+
+  .section-right {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+  }
+
+  /* big action buttons row */
+  .row-buttons {
+    display: flex;
+    gap: .75rem;
+    flex-wrap: wrap;
+  }
+
+  button.main-btn {
+    flex: 1;
+    min-width: calc(50% - .4rem);
+    background-color: var(--accent);
+    color: #0f172a;
+    border: 0;
+    border-radius: .75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 1rem;
+    line-height: 1.2;
+    box-shadow: 0 14px 30px rgba(56,189,248,.4);
+    cursor: pointer;
+  }
+
+  button.sec-btn {
+    background-color: transparent;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: .75rem;
+    font-size: .8rem;
+    font-weight: 500;
+    line-height: 1.2;
+    padding: .6rem .9rem;
+    cursor: pointer;
+  }
+
+  /* form drawer styling */
+  .drawer-card {
+    display: none;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: .75rem;
+    background-color: #0b1220;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(148,163,184,.2);
+    padding: 1rem 1rem 1.5rem;
+  }
+  .drawer-card.active {
+    display: flex;
+  }
+
+  /* layout for fields */
+  .block-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .flex-row-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 1rem;
+    row-gap: 1rem;
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 260px;
+    min-width: 260px;
+  }
+
+  .field-can-drop {
+    flex: 1 1 220px;
+    min-width: 220px;
+  }
+
+  .field label {
+    font-size: .8rem;
+    color: var(--muted);
+    font-weight: 500;
+    line-height: 1.3;
+    margin-bottom: .3rem;
+  }
+
+  input, select, textarea {
+    width: 100%;
+    background-color: var(--card);
+    color: var(--text);
+    border: 1px solid rgba(148,163,184,.4);
+    border-radius: var(--radius-sm);
+    padding: .7rem .75rem;
+    font-size: 1rem;
+    line-height: 1.3;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: 2px solid var(--accent);
+    outline-offset: 0;
+    border-color: var(--accent);
+    background-color: #1f2f46;
+  }
+
+  textarea {
+    min-height: 3.5rem;
+    resize: vertical;
+  }
+
+  .save-row {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .save-row button {
+    flex: 1;
+    min-width: calc(50% - .5rem);
+  }
+
+  /* tables */
+  .table-wrapper {
+    overflow-x: auto;
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(148,163,184,.2);
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 760px;
+    background-color: #0b1220;
+    color: var(--text);
+    font-size: .8rem;
+  }
+
+  thead {
+    background-color: rgba(148,163,184,.08);
+  }
+
+  th, td {
+    text-align: left;
+    padding: .6rem .75rem;
+    vertical-align: top;
+    border-bottom: 1px solid rgba(148,163,184,.12);
+    line-height: 1.4;
+  }
+
+  th {
+    font-weight: 600;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .badge-type {
+    display: inline-block;
+    font-size: .65rem;
+    font-weight: 600;
+    line-height: 1.2;
+    background-color: rgba(56,189,248,.15);
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: .2rem .4rem;
+    border-radius: .4rem;
+  }
+
+  footer {
+    font-size: .7rem;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.4;
+    padding-bottom: 4rem;
+  }
+
+  /* meds chip section */
+  .chip-section-hdr {
+    color: var(--muted);
+    font-size: .7rem;
+    font-weight: 500;
+    letter-spacing: .02em;
+    text-transform: uppercase;
+  }
+
+  .chip-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+  }
+
+  .chip-btn {
+    background-color: rgba(56,189,248,.15);
+    border: 1px solid var(--accent);
+    border-radius: .6rem;
+    padding: .6rem .8rem;
+    font-size: .8rem;
+    line-height: 1.2;
+    font-weight: 500;
+    color: var(--accent);
+    cursor: pointer;
+  }
+
+  .chip-btn.active {
+    background-color: var(--accent);
+    color: #0f172a;
+    box-shadow: 0 14px 30px rgba(56,189,248,.4);
+  }
+
+  .chip-row-smallnote {
+    font-size: .7rem;
+    line-height: 1.4;
+    color: var(--muted);
+    margin-top: .25rem;
+  }
+
+  /* bullet guidance under PRN meds */
+  .med-guidance-list {
+    list-style-type: disc;
+    margin: .25rem 0 .5rem 1rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    row-gap: .5rem;
+    font-size: .7rem;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+  .med-guidance-list li {
+    margin: 0;
+    padding: 0;
+  }
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Care Log</h1>
+  <div class="subtitle">
+    Output / meds / oxygen / meals / vitals / sleep / activity.
+    Saved only on THIS device.
+  </div>
+</header>
+
+<!-- OUTPUT LOG SECTION -->
+<section class="card">
+  <div class="section-title">
+    <div class="section-left">
+      <h2>
+        Output Log
+        <span class="pill">Urine / Stool</span>
+      </h2>
+      <div class="tiny-note">
+        Amount, color, straining, and if he needed help.
+      </div>
+    </div>
+    <div class="section-right">
+      <button class="sec-btn" id="exportOutputBtn">Export CSV</button>
+    </div>
+  </div>
+
+  <div class="row-buttons">
+    <button class="main-btn" id="urineBtn">Log Urine</button>
+    <button class="main-btn" id="stoolBtn">Log Stool</button>
+  </div>
+
+  <div id="formCard" class="drawer-card">
+    <div class="field">
+      <label>Entry Type</label>
+      <div id="entryTypeLabel" style="font-size:1rem;font-weight:600;color:#38bdf8;"></div>
+    </div>
+
+    <div class="flex-row-wrap">
+      <div class="field">
+        <label for="dateTimeInput">
+          Date &amp; Time of Event
+          <span class="tiny-note">(edit if logging late)</span>
+        </label>
+        <input id="dateTimeInput" type="datetime-local" />
+      </div>
+
+      <div class="field field-can-drop">
+        <label for="assistSelect">
+          Assistance
+          <span class="tiny-note">(unassisted / needed help / catheter bag)</span>
+        </label>
+        <select id="assistSelect">
+          <option value="independent" selected>Unassisted / self</option>
+          <option value="assisted">Assisted to commode / helped walking</option>
+          <option value="catheter">Catheter / bag emptied</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="flex-row-wrap">
+      <div class="field">
+        <label for="amountInput">
+          Amount
+          <span class="tiny-note">(mL OR 'small'/'medium'/'large')</span>
+        </label>
+        <input id="amountInput" placeholder="e.g. 250 mL or medium or leaking" />
+      </div>
+
+      <div class="field field-can-drop">
+        <label for="colorInput">
+          Color / Appearance
+          <span class="tiny-note">(dark amber, tea-colored, tarry, clay)</span>
+        </label>
+        <input id="colorInput" placeholder="e.g. dark amber, tarry black" />
+      </div>
+    </div>
+
+    <div class="flex-row-wrap">
+      <div class="field">
+        <label for="bloodSelect">Visible Blood?</label>
+        <select id="bloodSelect">
+          <option value="no" selected>No</option>
+          <option value="yes-bright">Yes (bright red)</option>
+          <option value="yes-dark">Yes (dark/brownish)</option>
+        </select>
+      </div>
+
+      <div class="field field-can-drop">
+        <label for="painSelect">
+          Pain / Straining?
+          <span class="tiny-note">(0 = none, 10 = worst)</span>
+        </label>
+        <select id="painSelect">
+          <option value="0" selected>0</option>
+          <option value="1">1</option><option value="2">2</option>
+          <option value="3">3</option><option value="4">4</option>
+          <option value="5">5</option><option value="6">6</option>
+          <option value="7">7</option><option value="8">8</option>
+          <option value="9">9</option><option value="10">10</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="notesInput">
+        Notes
+        <span class="tiny-note">(odor, diarrhea, constipation, very sleepy)</span>
+      </label>
+      <textarea id="notesInput" placeholder="e.g. strong smell, diarrhea, hard to start, very sleepy"></textarea>
+    </div>
+
+    <div class="save-row">
+      <button class="main-btn" id="saveOutputBtn">Save Entry</button>
+      <button class="sec-btn" id="cancelOutputBtn">Cancel</button>
+    </div>
+  </div>
+</section>
+
+<!-- MEDICATION SECTION -->
+<section class="card">
+  <div class="section-title">
+    <div class="section-left">
+      <h2>
+        Medication Given
+        <span class="pill">Scheduled / PRN</span>
+      </h2>
+      <div class="tiny-note">
+        Tap a med below, fill dose, save. Includes comfort meds (palliative).
+      </div>
+    </div>
+    <div class="section-right">
+      <button class="main-btn" id="openMedBtn" style="min-width:auto;flex:0 0 auto;padding:.8rem 1rem;font-size:.9rem;">Log Medication</button>
+      <button class="sec-btn" id="exportMedBtn">Export Meds CSV</button>
+    </div>
+  </div>
+
+  <div id="medCard" class="drawer-card">
+    <div class="block-group">
+      <div class="chip-section-hdr">Scheduled / Daily</div>
+      <div class="chip-row" id="scheduledChips"></div>
+      <div class="chip-row-smallnote">
+        Hydrocortisone 5 mg tab: 1 tab AM + 1 tab at 2–3 PM (avoid insomnia).
+        Omeprazole 20 mg cap: 1 cap in AM (stomach protection).
+      </div>
+    </div>
+
+    <div class="block-group">
+      <div class="chip-section-hdr">Comfort / PRN</div>
+      <div class="chip-row" id="prnChips"></div>
+
+      <ul class="med-guidance-list">
+        <li>Acetaminophen 650 mg suppository: rectal q6h PRN pain/fever (max 4 doses / 24h)</li>
+        <li>Bisacodyl 10 mg suppository: rectal daily PRN constipation (max 1 dose / 24h)</li>
+        <li>Hyoscyamine 0.125 mg ODT: PO/SL q4h PRN secretions (max 6 doses / 24h)</li>
+        <li>Lorazepam liquid 1 mg: q4h PRN anxiety/agitation (max 6 doses / 24h)</li>
+        <li>Morphine oral 0.5 mg (0.25 mL): q4h PRN pain / SOB (max 6 doses / 24h)</li>
+        <li>Senna 8.6 mg: take 2 tabs PO daily PRN constipation (max 12 tabs / 24h)</li>
+        <li>Phenobarbital 60 mg tab: q8h ATC if severe agitation or seizure not controlled</li>
+      </ul>
+    </div>
+
+    <div class="flex-row-wrap" style="align-items:center;">
+      <div class="tiny-note" style="flex:1 1 auto;">
+        Can't find it? Add to list:
+      </div>
+      <button class="sec-btn" id="addMedNameBtn" style="flex:0 0 auto;min-width:auto;">+ Add med</button>
+    </div>
+
+    <div class="block-group">
+      <div class="flex-row-wrap">
+        <div class="field">
+          <label for="medDateTimeInput">Date &amp; Time Given</label>
+          <input id="medDateTimeInput" type="datetime-local" />
+        </div>
+
+        <div class="field">
+          <label for="medChosenName">
+            Medication Name
+            <span class="tiny-note">(auto-fills when you tap a chip)</span>
+          </label>
+          <input id="medChosenName" placeholder="tap chip or type manually" />
+        </div>
+
+        <div class="field field-can-drop">
+          <label for="medCategory">
+            Category
+            <span class="tiny-note">(scheduled / prn)</span>
+          </label>
+          <input id="medCategory" placeholder="scheduled / prn" />
+        </div>
+      </div>
+
+      <div class="flex-row-wrap">
+        <div class="field">
+          <label for="medDoseInput">
+            Dose / Route
+            <span class="tiny-note">(e.g. 650 mg suppository rectal)</span>
+          </label>
+          <input id="medDoseInput" placeholder="e.g. 0.25 mL morphine by mouth" />
+        </div>
+
+        <div class="field field-can-drop">
+          <label for="medReasonInput">
+            Reason
+            <span class="tiny-note">(pain 7/10, anxiety, noisy breathing)</span>
+          </label>
+          <input id="medReasonInput" placeholder="pain 8/10 / SOB at rest / agitation" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="medNotesInput">
+          Notes / Effect
+          <span class="tiny-note">(calmer? easier breathing?)</span>
+        </label>
+        <textarea id="medNotesInput" placeholder="calmer within 20 min, RR slower"></textarea>
+      </div>
+    </div>
+
+    <div class="save-row">
+      <button class="main-btn" id="medSaveBtn">Save Med Entry</button>
+      <button class="sec-btn" id="medCancelBtn">Cancel</button>
+    </div>
+  </div>
+</section>
+
+<!-- OXYGEN / BREATHING SECTION -->
+<section class="card">
+  <div class="section-title">
+    <div class="section-left">
+      <h2>
+        Oxygen / Breathing
+        <span class="pill">Comfort Support</span>
+      </h2>
+      <div class="tiny-note">
+        Nasal cannula / mask, flow rate, did it calm the breathing.
+      </div>
+    </div>
+    <div class="section-right">
+      <button class="main-btn" id="openOxyBtn" style="min-width:auto;flex:0 0 auto;padding:.8rem 1rem;font-size:.9rem;">Log Oxygen</button>
+      <button class="sec-btn" id="exportOxyBtn">Export O₂ CSV</button>
+    </div>
+  </div>
+
+  <div id="oxyCard" class="drawer-card">
+    <div class="block-group">
+      <div class="flex-row-wrap">
+        <div class="field">
+          <label for="oxyDateTimeInput">Date &amp; Time Started</label>
+          <input id="oxyDateTimeInput" type="datetime-local" />
+        </div>
+
+        <div class="field">
+          <label for="oxyFlowInput">Flow Rate (L/min)</label>
+          <input id="oxyFlowInput" placeholder="e.g. 2 L/min" />
+        </div>
+
+        <div class="field field-can-drop">
+          <label for="oxyMethodSelect">
+            Delivery
+            <span class="tiny-note">(nasal cannula / mask)</span>
+          </label>
+          <select id="oxyMethodSelect">
+            <option value="nasal_cannula">Nasal cannula</option>
+            <option value="mask">Mask</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="flex-row-wrap">
+        <div class="field">
+          <label for="oxyDurationInput">Duration (minutes)</label>
+          <input id="oxyDurationInput" placeholder="e.g. 20 min" />
+        </div>
+
+        <div class="field field-can-drop">
+          <label for="oxyReasonInput">
+            Reason
+            <span class="tiny-note">(SOB, anxiety, comfort)</span>
+          </label>
+          <input id="oxyReasonInput" placeholder="short of breath at rest" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="oxyReliefInput">
+          Did it help?
+          <span class="tiny-note">(calmer, RR lower, still gasping)</span>
+        </label>
+        <textarea id="oxyReliefInput" placeholder="calmer, RR improved, still distressed"></textarea>
+      </div>
+    </div>
+
+    <div class="save-row">
+      <button class="main-btn" id="oxySaveBtn">Save Oxygen Entry</button>
+      <button class="sec-btn" id="oxyCancelBtn">Cancel</button>
+    </div>
+  </div>
+</section>
+
+<!-- MEALS / INTAKE SECTION -->
+<section class="card">
+  <div class="section-title">
+    <div class="section-left">
+      <h2>
+        Meals / Intake
+        <span class="pill">Nutrition</span>
+      </h2>
+      <div class="tiny-note">
+        How much he actually took in, and nausea/vomiting.
+      </div>
+    </div>
+    <div class="section-right">
+      <button class="main-btn" id="openMealBtn" style="min-width:auto;flex:0 0 auto;padding:.8rem 1rem;font-size:.9rem;">Log Meal</button>
+      <button class="sec-btn" id="exportMealBtn">Export Meals CSV</button>
+    </div>
+  </div>
+
+  <div id="mealCard" class="drawer-card">
+    <div class="block-group">
+      <div class="flex-row-wrap">
+        <div class="field">
+          <label for="mealDateTimeInput">Date &amp; Time</label>
+          <input id="mealDateTimeInput" type="datetime-local" />
+        </div>
+
+        <div class="field">
+          <label for="mealTypeSelect">Meal Type</label>
+          <select id="mealTypeSelect">
+            <option value="breakfast">Breakfast</option>
+            <option value="lunch">Lunch</option>
+            <option value="dinner">Dinner</option>
+            <option value="snack">Snack / sip / supplement</option>
+          </select>
+        </div>
+
+        <div class="field field-can-drop">
+          <label for="mealTextureSelect">Consistency</label>
+          <select id="mealTextureSelect">
+            <option value="regular">Regular</option>
+            <option value="soft">Soft</option>
+            <option value="pureed">Pureed</option>
+            <option value="liquid_only">Liquid only / sips</option>
+            <option value="none">None</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="flex-row-wrap">
+        <div class="field">
+          <label for="mealPercentSelect">
+            Portion eaten
+            <span class="tiny-note">(% of what was offered)</span>
+          </label>
+          <select id="mealPercentSelect">
+            <option value="0%">0%</option>
+            <option value="25%">25%</option>
+            <option value="50%">50%</option>
+            <option value="75%">75%</option>
+            <option value="100%">100%</option>
+          </select>
+        </div>
+
+        <div class="field field-can-drop">
+          <label for="mealNauseaSelect">Nausea / Vomit?</label>
+          <select id="mealNauseaSelect">
+            <option value="no">No</option>
+            <option value="nausea_only">Nausea</option>
+            <option value="vomited">Vomited</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="mealNotesInput">
+          Notes
+          <span class="tiny-note">(refused food, coughing while eating, very sleepy)</span>
+        </label>
+        <textarea id="mealNotesInput" placeholder="only sips water, said no appetite"></textarea>
+      </div>
+    </div>
+
+    <div class="save-row">
+      <button class="main-btn" id="mealSaveBtn">Save Meal Entry</button>
+      <button class="sec-btn" id="mealCancelBtn">Cancel</button>
+    </div>
+  </div>
+</section>
+
+<!-- VITALS SECTION -->
+<section class="card">
+  <div class="section-title">
+    <div class="section-left">
+      <h2>
+        Vitals
+        <span class="pill">BP / Pulse / RR / O₂%</span>
+      </h2>
+      <div class="tiny-note">
+        Include position + timing (before meal / after meal).
+      </div>
+    </div>
+    <div class="section-right">
+      <button class="main-btn" id="openVitalBtn" style="min-width:auto;flex:0 0 auto;padding:.8rem 1rem;font-size:.9rem;">Log Vitals</button>
+      <button class="sec-btn" id="exportVitalBtn">Export Vitals CSV</button>
+    </div>
+  </div>
+
+  <div id="vitalsCard" class="drawer-card">
+    <div class="block-group">
+      <div class="flex-row-wrap">
+        <div class="field">
+          <label for="vitalDateTimeInput">Date &amp; Time</label>
+          <input id="vitalDateTimeInput" type="datetime-local" />
+        </div>
+
+        <div class="field">
+          <label for="vitalSysInput">Systolic (top #)</label>
+          <input id="vitalSysInput" placeholder="e.g. 112" />
+        </div>
+
+        <div class="field field-can-drop">
+          <label for="vitalDiaInput">Diastolic (bottom #)</label>
+          <input id="vitalDiaInput" placeholder="e.g. 68" />
+        </div>
+
+        <div class="field field-can-drop">
+          <label for="vitalPulseInput">Pulse (HR)</label>
+          <input id="vitalPulseInput" placeholder="e.g. 84" />
+        </div>
+      </div>
+
+      <div class="flex-row-wrap">
+        <div class="field">
+          <label for="vitalRRInput">Resp Rate (breaths/min)</label>
+          <input id="vitalRRInput" placeholder="e.g. 20" />
+        </div>
+
+        <div class="field field-can-drop">
+          <label for="vitalSpO2Input">Pulse O₂ %</label>
+          <input id="vitalSpO2Input" placeholder="e.g. 95%" />
+        </div>
+
+        <div class="field field-can-drop">
+          <label for="vitalPosSelect">Position</label>
+          <select id="vitalPosSelect">
+            <option value="sitting">Sitting</option>
+            <option value="lying">Lying</option>
+            <option value="standing">Standing</option>
+          </select>
+        </div>
+
+        <div class="field field-can-drop">
+          <label for="vitalFastingSelect">
+            Timing
+            <span class="tiny-note">(fasting vs after meal)</span>
+          </label>
+          <select id="vitalFastingSelect">
+            <option value="fasting">Fasting / before meal</option>
+            <option value="post_meal">After meal</option>
+            <option value="unknown">Unknown</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="vitalNotesInput">
+          Notes
+          <span class="tiny-note">(dizzy, weak, slept all day)</span>
+        </label>
+        <textarea id="vitalNotesInput" placeholder="very sleepy, hard to wake, c/o dizziness on standing"></textarea>
+      </div>
+    </div>
+
+    <div class="save-row">
+      <button class="main-btn" id="vitalSaveBtn">Save Vitals Entry</button>
+      <button class="sec-btn" id="vitalCancelBtn">Cancel</button>
+    </div>
+  </div>
+</section>
+
+<!-- SLEEP SECTION -->
+<section class="card">
+  <div class="section-title">
+    <div class="section-left">
+      <h2>
+        Sleep / Rest
+        <span class="pill">Overnight / Naps</span>
+      </h2>
+      <div class="tiny-note">
+        Track start/end, total hours, and how restful he seemed.
+      </div>
+    </div>
+    <div class="section-right">
+      <button class="main-btn" id="openSleepBtn" style="min-width:auto;flex:0 0 auto;padding:.8rem 1rem;font-size:.9rem;">Log Sleep</button>
+      <button class="sec-btn" id="exportSleepBtn">Export Sleep CSV</button>
+    </div>
+  </div>
+
+  <div id="sleepCard" class="drawer-card">
+    <div class="block-group">
+
+      <div class="flex-row-wrap">
+        <div class="field">
+          <label for="sleepStartInput">Start Time</label>
+          <input id="sleepStartInput" type="datetime-local" />
+        </div>
+
+        <div class="field">
+          <label for="sleepEndInput">End Time</label>
+          <input id="sleepEndInput" type="datetime-local" />
+        </div>
+
+        <div class="field field-can-drop">
+          <label for="sleepTotalInput">
+            Total Sleep (hrs)
+            <span class="tiny-note">(or best guess)</span>
+          </label>
+          <input id="sleepTotalInput" placeholder="e.g. 4.5" />
+        </div>
+      </div>
+
+      <div class="flex-row-wrap">
+        <div class="field">
+          <label for="sleepQualitySelect">Quality</label>
+          <select id="sleepQualitySelect">
+            <option value="good">Good / mostly calm</option>
+            <option value="ok">Okay / some restlessness</option>
+            <option value="poor">Poor / very restless</option>
+          </select>
+        </div>
+
+        <div class="field field-can-drop">
+          <label for="sleepAssistSelect">
+            Needed repositioning / meds?
+          </label>
+          <select id="sleepAssistSelect">
+            <option value="no_help">No help needed</option>
+            <option value="reposition_only">Repositioned in bed</option>
+            <option value="comfort_meds">Comfort med given for sleep</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="sleepNotesInput">
+          Notes
+          <span class="tiny-note">(woke gasping, moaning, pain, talking in sleep)</span>
+        </label>
+        <textarea id="sleepNotesInput" placeholder="restless ~2am, said back pain, calmed after morphine"></textarea>
+      </div>
+
+    </div>
+
+    <div class="save-row">
+      <button class="main-btn" id="sleepSaveBtn">Save Sleep Entry</button>
+      <button class="sec-btn" id="sleepCancelBtn">Cancel</button>
+    </div>
+  </div>
+</section>
+
+<!-- ACTIVITY / MOBILITY SECTION -->
+<section class="card">
+  <div class="section-title">
+    <div class="section-left">
+      <h2>
+        Activity / Mobility
+        <span class="pill">Movement</span>
+      </h2>
+      <div class="tiny-note">
+        Sitting up, walked to bathroom, talked with family, PT-style moves.
+      </div>
+    </div>
+    <div class="section-right">
+      <button class="main-btn" id="openActBtn" style="min-width:auto;flex:0 0 auto;padding:.8rem 1rem;font-size:.9rem;">Log Activity</button>
+      <button class="sec-btn" id="exportActBtn">Export Activity CSV</button>
+    </div>
+  </div>
+
+  <div id="actCard" class="drawer-card">
+    <div class="block-group">
+
+      <div class="flex-row-wrap">
+        <div class="field">
+          <label for="actDateTimeInput">Date &amp; Time</label>
+          <input id="actDateTimeInput" type="datetime-local" />
+        </div>
+
+        <div class="field">
+          <label for="actTypeInput">
+            Activity
+            <span class="tiny-note">(sat in recliner, walked to restroom, talked w/family)</span>
+          </label>
+          <input id="actTypeInput" placeholder="sat on edge of bed, feet down" />
+        </div>
+
+        <div class="field field-can-drop">
+          <label for="actAssistSelect">Assistance</label>
+          <select id="actAssistSelect">
+            <option value="independent">Independent</option>
+            <option value="standby">Stand-by assist</option>
+            <option value="hands_on">Hands-on assist</option>
+            <option value="could_not">Could not attempt</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="flex-row-wrap">
+        <div class="field">
+          <label for="actDurationInput">
+            Duration (min)
+          </label>
+          <input id="actDurationInput" placeholder="e.g. 5" />
+        </div>
+
+        <div class="field field-can-drop">
+          <label for="actToleranceSelect">
+            Tolerance
+            <span class="tiny-note">(okay / tired / SOB / dizzy)</span>
+          </label>
+          <select id="actToleranceSelect">
+            <option value="okay">Okay</option>
+            <option value="tired">Very tired</option>
+            <option value="sob">Short of breath</option>
+            <option value="dizzy">Dizzy / weak</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="actNotesInput">
+          Notes
+          <span class="tiny-note">(needed rest right after, chest pain, etc.)</span>
+        </label>
+        <textarea id="actNotesInput" placeholder="needed 2-person assist to stand, very weak today"></textarea>
+      </div>
+
+    </div>
+
+    <div class="save-row">
+      <button class="main-btn" id="actSaveBtn">Save Activity Entry</button>
+      <button class="sec-btn" id="actCancelBtn">Cancel</button>
+    </div>
+  </div>
+</section>
+
+<!-- TABLES / HISTORY -->
+<section class="card">
+  <div class="section-title">
+    <div class="section-left">
+      <h2>Recent Output <span class="pill" id="countPill">0 entries</span></h2>
+      <div class="tiny-note">Most recent first</div>
+    </div>
+  </div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Type</th>
+          <th>Assist</th>
+          <th>Amount</th>
+          <th>Color / Looks</th>
+          <th>Blood?</th>
+          <th>Pain</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody id="logTableBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="card">
+  <div class="section-title">
+    <div class="section-left">
+      <h2>Recent Meds <span class="pill" id="medCountPill">0 entries</span></h2>
+      <div class="tiny-note">Most recent first</div>
+    </div>
+  </div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Medication</th>
+          <th>Category</th>
+          <th>Dose / Route</th>
+          <th>Reason</th>
+          <th>Notes / Effect</th>
+        </tr>
+      </thead>
+      <tbody id="medTableBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="card">
+  <div class="section-title">
+    <div class="section-left">
+      <h2>Oxygen Sessions <span class="pill" id="oxyCountPill">0 entries</span></h2>
+      <div class="tiny-note">Most recent first</div>
+    </div>
+  </div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Flow / Method</th>
+          <th>Duration</th>
+          <th>Reason</th>
+          <th>Relief / Effect</th>
+        </tr>
+      </thead>
+      <tbody id="oxyTableBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="card">
+  <div class="section-title">
+    <div class="section-left">
+      <h2>Meals / Intake <span class="pill" id="mealCountPill">0 entries</span></h2>
+      <div class="tiny-note">Most recent first</div>
+    </div>
+  </div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Meal</th>
+          <th>Texture</th>
+          <th>Portion</th>
+          <th>Nausea/Vomit</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody id="mealTableBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="card">
+  <div class="section-title">
+    <div class="section-left">
+      <h2>Vitals Log <span class="pill" id="vitalCountPill">0 entries</span></h2>
+      <div class="tiny-note">Most recent first</div>
+    </div>
+  </div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>BP (sys/dia)</th>
+          <th>Pulse</th>
+          <th>RR</th>
+          <th>SpO₂%</th>
+          <th>Position</th>
+          <th>Timing</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody id="vitalTableBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="card">
+  <div class="section-title">
+    <div class="section-left">
+      <h2>Sleep / Rest <span class="pill" id="sleepCountPill">0 entries</span></h2>
+      <div class="tiny-note">Most recent first</div>
+    </div>
+  </div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Start</th>
+          <th>End</th>
+          <th>Total hrs</th>
+          <th>Quality</th>
+          <th>Assist / Meds</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody id="sleepTableBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="card">
+  <div class="section-title">
+    <div class="section-left">
+      <h2>Activity / Mobility <span class="pill" id="actCountPill">0 entries</span></h2>
+      <div class="tiny-note">Most recent first</div>
+    </div>
+  </div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Activity</th>
+          <th>Assist</th>
+          <th>Duration</th>
+          <th>Tolerance</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody id="actTableBody"></tbody>
+    </table>
+  </div>
+</section>
+
+<footer>
+  This does NOT replace medical advice.
+  Call hospice immediately for: no urine for many hours, new red urine,
+  black/tarry stool, can't wake him, gasping breathing, new seizure,
+  or sudden severe pain.
+</footer>
+
+<script>
+function loadArr(key) {
+  try { return JSON.parse(localStorage.getItem(key)) || []; }
+  catch(e){ return []; }
+}
+function saveArr(key, arr) {
+  localStorage.setItem(key, JSON.stringify(arr));
+}
+
+let outputEntries  = loadArr("outputEntries");
+let medEntries     = loadArr("medEntries");
+let oxyEntries     = loadArr("oxyEntries");
+let mealEntries    = loadArr("mealEntries");
+let vitalEntries   = loadArr("vitalEntries");
+let sleepEntries   = loadArr("sleepEntries");
+let actEntries     = loadArr("actEntries");
+
+const urineBtn       = document.getElementById("urineBtn");
+const stoolBtn       = document.getElementById("stoolBtn");
+const formCard       = document.getElementById("formCard");
+const entryTypeLabel = document.getElementById("entryTypeLabel");
+const dateTimeInput  = document.getElementById("dateTimeInput");
+const assistSelect   = document.getElementById("assistSelect");
+const amountInput    = document.getElementById("amountInput");
+const colorInput     = document.getElementById("colorInput");
+const bloodSelect    = document.getElementById("bloodSelect");
+const painSelect     = document.getElementById("painSelect");
+const notesInput     = document.getElementById("notesInput");
+const saveOutputBtn  = document.getElementById("saveOutputBtn");
+const cancelOutputBtn= document.getElementById("cancelOutputBtn");
+const logTableBody   = document.getElementById("logTableBody");
+const countPill      = document.getElementById("countPill");
+const exportOutputBtn= document.getElementById("exportOutputBtn");
+let currentOutputType = "";
+
+const openMedBtn        = document.getElementById("openMedBtn");
+const medCard           = document.getElementById("medCard");
+const scheduledChipsDiv = document.getElementById("scheduledChips");
+const prnChipsDiv       = document.getElementById("prnChips");
+const addMedNameBtn     = document.getElementById("addMedNameBtn");
+const medDateTimeInput  = document.getElementById("medDateTimeInput");
+const medChosenName     = document.getElementById("medChosenName");
+const medCategory       = document.getElementById("medCategory");
+const medDoseInput      = document.getElementById("medDoseInput");
+const medReasonInput    = document.getElementById("medReasonInput");
+const medNotesInput     = document.getElementById("medNotesInput");
+const medSaveBtn        = document.getElementById("medSaveBtn");
+const medCancelBtn      = document.getElementById("medCancelBtn");
+const medTableBody      = document.getElementById("medTableBody");
+const medCountPill      = document.getElementById("medCountPill");
+const exportMedBtn      = document.getElementById("exportMedBtn");
+
+const openOxyBtn     = document.getElementById("openOxyBtn");
+const oxyCard        = document.getElementById("oxyCard");
+const oxyDateTimeInput = document.getElementById("oxyDateTimeInput");
+const oxyFlowInput   = document.getElementById("oxyFlowInput");
+const oxyMethodSelect= document.getElementById("oxyMethodSelect");
+const oxyDurationInput= document.getElementById("oxyDurationInput");
+const oxyReasonInput = document.getElementById("oxyReasonInput");
+const oxyReliefInput = document.getElementById("oxyReliefInput");
+const oxySaveBtn     = document.getElementById("oxySaveBtn");
+const oxyCancelBtn   = document.getElementById("oxyCancelBtn");
+const oxyTableBody   = document.getElementById("oxyTableBody");
+const oxyCountPill   = document.getElementById("oxyCountPill");
+const exportOxyBtn   = document.getElementById("exportOxyBtn");
+
+const openMealBtn       = document.getElementById("openMealBtn");
+const mealCard          = document.getElementById("mealCard");
+const mealDateTimeInput = document.getElementById("mealDateTimeInput");
+const mealTypeSelect    = document.getElementById("mealTypeSelect");
+const mealTextureSelect = document.getElementById("mealTextureSelect");
+const mealPercentSelect = document.getElementById("mealPercentSelect");
+const mealNauseaSelect  = document.getElementById("mealNauseaSelect");
+const mealNotesInput    = document.getElementById("mealNotesInput");
+const mealSaveBtn       = document.getElementById("mealSaveBtn");
+const mealCancelBtn     = document.getElementById("mealCancelBtn");
+const mealTableBody     = document.getElementById("mealTableBody");
+const mealCountPill     = document.getElementById("mealCountPill");
+const exportMealBtn     = document.getElementById("exportMealBtn");
+
+const openVitalBtn      = document.getElementById("openVitalBtn");
+const vitalsCard        = document.getElementById("vitalsCard");
+const vitalDateTimeInput= document.getElementById("vitalDateTimeInput");
+const vitalSysInput     = document.getElementById("vitalSysInput");
+const vitalDiaInput     = document.getElementById("vitalDiaInput");
+const vitalPulseInput   = document.getElementById("vitalPulseInput");
+const vitalRRInput      = document.getElementById("vitalRRInput");
+const vitalSpO2Input    = document.getElementById("vitalSpO2Input");
+const vitalPosSelect    = document.getElementById("vitalPosSelect");
+const vitalFastingSelect= document.getElementById("vitalFastingSelect");
+const vitalNotesInput   = document.getElementById("vitalNotesInput");
+const vitalSaveBtn      = document.getElementById("vitalSaveBtn");
+const vitalCancelBtn    = document.getElementById("vitalCancelBtn");
+const vitalTableBody    = document.getElementById("vitalTableBody");
+const vitalCountPill    = document.getElementById("vitalCountPill");
+const exportVitalBtn    = document.getElementById("exportVitalBtn");
+
+const openSleepBtn      = document.getElementById("openSleepBtn");
+const sleepCard         = document.getElementById("sleepCard");
+const sleepStartInput   = document.getElementById("sleepStartInput");
+const sleepEndInput     = document.getElementById("sleepEndInput");
+const sleepTotalInput   = document.getElementById("sleepTotalInput");
+const sleepQualitySelect= document.getElementById("sleepQualitySelect");
+const sleepAssistSelect = document.getElementById("sleepAssistSelect");
+const sleepNotesInput   = document.getElementById("sleepNotesInput");
+const sleepSaveBtn      = document.getElementById("sleepSaveBtn");
+const sleepCancelBtn    = document.getElementById("sleepCancelBtn");
+const sleepTableBody    = document.getElementById("sleepTableBody");
+const sleepCountPill    = document.getElementById("sleepCountPill");
+const exportSleepBtn    = document.getElementById("exportSleepBtn");
+
+const openActBtn        = document.getElementById("openActBtn");
+const actCard           = document.getElementById("actCard");
+const actDateTimeInput  = document.getElementById("actDateTimeInput");
+const actTypeInput      = document.getElementById("actTypeInput");
+const actAssistSelect   = document.getElementById("actAssistSelect");
+const actDurationInput  = document.getElementById("actDurationInput");
+const actToleranceSelect= document.getElementById("actToleranceSelect");
+const actNotesInput     = document.getElementById("actNotesInput");
+const actSaveBtn        = document.getElementById("actSaveBtn");
+const actCancelBtn      = document.getElementById("actCancelBtn");
+const actTableBody      = document.getElementById("actTableBody");
+const actCountPill      = document.getElementById("actCountPill");
+const exportActBtn      = document.getElementById("exportActBtn");
+
+let scheduledMeds = [
+  { name: "Hydrocortisone 5 mg tab", category: "scheduled" },
+  { name: "Omeprazole 20 mg cap", category: "scheduled" }
+];
+
+let prnMeds = [
+  { name: "Acetaminophen 650 mg supp", category: "prn" },
+  { name: "Bisacodyl 10 mg supp", category: "prn" },
+  { name: "Hyoscyamine 0.125 mg ODT", category: "prn" },
+  { name: "Lorazepam liquid 1 mg", category: "prn" },
+  { name: "Morphine oral 0.5 mg (0.25 mL)", category: "prn" },
+  { name: "Senna 8.6 mg tabs (2 tabs)", category: "prn" },
+  { name: "Phenobarbital 60 mg tab", category: "prn" }
+];
+
+function nowLocalDatetimeValue() {
+  const d = new Date();
+  const pad = (n)=> String(n).padStart(2,"0");
+  const yyyy = d.getFullYear();
+  const mm = pad(d.getMonth()+1);
+  const dd = pad(d.getDate());
+  const hh = pad(d.getHours());
+  const mi = pad(d.getMinutes());
+  return `${yyyy}-${mm}-${dd}T${hh}:${mi}`;
+}
+
+function renderChips() {
+  scheduledChipsDiv.innerHTML = "";
+  scheduledMeds.forEach(m=>{
+    const btn = document.createElement("button");
+    btn.className = "chip-btn";
+    btn.textContent = m.name;
+    btn.onclick = ()=>{
+      medChosenName.value = m.name;
+      medCategory.value   = m.category;
+    };
+    scheduledChipsDiv.appendChild(btn);
+  });
+
+  prnChipsDiv.innerHTML = "";
+  prnMeds.forEach(m=>{
+    const btn = document.createElement("button");
+    btn.className = "chip-btn";
+    btn.textContent = m.name;
+    btn.onclick = ()=>{
+      medChosenName.value = m.name;
+      medCategory.value   = m.category;
+    };
+    prnChipsDiv.appendChild(btn);
+  });
+}
+
+function renderOutputTable() {
+  logTableBody.innerHTML = "";
+  [...outputEntries].reverse().forEach(e => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${e.time||""}</td>
+      <td>${e.type||""}</td>
+      <td>${e.assist||""}</td>
+      <td>${e.amount||""}</td>
+      <td>${e.color||""}</td>
+      <td>${e.blood||""}</td>
+      <td>${e.pain||""}</td>
+      <td>${e.notes||""}</td>`;
+    logTableBody.appendChild(tr);
+  });
+  countPill.textContent = outputEntries.length + " entries";
+}
+
+function renderMedTable() {
+  medTableBody.innerHTML = "";
+  [...medEntries].reverse().forEach(e => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${e.time||""}</td>
+      <td>${e.name||""}</td>
+      <td>${e.category||""}</td>
+      <td>${e.dose||""}</td>
+      <td>${e.reason||""}</td>
+      <td>${e.notes||""}</td>`;
+    medTableBody.appendChild(tr);
+  });
+  medCountPill.textContent = medEntries.length + " entries";
+}
+
+function renderOxyTable() {
+  oxyTableBody.innerHTML = "";
+  [...oxyEntries].reverse().forEach(e => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${e.time||""}</td>
+      <td>${e.flow||""} / ${e.method||""}</td>
+      <td>${e.duration||""}</td>
+      <td>${e.reason||""}</td>
+      <td>${e.relief||""}</td>`;
+    oxyTableBody.appendChild(tr);
+  });
+  oxyCountPill.textContent = oxyEntries.length + " entries";
+}
+
+function renderMealTable() {
+  mealTableBody.innerHTML = "";
+  [...mealEntries].reverse().forEach(e => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${e.time||""}</td>
+      <td>${e.mealType||""}</td>
+      <td>${e.texture||""}</td>
+      <td>${e.portion||""}</td>
+      <td>${e.nausea||""}</td>
+      <td>${e.notes||""}</td>`;
+    mealTableBody.appendChild(tr);
+  });
+  mealCountPill.textContent = mealEntries.length + " entries";
+}
+
+function renderVitalTable() {
+  vitalTableBody.innerHTML = "";
+  [...vitalEntries].reverse().forEach(e => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${e.time||""}</td>
+      <td>${e.sys||""}/${e.dia||""}</td>
+      <td>${e.pulse||""}</td>
+      <td>${e.rr||""}</td>
+      <td>${e.spO2||""}</td>
+      <td>${e.position||""}</td>
+      <td>${e.timing||""}</td>
+      <td>${e.notes||""}</td>`;
+    vitalTableBody.appendChild(tr);
+  });
+  vitalCountPill.textContent = vitalEntries.length + " entries";
+}
+
+function renderSleepTable() {
+  sleepTableBody.innerHTML = "";
+  [...sleepEntries].reverse().forEach(e => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${e.start||""}</td>
+      <td>${e.end||""}</td>
+      <td>${e.total||""}</td>
+      <td>${e.quality||""}</td>
+      <td>${e.assist||""}</td>
+      <td>${e.notes||""}</td>`;
+    sleepTableBody.appendChild(tr);
+  });
+  sleepCountPill.textContent = sleepEntries.length + " entries";
+}
+
+function renderActTable() {
+  actTableBody.innerHTML = "";
+  [...actEntries].reverse().forEach(e => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${e.time||""}</td>
+      <td>${e.activity||""}</td>
+      <td>${e.assist||""}</td>
+      <td>${e.duration||""}</td>
+      <td>${e.tolerance||""}</td>
+      <td>${e.notes||""}</td>`;
+    actTableBody.appendChild(tr);
+  });
+  actCountPill.textContent = actEntries.length + " entries";
+}
+
+function exportCSV(filename, rows, headers) {
+  const csvRows = [];
+  csvRows.push(headers.join(","));
+  rows.forEach(r => {
+    const vals = headers.map(h => {
+      const v = (r[h] ?? "").toString().replace(/"/g,'""');
+      return '"' + v + '"';
+    });
+    csvRows.push(vals.join(","));
+  });
+  const blob = new Blob([csvRows.join("\n")], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function closeAllDrawers() {
+  [formCard, medCard, oxyCard, mealCard, vitalsCard, sleepCard, actCard].forEach(el=>{
+    el.classList.remove("active");
+  });
+}
+
+/* OUTPUT handlers */
+urineBtn.addEventListener("click", ()=>{
+  closeAllDrawers();
+  currentOutputType = "urine";
+  entryTypeLabel.textContent = "Urine";
+  dateTimeInput.value = nowLocalDatetimeValue();
+  formCard.classList.add("active");
+});
+stoolBtn.addEventListener("click", ()=>{
+  closeAllDrawers();
+  currentOutputType = "stool";
+  entryTypeLabel.textContent = "Stool";
+  dateTimeInput.value = nowLocalDatetimeValue();
+  formCard.classList.add("active");
+});
+cancelOutputBtn.addEventListener("click", ()=>{
+  formCard.classList.remove("active");
+});
+saveOutputBtn.addEventListener("click", ()=>{
+  const newEntry = {
+    time: dateTimeInput.value,
+    type: currentOutputType,
+    assist: assistSelect.value,
+    amount: amountInput.value,
+    color: colorInput.value,
+    blood: bloodSelect.value,
+    pain: painSelect.value,
+    notes: notesInput.value
+  };
+  outputEntries.push(newEntry);
+  saveArr("outputEntries", outputEntries);
+  renderOutputTable();
+  formCard.classList.remove("active");
+});
+
+/* MED handlers */
+openMedBtn.addEventListener("click", ()=>{
+  closeAllDrawers();
+  medDateTimeInput.value = nowLocalDatetimeValue();
+  medChosenName.value = "";
+  medCategory.value   = "";
+  medDoseInput.value  = "";
+  medReasonInput.value= "";
+  medNotesInput.value = "";
+  medCard.classList.add("active");
+});
+medCancelBtn.addEventListener("click", ()=>{
+  medCard.classList.remove("active");
+});
+medSaveBtn.addEventListener("click", ()=>{
+  const newMed = {
+    time:   medDateTimeInput.value,
+    name:   medChosenName.value,
+    category: medCategory.value,
+    dose:   medDoseInput.value,
+    reason: medReasonInput.value,
+    notes:  medNotesInput.value
+  };
+  medEntries.push(newMed);
+  saveArr("medEntries", medEntries);
+  renderMedTable();
+  medCard.classList.remove("active");
+});
+addMedNameBtn.addEventListener("click", ()=>{
+  const custom = prompt("Medication name?");
+  if(custom) {
+    prnMeds.push({name: custom, category:"prn"});
+    renderChips();
+  }
+});
+
+/* OXY handlers */
+openOxyBtn.addEventListener("click", ()=>{
+  closeAllDrawers();
+  oxyDateTimeInput.value = nowLocalDatetimeValue();
+  oxyFlowInput.value = "";
+  oxyMethodSelect.value = "nasal_cannula";
+  oxyDurationInput.value = "";
+  oxyReasonInput.value = "";
+  oxyReliefInput.value = "";
+  oxyCard.classList.add("active");
+});
+oxyCancelBtn.addEventListener("click", ()=>{
+  oxyCard.classList.remove("active");
+});
+oxySaveBtn.addEventListener("click", ()=>{
+  const newOxy = {
+    time: oxyDateTimeInput.value,
+    flow: oxyFlowInput.value,
+    method: oxyMethodSelect.value,
+    duration: oxyDurationInput.value,
+    reason: oxyReasonInput.value,
+    relief: oxyReliefInput.value
+  };
+  oxyEntries.push(newOxy);
+  saveArr("oxyEntries", oxyEntries);
+  renderOxyTable();
+  oxyCard.classList.remove("active");
+});
+
+/* MEAL handlers */
+openMealBtn.addEventListener("click", ()=>{
+  closeAllDrawers();
+  mealDateTimeInput.value = nowLocalDatetimeValue();
+  mealTypeSelect.value = "breakfast";
+  mealTextureSelect.value = "regular";
+  mealPercentSelect.value = "0%";
+  mealNauseaSelect.value = "no";
+  mealNotesInput.value = "";
+  mealCard.classList.add("active");
+});
+mealCancelBtn.addEventListener("click", ()=>{
+  mealCard.classList.remove("active");
+});
+mealSaveBtn.addEventListener("click", ()=>{
+  const newMeal = {
+    time: mealDateTimeInput.value,
+    mealType: mealTypeSelect.value,
+    texture: mealTextureSelect.value,
+    portion: mealPercentSelect.value,
+    nausea: mealNauseaSelect.value,
+    notes: mealNotesInput.value
+  };
+  mealEntries.push(newMeal);
+  saveArr("mealEntries", mealEntries);
+  renderMealTable();
+  mealCard.classList.remove("active");
+});
+
+/* VITAL handlers */
+openVitalBtn.addEventListener("click", ()=>{
+  closeAllDrawers();
+  vitalDateTimeInput.value = nowLocalDatetimeValue();
+  vitalSysInput.value = "";
+  vitalDiaInput.value = "";
+  vitalPulseInput.value = "";
+  vitalRRInput.value = "";
+  vitalSpO2Input.value = "";
+  vitalPosSelect.value = "sitting";
+  vitalFastingSelect.value = "fasting";
+  vitalNotesInput.value = "";
+  vitalsCard.classList.add("active");
+});
+vitalCancelBtn.addEventListener("click", ()=>{
+  vitalsCard.classList.remove("active");
+});
+vitalSaveBtn.addEventListener("click", ()=>{
+  const newVital = {
+    time: vitalDateTimeInput.value,
+    sys: vitalSysInput.value,
+    dia: vitalDiaInput.value,
+    pulse: vitalPulseInput.value,
+    rr: vitalRRInput.value,
+    spO2: vitalSpO2Input.value,
+    position: vitalPosSelect.value,
+    timing: vitalFastingSelect.value,
+    notes: vitalNotesInput.value
+  };
+  vitalEntries.push(newVital);
+  saveArr("vitalEntries", vitalEntries);
+  renderVitalTable();
+  vitalsCard.classList.remove("active");
+});
+
+/* SLEEP handlers */
+openSleepBtn.addEventListener("click", ()=>{
+  closeAllDrawers();
+  sleepStartInput.value = nowLocalDatetimeValue();
+  sleepEndInput.value   = "";
+  sleepTotalInput.value = "";
+  sleepQualitySelect.value = "good";
+  sleepAssistSelect.value  = "no_help";
+  sleepNotesInput.value    = "";
+  sleepCard.classList.add("active");
+});
+sleepCancelBtn.addEventListener("click", ()=>{
+  sleepCard.classList.remove("active");
+});
+sleepSaveBtn.addEventListener("click", ()=>{
+  const newSleep = {
+    start:   sleepStartInput.value,
+    end:     sleepEndInput.value,
+    total:   sleepTotalInput.value,
+    quality: sleepQualitySelect.value,
+    assist:  sleepAssistSelect.value,
+    notes:   sleepNotesInput.value
+  };
+  sleepEntries.push(newSleep);
+  saveArr("sleepEntries", sleepEntries);
+  renderSleepTable();
+  sleepCard.classList.remove("active");
+});
+
+/* ACTIVITY handlers */
+openActBtn.addEventListener("click", ()=>{
+  closeAllDrawers();
+  actDateTimeInput.value = nowLocalDatetimeValue();
+  actTypeInput.value = "";
+  actAssistSelect.value = "independent";
+  actDurationInput.value = "";
+  actToleranceSelect.value = "okay";
+  actNotesInput.value = "";
+  actCard.classList.add("active");
+});
+actCancelBtn.addEventListener("click", ()=>{
+  actCard.classList.remove("active");
+});
+actSaveBtn.addEventListener("click", ()=>{
+  const newAct = {
+    time: actDateTimeInput.value,
+    activity: actTypeInput.value,
+    assist: actAssistSelect.value,
+    duration: actDurationInput.value,
+    tolerance: actToleranceSelect.value,
+    notes: actNotesInput.value
+  };
+  actEntries.push(newAct);
+  saveArr("actEntries", actEntries);
+  renderActTable();
+  actCard.classList.remove("active");
+});
+
+/* EXPORT buttons */
+exportOutputBtn.addEventListener("click", ()=>{
+  exportCSV("output_log.csv", outputEntries, [
+    "time","type","assist","amount","color","blood","pain","notes"
+  ]);
+});
+
+exportMedBtn.addEventListener("click", ()=>{
+  exportCSV("med_log.csv", medEntries, [
+    "time","name","category","dose","reason","notes"
+  ]);
+});
+
+exportOxyBtn.addEventListener("click", ()=>{
+  exportCSV("oxygen_log.csv", oxyEntries, [
+    "time","flow","method","duration","reason","relief"
+  ]);
+});
+
+exportMealBtn.addEventListener("click", ()=>{
+  exportCSV("meals_log.csv", mealEntries, [
+    "time","mealType","texture","portion","nausea","notes"
+  ]);
+});
+
+exportVitalBtn.addEventListener("click", ()=>{
+  exportCSV("vitals_log.csv", vitalEntries, [
+    "time","sys","dia","pulse","rr","spO2","position","timing","notes"
+  ]);
+});
+
+exportSleepBtn.addEventListener("click", ()=>{
+  exportCSV("sleep_log.csv", sleepEntries, [
+    "start","end","total","quality","assist","notes"
+  ]);
+});
+
+exportActBtn.addEventListener("click", ()=>{
+  exportCSV("activity_log.csv", actEntries, [
+    "time","activity","assist","duration","tolerance","notes"
+  ]);
+});
+
+renderChips();
+renderOutputTable();
+renderMedTable();
+renderOxyTable();
+renderMealTable();
+renderVitalTable();
+renderSleepTable();
+renderActTable();
+</script>
+</body>
+</html>
