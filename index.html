@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<!-- iOS home-screen friendly -->
+<!-- iOS add-to-home-screen friendliness -->
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 <meta name="apple-mobile-web-app-title" content="Care Tracker" />
@@ -20,6 +20,9 @@
     --muted: #94a3b8;
     --accent: #38bdf8;
     --accent-bg: rgba(56,189,248,0.15);
+    --danger-bg: rgba(239,68,68,.14);
+    --danger-border: rgba(239,68,68,.6);
+    --danger-text: #f87171;
     --radius-lg: 1rem;
     --radius-sm: .5rem;
   }
@@ -64,6 +67,35 @@
     padding: 1rem 1rem 1.25rem;
     box-shadow: 0 20px 40px rgba(0,0,0,.6);
     border: 1px solid rgba(148,163,184,.15);
+  }
+
+  .alert-card {
+    background-color: #2a1111;
+    border-radius: var(--radius-lg);
+    padding: 1rem 1rem 1.25rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,.6);
+    border: 1px solid var(--danger-border);
+  }
+
+  .alert-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--danger-text);
+    margin: 0 0 .5rem;
+    display: flex;
+    align-items: baseline;
+    gap: .5rem;
+  }
+
+  .alert-list {
+    margin: 0;
+    padding-left: 1.25rem;
+    color: var(--text);
+    font-size: .8rem;
+    line-height: 1.4;
+  }
+  .alert-list li {
+    margin-bottom: .5rem;
   }
 
   .section-title {
@@ -117,7 +149,6 @@
     gap: .5rem;
   }
 
-  /* big action buttons row */
   .row-buttons {
     display: flex;
     gap: .75rem;
@@ -151,7 +182,18 @@
     cursor: pointer;
   }
 
-  /* form drawer styling */
+  button.danger-btn {
+    background-color: transparent;
+    color: var(--danger-text);
+    border: 1px solid var(--danger-text);
+    border-radius: .5rem;
+    font-size: .7rem;
+    font-weight: 500;
+    line-height: 1.2;
+    padding: .4rem .6rem;
+    cursor: pointer;
+  }
+
   .drawer-card {
     display: none;
     flex-direction: column;
@@ -166,7 +208,6 @@
     display: flex;
   }
 
-  /* layout for fields */
   .block-group {
     display: flex;
     flex-direction: column;
@@ -235,7 +276,6 @@
     min-width: calc(50% - .5rem);
   }
 
-  /* tables */
   .table-wrapper {
     overflow-x: auto;
     border-radius: var(--radius-lg);
@@ -245,7 +285,7 @@
   table {
     border-collapse: collapse;
     width: 100%;
-    min-width: 760px;
+    min-width: 800px;
     background-color: #0b1220;
     color: var(--text);
     font-size: .8rem;
@@ -273,27 +313,13 @@
     border-bottom: none;
   }
 
-  .badge-type {
-    display: inline-block;
-    font-size: .65rem;
-    font-weight: 600;
-    line-height: 1.2;
-    background-color: rgba(56,189,248,.15);
-    border: 1px solid var(--accent);
-    color: var(--accent);
-    padding: .2rem .4rem;
-    border-radius: .4rem;
+  .actions-cell {
+    white-space: nowrap;
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
   }
 
-  footer {
-    font-size: .7rem;
-    color: var(--muted);
-    text-align: center;
-    line-height: 1.4;
-    padding-bottom: 4rem;
-  }
-
-  /* meds chip section */
   .chip-section-hdr {
     color: var(--muted);
     font-size: .7rem;
@@ -320,12 +346,6 @@
     cursor: pointer;
   }
 
-  .chip-btn.active {
-    background-color: var(--accent);
-    color: #0f172a;
-    box-shadow: 0 14px 30px rgba(56,189,248,.4);
-  }
-
   .chip-row-smallnote {
     font-size: .7rem;
     line-height: 1.4;
@@ -333,7 +353,6 @@
     margin-top: .25rem;
   }
 
-  /* bullet guidance under PRN meds */
   .med-guidance-list {
     list-style-type: disc;
     margin: .25rem 0 .5rem 1rem;
@@ -349,20 +368,97 @@
     margin: 0;
     padding: 0;
   }
+
+  footer {
+    font-size: .7rem;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.4;
+    padding-bottom: 4rem;
+  }
+
+  footer a {
+    color: var(--accent);
+    text-decoration: none;
+  }
 </style>
 </head>
 
 <body>
 
 <header>
-  <h1>Care Log</h1>
+  <h1>Care Tracker</h1>
   <div class="subtitle">
     Output / meds / oxygen / meals / vitals / sleep / activity.
     Saved only on THIS device.
   </div>
+  <div class="section-right" style="margin-top:.5rem;flex-wrap:wrap;">
+    <button class="main-btn" id="exportAllBtn" style="flex:0 0 auto;min-width:auto;padding:.8rem 1rem;font-size:.9rem;">
+      Export ALL Logs (Summary CSV)
+    </button>
+  </div>
 </header>
 
-<!-- OUTPUT LOG SECTION -->
+<!-- === Patient / Hospice Info Card === -->
+<section class="card">
+  <div class="section-title">
+    <div class="section-left">
+      <h2>
+        Patient / Hospice Info
+        <span class="pill">for triage calls</span>
+      </h2>
+      <div class="tiny-note">
+        This stays local on this phone. Hospice will ask this when you call.
+      </div>
+    </div>
+    <div class="section-right">
+      <button class="sec-btn" id="saveProfileBtn">Save Profile</button>
+    </div>
+  </div>
+
+  <div class="flex-row-wrap">
+    <div class="field">
+      <label for="profileName">Patient full name</label>
+      <input id="profileName" placeholder="e.g. John A. Doe" />
+    </div>
+
+    <div class="field">
+      <label for="profileDOB">DOB</label>
+      <input id="profileDOB" placeholder="e.g. 01/23/1947" />
+    </div>
+
+    <div class="field">
+      <label for="profileHospice">Hospice name</label>
+      <input id="profileHospice" placeholder="e.g. Redwood Hospice" />
+    </div>
+
+    <div class="field field-can-drop">
+      <label for="profilePhone">Hospice 24/7 number</label>
+      <input id="profilePhone" placeholder="800-825-8556" />
+    </div>
+  </div>
+</section>
+
+<!-- === Emergency / Red Flag Card === -->
+<section class="alert-card">
+  <div class="alert-title">
+    <span>🚨 Call hospice NOW if you see this:</span>
+  </div>
+  <ul class="alert-list">
+    <li>No urine for many hours and belly looks bigger / tight / painful</li>
+    <li>New bright red urine OR black / tarry stool</li>
+    <li>Breathing looks like gasping / pulling at neck or ribs / RR very fast even at rest</li>
+    <li>You cannot wake him or he’s not responding like normal</li>
+    <li>New seizure activity</li>
+    <li>Sudden severe pain that morphine did not help</li>
+    <li>Your gut says “he looks different and I’m scared”</li>
+  </ul>
+  <div class="tiny-note" style="color:var(--danger-text);margin-top:.5rem;">
+    Call hospice 24/7: <span id="profilePhoneDisplay" style="font-weight:600;color:#fff;">800-825-8556</span>
+  </div>
+</section>
+
+<!-- === Output Log === -->
 <section class="card">
   <div class="section-title">
     <div class="section-left">
@@ -375,7 +471,7 @@
       </div>
     </div>
     <div class="section-right">
-      <button class="sec-btn" id="exportOutputBtn">Export CSV</button>
+      <button class="sec-btn" id="exportOutputBtn">Export Output CSV</button>
     </div>
   </div>
 
@@ -392,20 +488,16 @@
 
     <div class="flex-row-wrap">
       <div class="field">
-        <label for="dateTimeInput">
-          Date &amp; Time of Event
-          <span class="tiny-note">(edit if logging late)</span>
-        </label>
+        <label for="dateTimeInput">Date &amp; Time of Event
+          <span class="tiny-note">(edit if logging late)</span></label>
         <input id="dateTimeInput" type="datetime-local" />
       </div>
 
       <div class="field field-can-drop">
-        <label for="assistSelect">
-          Assistance
-          <span class="tiny-note">(unassisted / needed help / catheter bag)</span>
-        </label>
+        <label for="assistSelect">Assistance
+          <span class="tiny-note">(unassisted / helped / catheter)</span></label>
         <select id="assistSelect">
-          <option value="independent" selected>Unassisted / self</option>
+          <option value="unassisted" selected>Unassisted / self</option>
           <option value="assisted">Assisted to commode / helped walking</option>
           <option value="catheter">Catheter / bag emptied</option>
         </select>
@@ -414,18 +506,14 @@
 
     <div class="flex-row-wrap">
       <div class="field">
-        <label for="amountInput">
-          Amount
-          <span class="tiny-note">(mL OR 'small'/'medium'/'large')</span>
-        </label>
+        <label for="amountInput">Amount
+          <span class="tiny-note">(mL OR "small/med/large")</span></label>
         <input id="amountInput" placeholder="e.g. 250 mL or medium or leaking" />
       </div>
 
       <div class="field field-can-drop">
-        <label for="colorInput">
-          Color / Appearance
-          <span class="tiny-note">(dark amber, tea-colored, tarry, clay)</span>
-        </label>
+        <label for="colorInput">Color / Appearance
+          <span class="tiny-note">(amber, dark, tarry black, clay)</span></label>
         <input id="colorInput" placeholder="e.g. dark amber, tarry black" />
       </div>
     </div>
@@ -441,27 +529,21 @@
       </div>
 
       <div class="field field-can-drop">
-        <label for="painSelect">
-          Pain / Straining?
-          <span class="tiny-note">(0 = none, 10 = worst)</span>
-        </label>
+        <label for="painSelect">Pain / Straining?
+          <span class="tiny-note">(0 = none, 10 = worst)</span></label>
         <select id="painSelect">
           <option value="0" selected>0</option>
-          <option value="1">1</option><option value="2">2</option>
-          <option value="3">3</option><option value="4">4</option>
-          <option value="5">5</option><option value="6">6</option>
-          <option value="7">7</option><option value="8">8</option>
-          <option value="9">9</option><option value="10">10</option>
+          <option>1</option><option>2</option><option>3</option><option>4</option>
+          <option>5</option><option>6</option><option>7</option><option>8</option>
+          <option>9</option><option>10</option>
         </select>
       </div>
     </div>
 
     <div class="field">
-      <label for="notesInput">
-        Notes
-        <span class="tiny-note">(odor, diarrhea, constipation, very sleepy)</span>
-      </label>
-      <textarea id="notesInput" placeholder="e.g. strong smell, diarrhea, hard to start, very sleepy"></textarea>
+      <label for="notesInput">Notes
+        <span class="tiny-note">(odor, diarrhea, constipation, very sleepy)</span></label>
+      <textarea id="notesInput" placeholder="e.g. strong smell, diarrhea, hard to start"></textarea>
     </div>
 
     <div class="save-row">
@@ -469,9 +551,28 @@
       <button class="sec-btn" id="cancelOutputBtn">Cancel</button>
     </div>
   </div>
+
+  <div class="table-wrapper" style="margin-top:1rem;">
+    <table>
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Type</th>
+          <th>Assist</th>
+          <th>Amount</th>
+          <th>Color</th>
+          <th>Blood?</th>
+          <th>Pain</th>
+          <th>Notes</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="logTableBody"></tbody>
+    </table>
+  </div>
 </section>
 
-<!-- MEDICATION SECTION -->
+<!-- === Medications === -->
 <section class="card">
   <div class="section-title">
     <div class="section-left">
@@ -494,7 +595,7 @@
       <div class="chip-section-hdr">Scheduled / Daily</div>
       <div class="chip-row" id="scheduledChips"></div>
       <div class="chip-row-smallnote">
-        Hydrocortisone 5 mg tab: 1 tab AM + 1 tab at 2–3 PM (avoid insomnia).
+        Hydrocortisone 5 mg tab: 1 tab AM + 1 tab at 2–3 PM (avoid insomnia).<br/>
         Omeprazole 20 mg cap: 1 cap in AM (stomach protection).
       </div>
     </div>
@@ -502,13 +603,12 @@
     <div class="block-group">
       <div class="chip-section-hdr">Comfort / PRN</div>
       <div class="chip-row" id="prnChips"></div>
-
       <ul class="med-guidance-list">
         <li>Acetaminophen 650 mg suppository: rectal q6h PRN pain/fever (max 4 doses / 24h)</li>
-        <li>Bisacodyl 10 mg suppository: rectal daily PRN constipation (max 1 dose / 24h)</li>
-        <li>Hyoscyamine 0.125 mg ODT: PO/SL q4h PRN secretions (max 6 doses / 24h)</li>
-        <li>Lorazepam liquid 1 mg: q4h PRN anxiety/agitation (max 6 doses / 24h)</li>
-        <li>Morphine oral 0.5 mg (0.25 mL): q4h PRN pain / SOB (max 6 doses / 24h)</li>
+        <li>Bisacodyl 10 mg suppository: rectal daily PRN constipation (max 1 / 24h)</li>
+        <li>Hyoscyamine 0.125 mg ODT: PO/SL q4h PRN secretions (max 6 / 24h)</li>
+        <li>Lorazepam liquid 1 mg: q4h PRN anxiety/agitation (max 6 / 24h)</li>
+        <li>Morphine oral 0.5 mg (0.25 mL): q4h PRN pain / SOB (max 6 / 24h)</li>
         <li>Senna 8.6 mg: take 2 tabs PO daily PRN constipation (max 12 tabs / 24h)</li>
         <li>Phenobarbital 60 mg tab: q8h ATC if severe agitation or seizure not controlled</li>
       </ul>
@@ -516,7 +616,7 @@
 
     <div class="flex-row-wrap" style="align-items:center;">
       <div class="tiny-note" style="flex:1 1 auto;">
-        Can't find it? Add to list:
+        Can't find it? Add to quick list:
       </div>
       <button class="sec-btn" id="addMedNameBtn" style="flex:0 0 auto;min-width:auto;">+ Add med</button>
     </div>
@@ -529,45 +629,35 @@
         </div>
 
         <div class="field">
-          <label for="medChosenName">
-            Medication Name
-            <span class="tiny-note">(auto-fills when you tap a chip)</span>
-          </label>
+          <label for="medChosenName">Medication Name
+            <span class="tiny-note">(auto-fills when you tap a chip)</span></label>
           <input id="medChosenName" placeholder="tap chip or type manually" />
         </div>
 
         <div class="field field-can-drop">
-          <label for="medCategory">
-            Category
-            <span class="tiny-note">(scheduled / prn)</span>
-          </label>
+          <label for="medCategory">Category
+            <span class="tiny-note">(scheduled / prn)</span></label>
           <input id="medCategory" placeholder="scheduled / prn" />
         </div>
       </div>
 
       <div class="flex-row-wrap">
         <div class="field">
-          <label for="medDoseInput">
-            Dose / Route
-            <span class="tiny-note">(e.g. 650 mg suppository rectal)</span>
-          </label>
-          <input id="medDoseInput" placeholder="e.g. 0.25 mL morphine by mouth" />
+          <label for="medDoseInput">Dose / Route
+            <span class="tiny-note">(e.g. 0.25 mL morphine PO)</span></label>
+          <input id="medDoseInput" placeholder="e.g. 650 mg suppository rectal" />
         </div>
 
         <div class="field field-can-drop">
-          <label for="medReasonInput">
-            Reason
-            <span class="tiny-note">(pain 7/10, anxiety, noisy breathing)</span>
-          </label>
+          <label for="medReasonInput">Reason
+            <span class="tiny-note">(pain 8/10, anxiety, noisy breathing)</span></label>
           <input id="medReasonInput" placeholder="pain 8/10 / SOB at rest / agitation" />
         </div>
       </div>
 
       <div class="field">
-        <label for="medNotesInput">
-          Notes / Effect
-          <span class="tiny-note">(calmer? easier breathing?)</span>
-        </label>
+        <label for="medNotesInput">Notes / Effect
+          <span class="tiny-note">(calmer? easier breathing?)</span></label>
         <textarea id="medNotesInput" placeholder="calmer within 20 min, RR slower"></textarea>
       </div>
     </div>
@@ -577,9 +667,26 @@
       <button class="sec-btn" id="medCancelBtn">Cancel</button>
     </div>
   </div>
+
+  <div class="table-wrapper" style="margin-top:1rem;">
+    <table>
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Medication</th>
+          <th>Category</th>
+          <th>Dose / Route</th>
+          <th>Reason</th>
+          <th>Notes / Effect</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="medTableBody"></tbody>
+    </table>
+  </div>
 </section>
 
-<!-- OXYGEN / BREATHING SECTION -->
+<!-- === Oxygen / Breathing === -->
 <section class="card">
   <div class="section-title">
     <div class="section-left">
@@ -611,13 +718,11 @@
         </div>
 
         <div class="field field-can-drop">
-          <label for="oxyMethodSelect">
-            Delivery
-            <span class="tiny-note">(nasal cannula / mask)</span>
-          </label>
+          <label for="oxyMethodSelect">Delivery
+            <span class="tiny-note">(nasal cannula / mask)</span></label>
           <select id="oxyMethodSelect">
-            <option value="nasal_cannula">Nasal cannula</option>
-            <option value="mask">Mask</option>
+            <option value="Nasal cannula">Nasal cannula</option>
+            <option value="Mask">Mask</option>
           </select>
         </div>
       </div>
@@ -629,19 +734,15 @@
         </div>
 
         <div class="field field-can-drop">
-          <label for="oxyReasonInput">
-            Reason
-            <span class="tiny-note">(SOB, anxiety, comfort)</span>
-          </label>
+          <label for="oxyReasonInput">Reason
+            <span class="tiny-note">(SOB, anxiety, comfort)</span></label>
           <input id="oxyReasonInput" placeholder="short of breath at rest" />
         </div>
       </div>
 
       <div class="field">
-        <label for="oxyReliefInput">
-          Did it help?
-          <span class="tiny-note">(calmer, RR lower, still gasping)</span>
-        </label>
+        <label for="oxyReliefInput">Did it help?
+          <span class="tiny-note">(calmer, RR lower, still gasping)</span></label>
         <textarea id="oxyReliefInput" placeholder="calmer, RR improved, still distressed"></textarea>
       </div>
     </div>
@@ -651,9 +752,25 @@
       <button class="sec-btn" id="oxyCancelBtn">Cancel</button>
     </div>
   </div>
+
+  <div class="table-wrapper" style="margin-top:1rem;">
+    <table>
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Flow / Method</th>
+          <th>Duration</th>
+          <th>Reason</th>
+          <th>Relief / Effect</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="oxyTableBody"></tbody>
+    </table>
+  </div>
 </section>
 
-<!-- MEALS / INTAKE SECTION -->
+<!-- === Meals / Intake === -->
 <section class="card">
   <div class="section-title">
     <div class="section-left">
@@ -682,55 +799,51 @@
         <div class="field">
           <label for="mealTypeSelect">Meal Type</label>
           <select id="mealTypeSelect">
-            <option value="breakfast">Breakfast</option>
-            <option value="lunch">Lunch</option>
-            <option value="dinner">Dinner</option>
-            <option value="snack">Snack / sip / supplement</option>
+            <option>Breakfast</option>
+            <option>Lunch</option>
+            <option>Dinner</option>
+            <option>Snack / sip / supplement</option>
           </select>
         </div>
 
         <div class="field field-can-drop">
           <label for="mealTextureSelect">Consistency</label>
           <select id="mealTextureSelect">
-            <option value="regular">Regular</option>
-            <option value="soft">Soft</option>
-            <option value="pureed">Pureed</option>
-            <option value="liquid_only">Liquid only / sips</option>
-            <option value="none">None</option>
+            <option>Regular</option>
+            <option>Soft</option>
+            <option>Pureed</option>
+            <option>Liquid only / sips</option>
+            <option>None</option>
           </select>
         </div>
       </div>
 
       <div class="flex-row-wrap">
         <div class="field">
-          <label for="mealPercentSelect">
-            Portion eaten
-            <span class="tiny-note">(% of what was offered)</span>
-          </label>
+          <label for="mealPercentSelect">Portion eaten
+            <span class="tiny-note">(% of what was offered)</span></label>
           <select id="mealPercentSelect">
-            <option value="0%">0%</option>
-            <option value="25%">25%</option>
-            <option value="50%">50%</option>
-            <option value="75%">75%</option>
-            <option value="100%">100%</option>
+            <option>0%</option>
+            <option>25%</option>
+            <option>50%</option>
+            <option>75%</option>
+            <option>100%</option>
           </select>
         </div>
 
         <div class="field field-can-drop">
           <label for="mealNauseaSelect">Nausea / Vomit?</label>
           <select id="mealNauseaSelect">
-            <option value="no">No</option>
-            <option value="nausea_only">Nausea</option>
-            <option value="vomited">Vomited</option>
+            <option>No</option>
+            <option>Nausea only</option>
+            <option>Vomited</option>
           </select>
         </div>
       </div>
 
       <div class="field">
-        <label for="mealNotesInput">
-          Notes
-          <span class="tiny-note">(refused food, coughing while eating, very sleepy)</span>
-        </label>
+        <label for="mealNotesInput">Notes
+          <span class="tiny-note">(refused food, coughing while eating, very sleepy)</span></label>
         <textarea id="mealNotesInput" placeholder="only sips water, said no appetite"></textarea>
       </div>
     </div>
@@ -740,9 +853,26 @@
       <button class="sec-btn" id="mealCancelBtn">Cancel</button>
     </div>
   </div>
+
+  <div class="table-wrapper" style="margin-top:1rem;">
+    <table>
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Meal</th>
+          <th>Texture</th>
+          <th>Portion</th>
+          <th>Nausea/Vomit</th>
+          <th>Notes</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="mealTableBody"></tbody>
+    </table>
+  </div>
 </section>
 
-<!-- VITALS SECTION -->
+<!-- === Vitals === -->
 <section class="card">
   <div class="section-title">
     <div class="section-left">
@@ -798,31 +928,27 @@
         <div class="field field-can-drop">
           <label for="vitalPosSelect">Position</label>
           <select id="vitalPosSelect">
-            <option value="sitting">Sitting</option>
-            <option value="lying">Lying</option>
-            <option value="standing">Standing</option>
+            <option>Sitting</option>
+            <option>Lying</option>
+            <option>Standing</option>
           </select>
         </div>
 
         <div class="field field-can-drop">
-          <label for="vitalFastingSelect">
-            Timing
-            <span class="tiny-note">(fasting vs after meal)</span>
-          </label>
+          <label for="vitalFastingSelect">Timing
+            <span class="tiny-note">(fasting vs after meal)</span></label>
           <select id="vitalFastingSelect">
-            <option value="fasting">Fasting / before meal</option>
-            <option value="post_meal">After meal</option>
-            <option value="unknown">Unknown</option>
+            <option>Fasting / before meal</option>
+            <option>After meal</option>
+            <option>Unknown</option>
           </select>
         </div>
       </div>
 
       <div class="field">
-        <label for="vitalNotesInput">
-          Notes
-          <span class="tiny-note">(dizzy, weak, slept all day)</span>
-        </label>
-        <textarea id="vitalNotesInput" placeholder="very sleepy, hard to wake, c/o dizziness on standing"></textarea>
+        <label for="vitalNotesInput">Notes
+          <span class="tiny-note">(dizzy, weak, slept all day)</span></label>
+        <textarea id="vitalNotesInput" placeholder="very sleepy, hard to wake, dizzy standing"></textarea>
       </div>
     </div>
 
@@ -831,9 +957,28 @@
       <button class="sec-btn" id="vitalCancelBtn">Cancel</button>
     </div>
   </div>
+
+  <div class="table-wrapper" style="margin-top:1rem;">
+    <table>
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>BP (sys/dia)</th>
+          <th>Pulse</th>
+          <th>RR</th>
+          <th>SpO₂%</th>
+          <th>Position</th>
+          <th>Timing</th>
+          <th>Notes</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="vitalTableBody"></tbody>
+    </table>
+  </div>
 </section>
 
-<!-- SLEEP SECTION -->
+<!-- === Sleep / Rest === -->
 <section class="card">
   <div class="section-title">
     <div class="section-left">
@@ -842,7 +987,7 @@
         <span class="pill">Overnight / Naps</span>
       </h2>
       <div class="tiny-note">
-        Track start/end, total hours, and how restful he seemed.
+        Start/end, total hours, how restful he seemed.
       </div>
     </div>
     <div class="section-right">
@@ -866,10 +1011,8 @@
         </div>
 
         <div class="field field-can-drop">
-          <label for="sleepTotalInput">
-            Total Sleep (hrs)
-            <span class="tiny-note">(or best guess)</span>
-          </label>
+          <label for="sleepTotalInput">Total Sleep (hrs)
+            <span class="tiny-note">(or best guess)</span></label>
           <input id="sleepTotalInput" placeholder="e.g. 4.5" />
         </div>
       </div>
@@ -878,29 +1021,25 @@
         <div class="field">
           <label for="sleepQualitySelect">Quality</label>
           <select id="sleepQualitySelect">
-            <option value="good">Good / mostly calm</option>
-            <option value="ok">Okay / some restlessness</option>
-            <option value="poor">Poor / very restless</option>
+            <option>Good / mostly calm</option>
+            <option>Okay / some restlessness</option>
+            <option>Poor / very restless</option>
           </select>
         </div>
 
         <div class="field field-can-drop">
-          <label for="sleepAssistSelect">
-            Needed repositioning / meds?
-          </label>
+          <label for="sleepAssistSelect">Needed repositioning / meds?</label>
           <select id="sleepAssistSelect">
-            <option value="no_help">No help needed</option>
-            <option value="reposition_only">Repositioned in bed</option>
-            <option value="comfort_meds">Comfort med given for sleep</option>
+            <option>No help needed</option>
+            <option>Repositioned in bed</option>
+            <option>Comfort med given for sleep</option>
           </select>
         </div>
       </div>
 
       <div class="field">
-        <label for="sleepNotesInput">
-          Notes
-          <span class="tiny-note">(woke gasping, moaning, pain, talking in sleep)</span>
-        </label>
+        <label for="sleepNotesInput">Notes
+          <span class="tiny-note">(woke gasping, moaning, pain, talking in sleep)</span></label>
         <textarea id="sleepNotesInput" placeholder="restless ~2am, said back pain, calmed after morphine"></textarea>
       </div>
 
@@ -911,9 +1050,26 @@
       <button class="sec-btn" id="sleepCancelBtn">Cancel</button>
     </div>
   </div>
+
+  <div class="table-wrapper" style="margin-top:1rem;">
+    <table>
+      <thead>
+        <tr>
+          <th>Start</th>
+          <th>End</th>
+          <th>Total hrs</th>
+          <th>Quality</th>
+          <th>Assist / Meds</th>
+          <th>Notes</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="sleepTableBody"></tbody>
+    </table>
+  </div>
 </section>
 
-<!-- ACTIVITY / MOBILITY SECTION -->
+<!-- === Activity / Mobility === -->
 <section class="card">
   <div class="section-title">
     <div class="section-left">
@@ -922,7 +1078,7 @@
         <span class="pill">Movement</span>
       </h2>
       <div class="tiny-note">
-        Sitting up, walked to bathroom, talked with family, PT-style moves.
+        Sat up, walked to bathroom, talked w/ family, etc.
       </div>
     </div>
     <div class="section-right">
@@ -941,51 +1097,43 @@
         </div>
 
         <div class="field">
-          <label for="actTypeInput">
-            Activity
-            <span class="tiny-note">(sat in recliner, walked to restroom, talked w/family)</span>
-          </label>
+          <label for="actTypeInput">Activity
+            <span class="tiny-note">(sat in recliner, walked to restroom, talked w/family)</span></label>
           <input id="actTypeInput" placeholder="sat on edge of bed, feet down" />
         </div>
 
         <div class="field field-can-drop">
           <label for="actAssistSelect">Assistance</label>
           <select id="actAssistSelect">
-            <option value="independent">Independent</option>
-            <option value="standby">Stand-by assist</option>
-            <option value="hands_on">Hands-on assist</option>
-            <option value="could_not">Could not attempt</option>
+            <option>Independent</option>
+            <option>Stand-by assist</option>
+            <option>Hands-on assist</option>
+            <option>Could not attempt</option>
           </select>
         </div>
       </div>
 
       <div class="flex-row-wrap">
         <div class="field">
-          <label for="actDurationInput">
-            Duration (min)
-          </label>
+          <label for="actDurationInput">Duration (min)</label>
           <input id="actDurationInput" placeholder="e.g. 5" />
         </div>
 
         <div class="field field-can-drop">
-          <label for="actToleranceSelect">
-            Tolerance
-            <span class="tiny-note">(okay / tired / SOB / dizzy)</span>
-          </label>
+          <label for="actToleranceSelect">Tolerance
+            <span class="tiny-note">(okay / tired / SOB / dizzy)</span></label>
           <select id="actToleranceSelect">
-            <option value="okay">Okay</option>
-            <option value="tired">Very tired</option>
-            <option value="sob">Short of breath</option>
-            <option value="dizzy">Dizzy / weak</option>
+            <option>Okay</option>
+            <option>Very tired</option>
+            <option>Short of breath</option>
+            <option>Dizzy / weak</option>
           </select>
         </div>
       </div>
 
       <div class="field">
-        <label for="actNotesInput">
-          Notes
-          <span class="tiny-note">(needed rest right after, chest pain, etc.)</span>
-        </label>
+        <label for="actNotesInput">Notes
+          <span class="tiny-note">(needed rest right after, chest pain, etc.)</span></label>
         <textarea id="actNotesInput" placeholder="needed 2-person assist to stand, very weak today"></textarea>
       </div>
 
@@ -996,164 +1144,8 @@
       <button class="sec-btn" id="actCancelBtn">Cancel</button>
     </div>
   </div>
-</section>
 
-<!-- TABLES / HISTORY -->
-<section class="card">
-  <div class="section-title">
-    <div class="section-left">
-      <h2>Recent Output <span class="pill" id="countPill">0 entries</span></h2>
-      <div class="tiny-note">Most recent first</div>
-    </div>
-  </div>
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th>Time</th>
-          <th>Type</th>
-          <th>Assist</th>
-          <th>Amount</th>
-          <th>Color / Looks</th>
-          <th>Blood?</th>
-          <th>Pain</th>
-          <th>Notes</th>
-        </tr>
-      </thead>
-      <tbody id="logTableBody"></tbody>
-    </table>
-  </div>
-</section>
-
-<section class="card">
-  <div class="section-title">
-    <div class="section-left">
-      <h2>Recent Meds <span class="pill" id="medCountPill">0 entries</span></h2>
-      <div class="tiny-note">Most recent first</div>
-    </div>
-  </div>
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th>Time</th>
-          <th>Medication</th>
-          <th>Category</th>
-          <th>Dose / Route</th>
-          <th>Reason</th>
-          <th>Notes / Effect</th>
-        </tr>
-      </thead>
-      <tbody id="medTableBody"></tbody>
-    </table>
-  </div>
-</section>
-
-<section class="card">
-  <div class="section-title">
-    <div class="section-left">
-      <h2>Oxygen Sessions <span class="pill" id="oxyCountPill">0 entries</span></h2>
-      <div class="tiny-note">Most recent first</div>
-    </div>
-  </div>
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th>Time</th>
-          <th>Flow / Method</th>
-          <th>Duration</th>
-          <th>Reason</th>
-          <th>Relief / Effect</th>
-        </tr>
-      </thead>
-      <tbody id="oxyTableBody"></tbody>
-    </table>
-  </div>
-</section>
-
-<section class="card">
-  <div class="section-title">
-    <div class="section-left">
-      <h2>Meals / Intake <span class="pill" id="mealCountPill">0 entries</span></h2>
-      <div class="tiny-note">Most recent first</div>
-    </div>
-  </div>
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th>Time</th>
-          <th>Meal</th>
-          <th>Texture</th>
-          <th>Portion</th>
-          <th>Nausea/Vomit</th>
-          <th>Notes</th>
-        </tr>
-      </thead>
-      <tbody id="mealTableBody"></tbody>
-    </table>
-  </div>
-</section>
-
-<section class="card">
-  <div class="section-title">
-    <div class="section-left">
-      <h2>Vitals Log <span class="pill" id="vitalCountPill">0 entries</span></h2>
-      <div class="tiny-note">Most recent first</div>
-    </div>
-  </div>
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th>Time</th>
-          <th>BP (sys/dia)</th>
-          <th>Pulse</th>
-          <th>RR</th>
-          <th>SpO₂%</th>
-          <th>Position</th>
-          <th>Timing</th>
-          <th>Notes</th>
-        </tr>
-      </thead>
-      <tbody id="vitalTableBody"></tbody>
-    </table>
-  </div>
-</section>
-
-<section class="card">
-  <div class="section-title">
-    <div class="section-left">
-      <h2>Sleep / Rest <span class="pill" id="sleepCountPill">0 entries</span></h2>
-      <div class="tiny-note">Most recent first</div>
-    </div>
-  </div>
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th>Start</th>
-          <th>End</th>
-          <th>Total hrs</th>
-          <th>Quality</th>
-          <th>Assist / Meds</th>
-          <th>Notes</th>
-        </tr>
-      </thead>
-      <tbody id="sleepTableBody"></tbody>
-    </table>
-  </div>
-</section>
-
-<section class="card">
-  <div class="section-title">
-    <div class="section-left">
-      <h2>Activity / Mobility <span class="pill" id="actCountPill">0 entries</span></h2>
-      <div class="tiny-note">Most recent first</div>
-    </div>
-  </div>
-  <div class="table-wrapper">
+  <div class="table-wrapper" style="margin-top:1rem;">
     <table>
       <thead>
         <tr>
@@ -1163,6 +1155,7 @@
           <th>Duration</th>
           <th>Tolerance</th>
           <th>Notes</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody id="actTableBody"></tbody>
@@ -1171,29 +1164,96 @@
 </section>
 
 <footer>
-  This does NOT replace medical advice.
-  Call hospice immediately for: no urine for many hours, new red urine,
-  black/tarry stool, can't wake him, gasping breathing, new seizure,
-  or sudden severe pain.
+  <div>Care Tracker © 2025 by Abdus Sabour Shaik • Built with love for our family and care team.</div>
+  <div>Redwood Hospice 24/7 Line: <a href="tel:8008258556">800-825-8556</a></div>
+  <div>All entries stay securely on this device. This does not replace medical advice. Call hospice for urgent concerns.</div>
 </footer>
 
 <script>
+/* ========= Local storage helpers ========= */
 function loadArr(key) {
   try { return JSON.parse(localStorage.getItem(key)) || []; }
-  catch(e){ return []; }
+  catch (e) { return []; }
 }
 function saveArr(key, arr) {
   localStorage.setItem(key, JSON.stringify(arr));
 }
+function loadField(key, fallback="") {
+  return localStorage.getItem(key) || fallback;
+}
+function saveField(key, val) {
+  localStorage.setItem(key, val || "");
+}
 
-let outputEntries  = loadArr("outputEntries");
-let medEntries     = loadArr("medEntries");
-let oxyEntries     = loadArr("oxyEntries");
-let mealEntries    = loadArr("mealEntries");
-let vitalEntries   = loadArr("vitalEntries");
-let sleepEntries   = loadArr("sleepEntries");
-let actEntries     = loadArr("actEntries");
+/* ========= ID helper ========= */
+function newId() {
+  return Date.now().toString() + "_" + Math.random().toString(16).slice(2);
+}
 
+/* ========= Timestamp Helpers ========= */
+function nowLocalDatetimeValue() {
+  const d = new Date();
+  const pad = (n)=> String(n).padStart(2,"0");
+  const yyyy = d.getFullYear();
+  const mm = pad(d.getMonth()+1);
+  const dd = pad(d.getDate());
+  const hh = pad(d.getHours());
+  const mi = pad(d.getMinutes());
+  return `${yyyy}-${mm}-${dd}T${hh}:${mi}`;
+}
+function niceNowStamp() {
+  const d = new Date();
+  const pad = n => String(n).padStart(2,"0");
+  const yyyy = d.getFullYear();
+  const mm = pad(d.getMonth()+1);
+  const dd = pad(d.getDate());
+  const hh = pad(d.getHours());
+  const mi = pad(d.getMinutes());
+  return `${yyyy}-${mm}-${dd} ${hh}:${mi}`;
+}
+function fileStamp() {
+  const d = new Date();
+  const pad = n => String(n).padStart(2,"0");
+  const yyyy = d.getFullYear();
+  const mm = pad(d.getMonth()+1);
+  const dd = pad(d.getDate());
+  const hh = pad(d.getHours());
+  const mi = pad(d.getMinutes());
+  return `${yyyy}-${mm}-${dd}_${hh}-${mi}`;
+}
+
+/* ========= Global arrays ========= */
+let outputEntries  = loadArr("outputEntries");   // urine/stool
+let medEntries     = loadArr("medEntries");      // meds
+let oxyEntries     = loadArr("oxyEntries");      // oxygen
+let mealEntries    = loadArr("mealEntries");     // meals
+let vitalEntries   = loadArr("vitalEntries");    // vitals
+let sleepEntries   = loadArr("sleepEntries");    // sleep
+let actEntries     = loadArr("actEntries");      // activity
+
+/* ========= Profile load ========= */
+const profileNameEl    = document.getElementById("profileName");
+const profileDOBEl     = document.getElementById("profileDOB");
+const profileHospiceEl = document.getElementById("profileHospice");
+const profilePhoneEl   = document.getElementById("profilePhone");
+const profilePhoneDisplay = document.getElementById("profilePhoneDisplay");
+
+profileNameEl.value    = loadField("profileName","");
+profileDOBEl.value     = loadField("profileDOB","");
+profileHospiceEl.value = loadField("profileHospice","Redwood Hospice");
+profilePhoneEl.value   = loadField("profilePhone","800-825-8556");
+profilePhoneDisplay.textContent = profilePhoneEl.value || "800-825-8556";
+
+document.getElementById("saveProfileBtn").addEventListener("click", ()=>{
+  saveField("profileName", profileNameEl.value);
+  saveField("profileDOB", profileDOBEl.value);
+  saveField("profileHospice", profileHospiceEl.value);
+  saveField("profilePhone", profilePhoneEl.value);
+  profilePhoneDisplay.textContent = profilePhoneEl.value || "800-825-8556";
+  alert("Profile saved on this device.");
+});
+
+/* ========= DOM refs for Output ========= */
 const urineBtn       = document.getElementById("urineBtn");
 const stoolBtn       = document.getElementById("stoolBtn");
 const formCard       = document.getElementById("formCard");
@@ -1208,10 +1268,9 @@ const notesInput     = document.getElementById("notesInput");
 const saveOutputBtn  = document.getElementById("saveOutputBtn");
 const cancelOutputBtn= document.getElementById("cancelOutputBtn");
 const logTableBody   = document.getElementById("logTableBody");
-const countPill      = document.getElementById("countPill");
 const exportOutputBtn= document.getElementById("exportOutputBtn");
-let currentOutputType = "";
 
+/* ========= DOM refs for Meds ========= */
 const openMedBtn        = document.getElementById("openMedBtn");
 const medCard           = document.getElementById("medCard");
 const scheduledChipsDiv = document.getElementById("scheduledChips");
@@ -1226,23 +1285,23 @@ const medNotesInput     = document.getElementById("medNotesInput");
 const medSaveBtn        = document.getElementById("medSaveBtn");
 const medCancelBtn      = document.getElementById("medCancelBtn");
 const medTableBody      = document.getElementById("medTableBody");
-const medCountPill      = document.getElementById("medCountPill");
 const exportMedBtn      = document.getElementById("exportMedBtn");
 
-const openOxyBtn     = document.getElementById("openOxyBtn");
-const oxyCard        = document.getElementById("oxyCard");
-const oxyDateTimeInput = document.getElementById("oxyDateTimeInput");
-const oxyFlowInput   = document.getElementById("oxyFlowInput");
-const oxyMethodSelect= document.getElementById("oxyMethodSelect");
-const oxyDurationInput= document.getElementById("oxyDurationInput");
-const oxyReasonInput = document.getElementById("oxyReasonInput");
-const oxyReliefInput = document.getElementById("oxyReliefInput");
-const oxySaveBtn     = document.getElementById("oxySaveBtn");
-const oxyCancelBtn   = document.getElementById("oxyCancelBtn");
-const oxyTableBody   = document.getElementById("oxyTableBody");
-const oxyCountPill   = document.getElementById("oxyCountPill");
-const exportOxyBtn   = document.getElementById("exportOxyBtn");
+/* ========= DOM refs for Oxygen ========= */
+const openOxyBtn        = document.getElementById("openOxyBtn");
+const oxyCard           = document.getElementById("oxyCard");
+const oxyDateTimeInput  = document.getElementById("oxyDateTimeInput");
+const oxyFlowInput      = document.getElementById("oxyFlowInput");
+const oxyMethodSelect   = document.getElementById("oxyMethodSelect");
+const oxyDurationInput  = document.getElementById("oxyDurationInput");
+const oxyReasonInput    = document.getElementById("oxyReasonInput");
+const oxyReliefInput    = document.getElementById("oxyReliefInput");
+const oxySaveBtn        = document.getElementById("oxySaveBtn");
+const oxyCancelBtn      = document.getElementById("oxyCancelBtn");
+const oxyTableBody      = document.getElementById("oxyTableBody");
+const exportOxyBtn      = document.getElementById("exportOxyBtn");
 
+/* ========= DOM refs for Meals ========= */
 const openMealBtn       = document.getElementById("openMealBtn");
 const mealCard          = document.getElementById("mealCard");
 const mealDateTimeInput = document.getElementById("mealDateTimeInput");
@@ -1254,9 +1313,9 @@ const mealNotesInput    = document.getElementById("mealNotesInput");
 const mealSaveBtn       = document.getElementById("mealSaveBtn");
 const mealCancelBtn     = document.getElementById("mealCancelBtn");
 const mealTableBody     = document.getElementById("mealTableBody");
-const mealCountPill     = document.getElementById("mealCountPill");
 const exportMealBtn     = document.getElementById("exportMealBtn");
 
+/* ========= DOM refs for Vitals ========= */
 const openVitalBtn      = document.getElementById("openVitalBtn");
 const vitalsCard        = document.getElementById("vitalsCard");
 const vitalDateTimeInput= document.getElementById("vitalDateTimeInput");
@@ -1271,9 +1330,9 @@ const vitalNotesInput   = document.getElementById("vitalNotesInput");
 const vitalSaveBtn      = document.getElementById("vitalSaveBtn");
 const vitalCancelBtn    = document.getElementById("vitalCancelBtn");
 const vitalTableBody    = document.getElementById("vitalTableBody");
-const vitalCountPill    = document.getElementById("vitalCountPill");
 const exportVitalBtn    = document.getElementById("exportVitalBtn");
 
+/* ========= DOM refs for Sleep ========= */
 const openSleepBtn      = document.getElementById("openSleepBtn");
 const sleepCard         = document.getElementById("sleepCard");
 const sleepStartInput   = document.getElementById("sleepStartInput");
@@ -1285,9 +1344,9 @@ const sleepNotesInput   = document.getElementById("sleepNotesInput");
 const sleepSaveBtn      = document.getElementById("sleepSaveBtn");
 const sleepCancelBtn    = document.getElementById("sleepCancelBtn");
 const sleepTableBody    = document.getElementById("sleepTableBody");
-const sleepCountPill    = document.getElementById("sleepCountPill");
 const exportSleepBtn    = document.getElementById("exportSleepBtn");
 
+/* ========= DOM refs for Activity ========= */
 const openActBtn        = document.getElementById("openActBtn");
 const actCard           = document.getElementById("actCard");
 const actDateTimeInput  = document.getElementById("actDateTimeInput");
@@ -1299,17 +1358,19 @@ const actNotesInput     = document.getElementById("actNotesInput");
 const actSaveBtn        = document.getElementById("actSaveBtn");
 const actCancelBtn      = document.getElementById("actCancelBtn");
 const actTableBody      = document.getElementById("actTableBody");
-const actCountPill      = document.getElementById("actCountPill");
 const exportActBtn      = document.getElementById("exportActBtn");
 
+/* ========= DOM for Export All ========= */
+const exportAllBtn = document.getElementById("exportAllBtn");
+
+/* ========= Med chip data (quick-pick buttons) ========= */
 let scheduledMeds = [
   { name: "Hydrocortisone 5 mg tab", category: "scheduled" },
   { name: "Omeprazole 20 mg cap", category: "scheduled" }
 ];
-
 let prnMeds = [
-  { name: "Acetaminophen 650 mg supp", category: "prn" },
-  { name: "Bisacodyl 10 mg supp", category: "prn" },
+  { name: "Acetaminophen 650 mg suppository", category: "prn" },
+  { name: "Bisacodyl 10 mg suppository", category: "prn" },
   { name: "Hyoscyamine 0.125 mg ODT", category: "prn" },
   { name: "Lorazepam liquid 1 mg", category: "prn" },
   { name: "Morphine oral 0.5 mg (0.25 mL)", category: "prn" },
@@ -1317,24 +1378,21 @@ let prnMeds = [
   { name: "Phenobarbital 60 mg tab", category: "prn" }
 ];
 
-function nowLocalDatetimeValue() {
-  const d = new Date();
-  const pad = (n)=> String(n).padStart(2,"0");
-  const yyyy = d.getFullYear();
-  const mm = pad(d.getMonth()+1);
-  const dd = pad(d.getDate());
-  const hh = pad(d.getHours());
-  const mi = pad(d.getMinutes());
-  return `${yyyy}-${mm}-${dd}T${hh}:${mi}`;
+/* ========= Drawer helpers ========= */
+function closeAllDrawers() {
+  [formCard, medCard, oxyCard, mealCard, vitalsCard, sleepCard, actCard].forEach(el=> {
+    el.classList.remove("active");
+  });
 }
 
+/* ========= Render chips for meds ========= */
 function renderChips() {
   scheduledChipsDiv.innerHTML = "";
-  scheduledMeds.forEach(m=>{
+  scheduledMeds.forEach(m => {
     const btn = document.createElement("button");
     btn.className = "chip-btn";
     btn.textContent = m.name;
-    btn.onclick = ()=>{
+    btn.onclick = () => {
       medChosenName.value = m.name;
       medCategory.value   = m.category;
     };
@@ -1342,11 +1400,11 @@ function renderChips() {
   });
 
   prnChipsDiv.innerHTML = "";
-  prnMeds.forEach(m=>{
+  prnMeds.forEach(m => {
     const btn = document.createElement("button");
     btn.className = "chip-btn";
     btn.textContent = m.name;
-    btn.onclick = ()=>{
+    btn.onclick = () => {
       medChosenName.value = m.name;
       medCategory.value   = m.category;
     };
@@ -1354,9 +1412,19 @@ function renderChips() {
   });
 }
 
+/* ========= State for edit modes ========= */
+let editOutputId = null;
+let editMedId    = null;
+let editOxyId    = null;
+let editMealId   = null;
+let editVitalId  = null;
+let editSleepId  = null;
+let editActId    = null;
+
+/* ========= RENDER TABLES (with Edit/Delete buttons) ========= */
 function renderOutputTable() {
   logTableBody.innerHTML = "";
-  [...outputEntries].reverse().forEach(e => {
+  [...outputEntries].slice().sort((a,b)=>b.time.localeCompare(a.time)).forEach(e => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${e.time||""}</td>
@@ -1366,15 +1434,18 @@ function renderOutputTable() {
       <td>${e.color||""}</td>
       <td>${e.blood||""}</td>
       <td>${e.pain||""}</td>
-      <td>${e.notes||""}</td>`;
+      <td>${e.notes||""}</td>
+      <td class="actions-cell">
+        <button class="sec-btn" onclick="editOutput('${e.id}')">Edit</button>
+        <button class="danger-btn" onclick="deleteOutput('${e.id}')">Delete</button>
+      </td>`;
     logTableBody.appendChild(tr);
   });
-  countPill.textContent = outputEntries.length + " entries";
 }
 
 function renderMedTable() {
   medTableBody.innerHTML = "";
-  [...medEntries].reverse().forEach(e => {
+  [...medEntries].slice().sort((a,b)=>b.time.localeCompare(a.time)).forEach(e => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${e.time||""}</td>
@@ -1382,30 +1453,36 @@ function renderMedTable() {
       <td>${e.category||""}</td>
       <td>${e.dose||""}</td>
       <td>${e.reason||""}</td>
-      <td>${e.notes||""}</td>`;
+      <td>${e.notes||""}</td>
+      <td class="actions-cell">
+        <button class="sec-btn" onclick="editMed('${e.id}')">Edit</button>
+        <button class="danger-btn" onclick="deleteMed('${e.id}')">Delete</button>
+      </td>`;
     medTableBody.appendChild(tr);
   });
-  medCountPill.textContent = medEntries.length + " entries";
 }
 
 function renderOxyTable() {
   oxyTableBody.innerHTML = "";
-  [...oxyEntries].reverse().forEach(e => {
+  [...oxyEntries].slice().sort((a,b)=>b.time.localeCompare(a.time)).forEach(e => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${e.time||""}</td>
       <td>${e.flow||""} / ${e.method||""}</td>
       <td>${e.duration||""}</td>
       <td>${e.reason||""}</td>
-      <td>${e.relief||""}</td>`;
+      <td>${e.relief||""}</td>
+      <td class="actions-cell">
+        <button class="sec-btn" onclick="editOxy('${e.id}')">Edit</button>
+        <button class="danger-btn" onclick="deleteOxy('${e.id}')">Delete</button>
+      </td>`;
     oxyTableBody.appendChild(tr);
   });
-  oxyCountPill.textContent = oxyEntries.length + " entries";
 }
 
 function renderMealTable() {
   mealTableBody.innerHTML = "";
-  [...mealEntries].reverse().forEach(e => {
+  [...mealEntries].slice().sort((a,b)=>b.time.localeCompare(a.time)).forEach(e => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${e.time||""}</td>
@@ -1413,15 +1490,18 @@ function renderMealTable() {
       <td>${e.texture||""}</td>
       <td>${e.portion||""}</td>
       <td>${e.nausea||""}</td>
-      <td>${e.notes||""}</td>`;
+      <td>${e.notes||""}</td>
+      <td class="actions-cell">
+        <button class="sec-btn" onclick="editMeal('${e.id}')">Edit</button>
+        <button class="danger-btn" onclick="deleteMeal('${e.id}')">Delete</button>
+      </td>`;
     mealTableBody.appendChild(tr);
   });
-  mealCountPill.textContent = mealEntries.length + " entries";
 }
 
 function renderVitalTable() {
   vitalTableBody.innerHTML = "";
-  [...vitalEntries].reverse().forEach(e => {
+  [...vitalEntries].slice().sort((a,b)=>b.time.localeCompare(a.time)).forEach(e => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${e.time||""}</td>
@@ -1431,15 +1511,18 @@ function renderVitalTable() {
       <td>${e.spO2||""}</td>
       <td>${e.position||""}</td>
       <td>${e.timing||""}</td>
-      <td>${e.notes||""}</td>`;
+      <td>${e.notes||""}</td>
+      <td class="actions-cell">
+        <button class="sec-btn" onclick="editVital('${e.id}')">Edit</button>
+        <button class="danger-btn" onclick="deleteVital('${e.id}')">Delete</button>
+      </td>`;
     vitalTableBody.appendChild(tr);
   });
-  vitalCountPill.textContent = vitalEntries.length + " entries";
 }
 
 function renderSleepTable() {
   sleepTableBody.innerHTML = "";
-  [...sleepEntries].reverse().forEach(e => {
+  [...sleepEntries].slice().sort((a,b)=>b.start.localeCompare(a.start)).forEach(e => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${e.start||""}</td>
@@ -1447,15 +1530,18 @@ function renderSleepTable() {
       <td>${e.total||""}</td>
       <td>${e.quality||""}</td>
       <td>${e.assist||""}</td>
-      <td>${e.notes||""}</td>`;
+      <td>${e.notes||""}</td>
+      <td class="actions-cell">
+        <button class="sec-btn" onclick="editSleep('${e.id}')">Edit</button>
+        <button class="danger-btn" onclick="deleteSleep('${e.id}')">Delete</button>
+      </td>`;
     sleepTableBody.appendChild(tr);
   });
-  sleepCountPill.textContent = sleepEntries.length + " entries";
 }
 
 function renderActTable() {
   actTableBody.innerHTML = "";
-  [...actEntries].reverse().forEach(e => {
+  [...actEntries].slice().sort((a,b)=>b.time.localeCompare(a.time)).forEach(e => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
       <td>${e.time||""}</td>
@@ -1463,88 +1549,253 @@ function renderActTable() {
       <td>${e.assist||""}</td>
       <td>${e.duration||""}</td>
       <td>${e.tolerance||""}</td>
-      <td>${e.notes||""}</td>`;
+      <td>${e.notes||""}</td>
+      <td class="actions-cell">
+        <button class="sec-btn" onclick="editAct('${e.id}')">Edit</button>
+        <button class="danger-btn" onclick="deleteAct('${e.id}')">Delete</button>
+      </td>`;
     actTableBody.appendChild(tr);
   });
-  actCountPill.textContent = actEntries.length + " entries";
 }
 
-function exportCSV(filename, rows, headers) {
-  const csvRows = [];
-  csvRows.push(headers.join(","));
-  rows.forEach(r => {
-    const vals = headers.map(h => {
-      const v = (r[h] ?? "").toString().replace(/"/g,'""');
-      return '"' + v + '"';
-    });
-    csvRows.push(vals.join(","));
-  });
-  const blob = new Blob([csvRows.join("\n")], { type: "text/csv" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  a.click();
-  URL.revokeObjectURL(url);
-}
+/* ========= EDIT / DELETE HANDLERS ========= */
+/* Output */
+window.editOutput = function(id) {
+  const e = outputEntries.find(x=>x.id===id);
+  if(!e) return;
+  editOutputId = id;
+  closeAllDrawers();
+  entryTypeLabel.textContent = e.type||"";
+  dateTimeInput.value = e.time || nowLocalDatetimeValue();
+  assistSelect.value = e.assist || "unassisted";
+  amountInput.value  = e.amount || "";
+  colorInput.value   = e.color || "";
+  bloodSelect.value  = e.blood || "no";
+  painSelect.value   = e.pain  || "0";
+  notesInput.value   = e.notes || "";
+  formCard.classList.add("active");
+  saveOutputBtn.textContent = "Update Entry";
+};
+window.deleteOutput = function(id){
+  if(!confirm("Delete this output entry?")) return;
+  outputEntries = outputEntries.filter(x=>x.id!==id);
+  saveArr("outputEntries", outputEntries);
+  renderOutputTable();
+};
 
-function closeAllDrawers() {
-  [formCard, medCard, oxyCard, mealCard, vitalsCard, sleepCard, actCard].forEach(el=>{
-    el.classList.remove("active");
-  });
-}
+/* Meds */
+window.editMed = function(id){
+  const e = medEntries.find(x=>x.id===id);
+  if(!e) return;
+  editMedId = id;
+  closeAllDrawers();
+  medDateTimeInput.value = e.time || nowLocalDatetimeValue();
+  medChosenName.value    = e.name || "";
+  medCategory.value      = e.category || "";
+  medDoseInput.value     = e.dose || "";
+  medReasonInput.value   = e.reason || "";
+  medNotesInput.value    = e.notes || "";
+  medCard.classList.add("active");
+  medSaveBtn.textContent = "Update Med Entry";
+};
+window.deleteMed = function(id){
+  if(!confirm("Delete this medication entry?")) return;
+  medEntries = medEntries.filter(x=>x.id!==id);
+  saveArr("medEntries", medEntries);
+  renderMedTable();
+};
 
-/* OUTPUT handlers */
+/* Oxygen */
+window.editOxy = function(id){
+  const e = oxyEntries.find(x=>x.id===id);
+  if(!e) return;
+  editOxyId = id;
+  closeAllDrawers();
+  oxyDateTimeInput.value = e.time || nowLocalDatetimeValue();
+  oxyFlowInput.value     = e.flow || "";
+  oxyMethodSelect.value  = e.method || "Nasal cannula";
+  oxyDurationInput.value = e.duration || "";
+  oxyReasonInput.value   = e.reason || "";
+  oxyReliefInput.value   = e.relief || "";
+  oxyCard.classList.add("active");
+  oxySaveBtn.textContent = "Update Oxygen Entry";
+};
+window.deleteOxy = function(id){
+  if(!confirm("Delete this oxygen entry?")) return;
+  oxyEntries = oxyEntries.filter(x=>x.id!==id);
+  saveArr("oxyEntries", oxyEntries);
+  renderOxyTable();
+};
+
+/* Meals */
+window.editMeal = function(id){
+  const e = mealEntries.find(x=>x.id===id);
+  if(!e) return;
+  editMealId = id;
+  closeAllDrawers();
+  mealDateTimeInput.value = e.time || nowLocalDatetimeValue();
+  mealTypeSelect.value    = e.mealType || "Dinner";
+  mealTextureSelect.value = e.texture || "Regular";
+  mealPercentSelect.value = e.portion || "0%";
+  mealNauseaSelect.value  = e.nausea || "No";
+  mealNotesInput.value    = e.notes || "";
+  mealCard.classList.add("active");
+  mealSaveBtn.textContent = "Update Meal Entry";
+};
+window.deleteMeal = function(id){
+  if(!confirm("Delete this meal entry?")) return;
+  mealEntries = mealEntries.filter(x=>x.id!==id);
+  saveArr("mealEntries", mealEntries);
+  renderMealTable();
+};
+
+/* Vitals */
+window.editVital = function(id){
+  const e = vitalEntries.find(x=>x.id===id);
+  if(!e) return;
+  editVitalId = id;
+  closeAllDrawers();
+  vitalDateTimeInput.value = e.time || nowLocalDatetimeValue();
+  vitalSysInput.value      = e.sys || "";
+  vitalDiaInput.value      = e.dia || "";
+  vitalPulseInput.value    = e.pulse || "";
+  vitalRRInput.value       = e.rr || "";
+  vitalSpO2Input.value     = e.spO2 || "";
+  vitalPosSelect.value     = e.position || "Sitting";
+  vitalFastingSelect.value = e.timing || "Fasting / before meal";
+  vitalNotesInput.value    = e.notes || "";
+  vitalsCard.classList.add("active");
+  vitalSaveBtn.textContent = "Update Vitals Entry";
+};
+window.deleteVital = function(id){
+  if(!confirm("Delete this vitals entry?")) return;
+  vitalEntries = vitalEntries.filter(x=>x.id!==id);
+  saveArr("vitalEntries", vitalEntries);
+  renderVitalTable();
+};
+
+/* Sleep */
+window.editSleep = function(id){
+  const e = sleepEntries.find(x=>x.id===id);
+  if(!e) return;
+  editSleepId = id;
+  closeAllDrawers();
+  sleepStartInput.value    = e.start || nowLocalDatetimeValue();
+  sleepEndInput.value      = e.end || "";
+  sleepTotalInput.value    = e.total || "";
+  sleepQualitySelect.value = e.quality || "Good / mostly calm";
+  sleepAssistSelect.value  = e.assist || "No help needed";
+  sleepNotesInput.value    = e.notes || "";
+  sleepCard.classList.add("active");
+  sleepSaveBtn.textContent = "Update Sleep Entry";
+};
+window.deleteSleep = function(id){
+  if(!confirm("Delete this sleep entry?")) return;
+  sleepEntries = sleepEntries.filter(x=>x.id!==id);
+  saveArr("sleepEntries", sleepEntries);
+  renderSleepTable();
+};
+
+/* Activity */
+window.editAct = function(id){
+  const e = actEntries.find(x=>x.id===id);
+  if(!e) return;
+  editActId = id;
+  closeAllDrawers();
+  actDateTimeInput.value   = e.time || nowLocalDatetimeValue();
+  actTypeInput.value       = e.activity || "";
+  actAssistSelect.value    = e.assist || "Independent";
+  actDurationInput.value   = e.duration || "";
+  actToleranceSelect.value = e.tolerance || "Okay";
+  actNotesInput.value      = e.notes || "";
+  actCard.classList.add("active");
+  actSaveBtn.textContent   = "Update Activity Entry";
+};
+window.deleteAct = function(id){
+  if(!confirm("Delete this activity entry?")) return;
+  actEntries = actEntries.filter(x=>x.id!==id);
+  saveArr("actEntries", actEntries);
+  renderActTable();
+};
+
+/* ========= NEW ENTRY HANDLERS ========= */
+/* OUTPUT new */
+let currentOutputType = "";
 urineBtn.addEventListener("click", ()=>{
   closeAllDrawers();
+  editOutputId = null;
   currentOutputType = "urine";
   entryTypeLabel.textContent = "Urine";
   dateTimeInput.value = nowLocalDatetimeValue();
+  assistSelect.value = "unassisted";
+  amountInput.value  = "";
+  colorInput.value   = "";
+  bloodSelect.value  = "no";
+  painSelect.value   = "0";
+  notesInput.value   = "";
   formCard.classList.add("active");
+  saveOutputBtn.textContent = "Save Entry";
 });
 stoolBtn.addEventListener("click", ()=>{
   closeAllDrawers();
+  editOutputId = null;
   currentOutputType = "stool";
   entryTypeLabel.textContent = "Stool";
   dateTimeInput.value = nowLocalDatetimeValue();
+  assistSelect.value = "unassisted";
+  amountInput.value  = "";
+  colorInput.value   = "";
+  bloodSelect.value  = "no";
+  painSelect.value   = "0";
+  notesInput.value   = "";
   formCard.classList.add("active");
+  saveOutputBtn.textContent = "Save Entry";
 });
 cancelOutputBtn.addEventListener("click", ()=>{
   formCard.classList.remove("active");
 });
 saveOutputBtn.addEventListener("click", ()=>{
-  const newEntry = {
-    time: dateTimeInput.value,
-    type: currentOutputType,
+  const newData = {
+    id: editOutputId || newId(),
+    time:  dateTimeInput.value,
+    type:  currentOutputType || entryTypeLabel.textContent || "",
     assist: assistSelect.value,
     amount: amountInput.value,
-    color: colorInput.value,
-    blood: bloodSelect.value,
-    pain: painSelect.value,
-    notes: notesInput.value
+    color:  colorInput.value,
+    blood:  bloodSelect.value,
+    pain:   painSelect.value,
+    notes:  notesInput.value
   };
-  outputEntries.push(newEntry);
+
+  if(editOutputId){
+    outputEntries = outputEntries.map(x=> x.id===editOutputId ? newData : x);
+  } else {
+    outputEntries.push(newData);
+  }
   saveArr("outputEntries", outputEntries);
   renderOutputTable();
   formCard.classList.remove("active");
 });
 
-/* MED handlers */
+/* MEDS new */
 openMedBtn.addEventListener("click", ()=>{
   closeAllDrawers();
+  editMedId = null;
   medDateTimeInput.value = nowLocalDatetimeValue();
-  medChosenName.value = "";
-  medCategory.value   = "";
-  medDoseInput.value  = "";
-  medReasonInput.value= "";
-  medNotesInput.value = "";
+  medChosenName.value    = "";
+  medCategory.value      = "";
+  medDoseInput.value     = "";
+  medReasonInput.value   = "";
+  medNotesInput.value    = "";
   medCard.classList.add("active");
+  medSaveBtn.textContent = "Save Med Entry";
 });
 medCancelBtn.addEventListener("click", ()=>{
   medCard.classList.remove("active");
 });
 medSaveBtn.addEventListener("click", ()=>{
-  const newMed = {
+  const newData = {
+    id: editMedId || newId(),
     time:   medDateTimeInput.value,
     name:   medChosenName.value,
     category: medCategory.value,
@@ -1552,7 +1803,11 @@ medSaveBtn.addEventListener("click", ()=>{
     reason: medReasonInput.value,
     notes:  medNotesInput.value
   };
-  medEntries.push(newMed);
+  if(editMedId){
+    medEntries = medEntries.map(x=> x.id===editMedId ? newData : x);
+  } else {
+    medEntries.push(newData);
+  }
   saveArr("medEntries", medEntries);
   renderMedTable();
   medCard.classList.remove("active");
@@ -1565,22 +1820,25 @@ addMedNameBtn.addEventListener("click", ()=>{
   }
 });
 
-/* OXY handlers */
+/* OXYGEN new */
 openOxyBtn.addEventListener("click", ()=>{
   closeAllDrawers();
+  editOxyId = null;
   oxyDateTimeInput.value = nowLocalDatetimeValue();
-  oxyFlowInput.value = "";
-  oxyMethodSelect.value = "nasal_cannula";
+  oxyFlowInput.value     = "";
+  oxyMethodSelect.value  = "Nasal cannula";
   oxyDurationInput.value = "";
-  oxyReasonInput.value = "";
-  oxyReliefInput.value = "";
+  oxyReasonInput.value   = "";
+  oxyReliefInput.value   = "";
   oxyCard.classList.add("active");
+  oxySaveBtn.textContent = "Save Oxygen Entry";
 });
 oxyCancelBtn.addEventListener("click", ()=>{
   oxyCard.classList.remove("active");
 });
 oxySaveBtn.addEventListener("click", ()=>{
-  const newOxy = {
+  const newData = {
+    id: editOxyId || newId(),
     time: oxyDateTimeInput.value,
     flow: oxyFlowInput.value,
     method: oxyMethodSelect.value,
@@ -1588,92 +1846,113 @@ oxySaveBtn.addEventListener("click", ()=>{
     reason: oxyReasonInput.value,
     relief: oxyReliefInput.value
   };
-  oxyEntries.push(newOxy);
+  if(editOxyId){
+    oxyEntries = oxyEntries.map(x=> x.id===editOxyId ? newData : x);
+  } else {
+    oxyEntries.push(newData);
+  }
   saveArr("oxyEntries", oxyEntries);
   renderOxyTable();
   oxyCard.classList.remove("active");
 });
 
-/* MEAL handlers */
+/* MEALS new */
 openMealBtn.addEventListener("click", ()=>{
   closeAllDrawers();
+  editMealId = null;
   mealDateTimeInput.value = nowLocalDatetimeValue();
-  mealTypeSelect.value = "breakfast";
-  mealTextureSelect.value = "regular";
+  mealTypeSelect.value    = "Dinner";
+  mealTextureSelect.value = "Regular";
   mealPercentSelect.value = "0%";
-  mealNauseaSelect.value = "no";
-  mealNotesInput.value = "";
+  mealNauseaSelect.value  = "No";
+  mealNotesInput.value    = "";
   mealCard.classList.add("active");
+  mealSaveBtn.textContent = "Save Meal Entry";
 });
 mealCancelBtn.addEventListener("click", ()=>{
   mealCard.classList.remove("active");
 });
 mealSaveBtn.addEventListener("click", ()=>{
-  const newMeal = {
-    time: mealDateTimeInput.value,
+  const newData = {
+    id: editMealId || newId(),
+    time:    mealDateTimeInput.value,
     mealType: mealTypeSelect.value,
     texture: mealTextureSelect.value,
     portion: mealPercentSelect.value,
-    nausea: mealNauseaSelect.value,
-    notes: mealNotesInput.value
+    nausea:  mealNauseaSelect.value,
+    notes:   mealNotesInput.value
   };
-  mealEntries.push(newMeal);
+  if(editMealId){
+    mealEntries = mealEntries.map(x=> x.id===editMealId ? newData : x);
+  } else {
+    mealEntries.push(newData);
+  }
   saveArr("mealEntries", mealEntries);
   renderMealTable();
   mealCard.classList.remove("active");
 });
 
-/* VITAL handlers */
+/* VITALS new */
 openVitalBtn.addEventListener("click", ()=>{
   closeAllDrawers();
+  editVitalId = null;
   vitalDateTimeInput.value = nowLocalDatetimeValue();
-  vitalSysInput.value = "";
-  vitalDiaInput.value = "";
-  vitalPulseInput.value = "";
-  vitalRRInput.value = "";
-  vitalSpO2Input.value = "";
-  vitalPosSelect.value = "sitting";
-  vitalFastingSelect.value = "fasting";
-  vitalNotesInput.value = "";
+  vitalSysInput.value      = "";
+  vitalDiaInput.value      = "";
+  vitalPulseInput.value    = "";
+  vitalRRInput.value       = "";
+  vitalSpO2Input.value     = "";
+  vitalPosSelect.value     = "Sitting";
+  vitalFastingSelect.value = "Fasting / before meal";
+  vitalNotesInput.value    = "";
   vitalsCard.classList.add("active");
+  vitalSaveBtn.textContent = "Save Vitals Entry";
 });
 vitalCancelBtn.addEventListener("click", ()=>{
   vitalsCard.classList.remove("active");
 });
 vitalSaveBtn.addEventListener("click", ()=>{
-  const newVital = {
+  const newData = {
+    id: editVitalId || newId(),
     time: vitalDateTimeInput.value,
-    sys: vitalSysInput.value,
-    dia: vitalDiaInput.value,
-    pulse: vitalPulseInput.value,
-    rr: vitalRRInput.value,
+    sys:  vitalSysInput.value,
+    dia:  vitalDiaInput.value,
+    pulse:vitalPulseInput.value,
+    rr:   vitalRRInput.value,
     spO2: vitalSpO2Input.value,
     position: vitalPosSelect.value,
-    timing: vitalFastingSelect.value,
+    timing:   vitalFastingSelect.value,
     notes: vitalNotesInput.value
   };
-  vitalEntries.push(newVital);
+  if(editVitalId){
+    vitalEntries = vitalEntries.map(x=> x.id===editVitalId ? newData : x);
+  } else {
+    vitalEntries.push(newData);
+  }
   saveArr("vitalEntries", vitalEntries);
   renderVitalTable();
   vitalsCard.classList.remove("active");
 });
 
-/* SLEEP handlers */
+/* SLEEP new */
 openSleepBtn.addEventListener("click", ()=>{
   closeAllDrawers();
-  sleepStartInput.value = nowLocalDatetimeValue();
-  sleepEndInput.value   = "";
-  sleepTotalInput.value = "";
-  sleepQualitySelect.value = "good";
-  sleepAssistSelect.value  = "no_help";
+  editSleepId = null;
+  sleepStartInput.value    = nowLocalDatetimeValue();
+  sleepEndInput.value      = "";
+  sleepTotalInput.value    = "";
+  sleepQualitySelect.value = "Good / mostly calm";
+  sleepAssistSelect.value  = "No help needed";
   sleepNotesInput.value    = "";
   sleepCard.classList.add("active");
+  sleepSaveBtn.textContent = "Save Sleep Entry";
 });
 sleepCancelBtn.addEventListener("click", ()=>{
   sleepCard.classList.remove("active");
 });
 sleepSaveBtn.addEventListener("click", ()=>{
-  const newSleep = {
+  const newData = {
+    id: editSleepId || newId(),
     start:   sleepStartInput.value,
     end:     sleepEndInput.value,
     total:   sleepTotalInput.value,
@@ -1681,28 +1960,35 @@ sleepSaveBtn.addEventListener("click", ()=>{
     assist:  sleepAssistSelect.value,
     notes:   sleepNotesInput.value
   };
-  sleepEntries.push(newSleep);
+  if(editSleepId){
+    sleepEntries = sleepEntries.map(x=> x.id===editSleepId ? newData : x);
+  } else {
+    sleepEntries.push(newData);
+  }
   saveArr("sleepEntries", sleepEntries);
   renderSleepTable();
   sleepCard.classList.remove("active");
 });
 
-/* ACTIVITY handlers */
+/* ACTIVITY new */
 openActBtn.addEventListener("click", ()=>{
   closeAllDrawers();
-  actDateTimeInput.value = nowLocalDatetimeValue();
-  actTypeInput.value = "";
-  actAssistSelect.value = "independent";
-  actDurationInput.value = "";
-  actToleranceSelect.value = "okay";
-  actNotesInput.value = "";
+  editActId = null;
+  actDateTimeInput.value   = nowLocalDatetimeValue();
+  actTypeInput.value       = "";
+  actAssistSelect.value    = "Independent";
+  actDurationInput.value   = "";
+  actToleranceSelect.value = "Okay";
+  actNotesInput.value      = "";
   actCard.classList.add("active");
+  actSaveBtn.textContent   = "Save Activity Entry";
 });
 actCancelBtn.addEventListener("click", ()=>{
   actCard.classList.remove("active");
 });
 actSaveBtn.addEventListener("click", ()=>{
-  const newAct = {
+  const newData = {
+    id: editActId || newId(),
     time: actDateTimeInput.value,
     activity: actTypeInput.value,
     assist: actAssistSelect.value,
@@ -1710,55 +1996,334 @@ actSaveBtn.addEventListener("click", ()=>{
     tolerance: actToleranceSelect.value,
     notes: actNotesInput.value
   };
-  actEntries.push(newAct);
+  if(editActId){
+    actEntries = actEntries.map(x=> x.id===editActId ? newData : x);
+  } else {
+    actEntries.push(newData);
+  }
   saveArr("actEntries", actEntries);
   renderActTable();
   actCard.classList.remove("active");
 });
 
-/* EXPORT buttons */
+/* ========= CSV EXPORT HELPERS ========= */
+function csvEscape(v){
+  return `"${(v ?? "").toString().replace(/"/g,'""')}"`;
+}
+
+function exportSectionCSV(fnameBase, headerLabelRow, headers, rows, mapFn){
+  const ts = fileStamp();
+  const filename = `${fnameBase}_as_of_${ts}.csv`;
+
+  const csvLines = [];
+  csvLines.push(csvEscape(headerLabelRow));
+  csvLines.push(""); // blank line
+  csvLines.push(headers.map(h=>csvEscape(h)).join(","));
+
+  rows.forEach(r=>{
+    const mapped = mapFn(r);
+    const line = headers.map(h=>csvEscape(mapped[h] ?? "")).join(",");
+    csvLines.push(line);
+  });
+
+  const blob = new Blob([csvLines.join("\n")], {type:"text/csv"});
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement("a");
+  a.href     = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+/* Per-section export buttons */
 exportOutputBtn.addEventListener("click", ()=>{
-  exportCSV("output_log.csv", outputEntries, [
-    "time","type","assist","amount","color","blood","pain","notes"
-  ]);
+  const rows = [...outputEntries].slice().sort((a,b)=>b.time.localeCompare(a.time));
+  exportSectionCSV(
+    "output_log",
+    `Output log export as of ${niceNowStamp()}`,
+    [
+      "Logged Time",
+      "Type (urine/stool)",
+      "Assist Level",
+      "Amount",
+      "Color / Appearance",
+      "Blood Seen",
+      "Pain/Strain (0-10)",
+      "Notes"
+    ],
+    rows,
+    r=>({
+      "Logged Time": r.time,
+      "Type (urine/stool)": r.type,
+      "Assist Level": r.assist,
+      "Amount": r.amount,
+      "Color / Appearance": r.color,
+      "Blood Seen": r.blood,
+      "Pain/Strain (0-10)": r.pain,
+      "Notes": r.notes
+    })
+  );
 });
 
 exportMedBtn.addEventListener("click", ()=>{
-  exportCSV("med_log.csv", medEntries, [
-    "time","name","category","dose","reason","notes"
-  ]);
+  const rows = [...medEntries].slice().sort((a,b)=>b.time.localeCompare(a.time));
+  exportSectionCSV(
+    "med_log",
+    `Medication log export as of ${niceNowStamp()}`,
+    [
+      "Logged Time",
+      "Medication",
+      "Category",
+      "Dose / Route",
+      "Reason",
+      "Notes / Effect"
+    ],
+    rows,
+    r=>({
+      "Logged Time": r.time,
+      "Medication": r.name,
+      "Category": r.category,
+      "Dose / Route": r.dose,
+      "Reason": r.reason,
+      "Notes / Effect": r.notes
+    })
+  );
 });
 
 exportOxyBtn.addEventListener("click", ()=>{
-  exportCSV("oxygen_log.csv", oxyEntries, [
-    "time","flow","method","duration","reason","relief"
-  ]);
+  const rows = [...oxyEntries].slice().sort((a,b)=>b.time.localeCompare(a.time));
+  exportSectionCSV(
+    "oxygen_log",
+    `Oxygen log export as of ${niceNowStamp()}`,
+    [
+      "Start Time",
+      "Flow (L/min)",
+      "Method",
+      "Duration (min)",
+      "Reason",
+      "Relief / Effect"
+    ],
+    rows,
+    r=>({
+      "Start Time": r.time,
+      "Flow (L/min)": r.flow,
+      "Method": r.method,
+      "Duration (min)": r.duration,
+      "Reason": r.reason,
+      "Relief / Effect": r.relief
+    })
+  );
 });
 
 exportMealBtn.addEventListener("click", ()=>{
-  exportCSV("meals_log.csv", mealEntries, [
-    "time","mealType","texture","portion","nausea","notes"
-  ]);
+  const rows = [...mealEntries].slice().sort((a,b)=>b.time.localeCompare(a.time));
+  exportSectionCSV(
+    "meals_log",
+    `Meals / intake export as of ${niceNowStamp()}`,
+    [
+      "Time",
+      "Meal",
+      "Texture",
+      "Portion Eaten",
+      "Nausea/Vomit",
+      "Notes"
+    ],
+    rows,
+    r=>({
+      "Time": r.time,
+      "Meal": r.mealType,
+      "Texture": r.texture,
+      "Portion Eaten": r.portion,
+      "Nausea/Vomit": r.nausea,
+      "Notes": r.notes
+    })
+  );
 });
 
 exportVitalBtn.addEventListener("click", ()=>{
-  exportCSV("vitals_log.csv", vitalEntries, [
-    "time","sys","dia","pulse","rr","spO2","position","timing","notes"
-  ]);
+  const rows = [...vitalEntries].slice().sort((a,b)=>b.time.localeCompare(a.time));
+  exportSectionCSV(
+    "vitals_log",
+    `Vitals export as of ${niceNowStamp()}`,
+    [
+      "Time",
+      "BP Systolic",
+      "BP Diastolic",
+      "Pulse",
+      "Resp Rate",
+      "SpO2 %",
+      "Position",
+      "Timing",
+      "Notes"
+    ],
+    rows,
+    r=>({
+      "Time": r.time,
+      "BP Systolic": r.sys,
+      "BP Diastolic": r.dia,
+      "Pulse": r.pulse,
+      "Resp Rate": r.rr,
+      "SpO2 %": r.spO2,
+      "Position": r.position,
+      "Timing": r.timing,
+      "Notes": r.notes
+    })
+  );
 });
 
 exportSleepBtn.addEventListener("click", ()=>{
-  exportCSV("sleep_log.csv", sleepEntries, [
-    "start","end","total","quality","assist","notes"
-  ]);
+  const rows = [...sleepEntries].slice().sort((a,b)=>b.start.localeCompare(a.start));
+  exportSectionCSV(
+    "sleep_log",
+    `Sleep / rest export as of ${niceNowStamp()}`,
+    [
+      "Start Time",
+      "End Time",
+      "Total (hrs)",
+      "Quality",
+      "Assist / Meds",
+      "Notes"
+    ],
+    rows,
+    r=>({
+      "Start Time": r.start,
+      "End Time": r.end,
+      "Total (hrs)": r.total,
+      "Quality": r.quality,
+      "Assist / Meds": r.assist,
+      "Notes": r.notes
+    })
+  );
 });
 
 exportActBtn.addEventListener("click", ()=>{
-  exportCSV("activity_log.csv", actEntries, [
-    "time","activity","assist","duration","tolerance","notes"
-  ]);
+  const rows = [...actEntries].slice().sort((a,b)=>b.time.localeCompare(a.time));
+  exportSectionCSV(
+    "activity_log",
+    `Activity / mobility export as of ${niceNowStamp()}`,
+    [
+      "Time",
+      "Activity",
+      "Assist",
+      "Duration (min)",
+      "Tolerance",
+      "Notes"
+    ],
+    rows,
+    r=>({
+      "Time": r.time,
+      "Activity": r.activity,
+      "Assist": r.assist,
+      "Duration (min)": r.duration,
+      "Tolerance": r.tolerance,
+      "Notes": r.notes
+    })
+  );
 });
 
+/* ========= EXPORT ALL SUMMARY ========= */
+function buildSummaryRows(){
+  let summary = [];
+
+  outputEntries.forEach(r=>{
+    summary.push({
+      t: r.time || "",
+      category: "Output",
+      summary: `${r.type||""} ${r.amount||""} ${r.color||""} assist:${r.assist||""} pain:${r.pain||""} blood:${r.blood||""}`,
+      notes: r.notes||""
+    });
+  });
+
+  medEntries.forEach(r=>{
+    summary.push({
+      t: r.time || "",
+      category: "Medication",
+      summary: `${r.name||""} (${r.category||""}) ${r.dose||""} for ${r.reason||""}`,
+      notes: r.notes||""
+    });
+  });
+
+  oxyEntries.forEach(r=>{
+    summary.push({
+      t: r.time || "",
+      category: "Oxygen",
+      summary: `${r.flow||""} L/min ${r.method||""} x${r.duration||""}min for ${r.reason||""}`,
+      notes: r.relief||""
+    });
+  });
+
+  mealEntries.forEach(r=>{
+    summary.push({
+      t: r.time || "",
+      category: "Meal",
+      summary: `${r.mealType||""}, ${r.texture||""}, ate ${r.portion||""}, nausea:${r.nausea||""}`,
+      notes: r.notes||""
+    });
+  });
+
+  vitalEntries.forEach(r=>{
+    summary.push({
+      t: r.time || "",
+      category: "Vitals",
+      summary: `BP ${r.sys||""}/${r.dia||""}, HR ${r.pulse||""}, RR ${r.rr||""}, SpO2 ${r.spO2||""}, ${r.position||""}, ${r.timing||""}`,
+      notes: r.notes||""
+    });
+  });
+
+  sleepEntries.forEach(r=>{
+    summary.push({
+      t: r.start || "",
+      category: "Sleep",
+      summary: `${r.total||""} hrs, quality:${r.quality||""}, assist:${r.assist||""}`,
+      notes: r.notes||`(end ${r.end||""})`
+    });
+  });
+
+  actEntries.forEach(r=>{
+    summary.push({
+      t: r.time || "",
+      category: "Activity",
+      summary: `${r.activity||""}, assist:${r.assist||""}, ${r.duration||""} min, tol:${r.tolerance||""}`,
+      notes: r.notes||""
+    });
+  });
+
+  // sort ascending by time-ish string
+  summary.sort((a,b)=> (a.t||"").localeCompare(b.t||""));
+  return summary;
+}
+
+exportAllBtn.addEventListener("click", ()=>{
+  const rows = buildSummaryRows();
+  const ts = fileStamp();
+  const filename = `care_summary_as_of_${ts}.csv`;
+
+  const csvLines = [];
+  csvLines.push(csvEscape(`Full care summary export as of ${niceNowStamp()}`));
+  csvLines.push("");
+  csvLines.push(["Time","Category","Summary","Notes"]
+    .map(h=>csvEscape(h)).join(","));
+
+  rows.forEach(r=>{
+    const line = [
+      csvEscape(r.t),
+      csvEscape(r.category),
+      csvEscape(r.summary),
+      csvEscape(r.notes)
+    ].join(",");
+    csvLines.push(line);
+  });
+
+  const blob = new Blob([csvLines.join("\n")], {type:"text/csv"});
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement("a");
+  a.href     = url;
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+/* ========= Initial render ========= */
 renderChips();
 renderOutputTable();
 renderMedTable();
@@ -1768,5 +2333,6 @@ renderVitalTable();
 renderSleepTable();
 renderActTable();
 </script>
+
 </body>
 </html>
