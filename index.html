@@ -1,147 +1,377 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<!-- iOS add-to-home-screen friendliness -->
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<meta name="apple-mobile-web-app-title" content="Care Tracker" />
-<meta name="theme-color" content="#0f172a" />
+  <!-- iOS add-to-home-screen friendliness -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="HomePAL Care Tracker" />
+  <meta name="theme-color" content="#0d9488" />
+  <meta name="description" content="HomePAL - Professional home care tracking for patients, families, and care teams." />
 
-<title>Care Tracker</title>
+  <title>HomePAL - Care Tracker</title>
 
-<style>
-  :root {
-    --bg: #0f172a;
-    --card: #1e293b;
-    --text: #f8fafc;
-    --muted: #94a3b8;
-    --accent: #38bdf8;
-    --accent-bg: rgba(56,189,248,0.15);
-    --danger-bg: rgba(239,68,68,.14);
-    --danger-border: rgba(239,68,68,.6);
-    --danger-text: #f87171;
-    --radius-lg: 1rem;
-    --radius-sm: .5rem;
-  }
+  <style>
+    :root {
+      /* HomePAL Professional Healthcare Design System */
+      --primary: #0d9488;           /* Teal - trust, care, medical */
+      --primary-dark: #0f766e;
+      --primary-light: #14b8a6;
+      --primary-bg: #ccfbf1;
+      --primary-hover: #0f766e;
+      
+      --secondary: #0891b2;         /* Cyan - complementary */
+      --secondary-light: #e0f2fe;
+      
+      --bg: #f8fafc;                /* Soft white-gray */
+      --bg-gradient: linear-gradient(135deg, #f0fdfa 0%, #e0f2fe 100%);
+      --card: #ffffff;
+      --card-hover: #fafafa;
+      
+      --text: #0f172a;              /* Deep slate */
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --text-light: #94a3b8;
+      
+      --success: #10b981;
+      --success-bg: #d1fae5;
+      --success-text: #065f46;
+      
+      --warning: #f59e0b;
+      --warning-bg: #fef3c7;
+      --warning-text: #92400e;
+      
+      --danger: #ef4444;
+      --danger-bg: #fee2e2;
+      --danger-border: #f87171;
+      --danger-text: #991b1b;
+      
+      --border: #e2e8f0;
+      --border-light: #f1f5f9;
+      
+      --radius-sm: 0.5rem;
+      --radius-md: 0.75rem;
+      --radius-lg: 1rem;
+      --radius-xl: 1.5rem;
+      
+      --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+      
+      --spacing-xs: 0.25rem;
+      --spacing-sm: 0.5rem;
+      --spacing-md: 1rem;
+      --spacing-lg: 1.5rem;
+      --spacing-xl: 2rem;
+      --spacing-2xl: 3rem;
+    }
 
-  body {
-    background-color: var(--bg);
-    color: var(--text);
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", Roboto, "Helvetica Neue", sans-serif;
-    margin: 0;
-    padding: 1rem;
-    line-height: 1.4;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    max-width: 1000px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+    * {
+      box-sizing: border-box;
+    }
 
-  header {
-    display: flex;
-    flex-direction: column;
-    gap: .25rem;
-  }
+    body {
+      background: var(--bg-gradient);
+      background-attachment: fixed;
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", "SF Pro Display", Roboto, "Helvetica Neue", sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
-  header h1 {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--text);
-    margin: 0;
-  }
+    .app-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: var(--spacing-xl) var(--spacing-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-xl);
+      min-height: 100vh;
+    }
 
-  header .subtitle {
-    color: var(--muted);
-    font-size: .9rem;
-    max-width: 700px;
-  }
+    /* ========= Professional Header with Branding ========= */
+    .brand-header {
+      background: var(--card);
+      border-radius: var(--radius-xl);
+      padding: var(--spacing-xl);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+      margin-bottom: var(--spacing-md);
+    }
 
-  .card {
-    background-color: var(--card);
-    border-radius: var(--radius-lg);
-    padding: 1rem 1rem 1.25rem;
-    box-shadow: 0 20px 40px rgba(0,0,0,.6);
-    border: 1px solid rgba(148,163,184,.15);
-  }
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+      margin-bottom: var(--spacing-lg);
+      padding-bottom: var(--spacing-lg);
+      border-bottom: 2px solid var(--border-light);
+    }
 
-  .alert-card {
-    background-color: #2a1111;
-    border-radius: var(--radius-lg);
-    padding: 1rem 1rem 1.25rem;
-    box-shadow: 0 20px 40px rgba(0,0,0,.6);
-    border: 1px solid var(--danger-border);
-  }
+    .brand-logo-img {
+      width: 256px;
+      height: 128px;
+      object-fit: contain;
+      display: block;
+      flex-shrink: 0;
+    }
 
-  .alert-title {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--danger-text);
-    margin: 0 0 .5rem;
-    display: flex;
-    align-items: baseline;
-    gap: .5rem;
-  }
+    .brand-logo-text {
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.03em;
+      margin: 0;
+    }
 
-  .alert-list {
-    margin: 0;
-    padding-left: 1.25rem;
-    color: var(--text);
-    font-size: .8rem;
-    line-height: 1.4;
-  }
-  .alert-list li {
-    margin-bottom: .5rem;
-  }
+    .brand-tagline {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      font-weight: 500;
+      margin: 0;
+      margin-top: var(--spacing-xs);
+    }
 
-  .section-title {
-    display: flex;
-    align-items: start;
-    justify-content: space-between;
-    margin-bottom: .75rem;
-    flex-wrap: wrap;
-    row-gap: .5rem;
-    column-gap: .75rem;
-  }
+    header {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-md);
+    }
 
-  .section-left {
-    display: flex;
-    flex-direction: column;
-    gap: .4rem;
-  }
+    header h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0;
+      letter-spacing: -0.01em;
+    }
 
-  .section-left h2 {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text);
-    margin: 0;
-    display: flex;
-    align-items: baseline;
-    gap: .5rem;
-  }
+    header .subtitle {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      max-width: 700px;
+      line-height: 1.6;
+    }
 
-  .pill {
-    background: var(--accent-bg);
-    border: 1px solid var(--accent);
-    color: var(--accent);
-    font-size: .7rem;
-    padding: .2rem .5rem;
-    border-radius: 999px;
-    font-weight: 500;
-    line-height: 1.2;
-    white-space: nowrap;
-  }
+    .card {
+      background-color: var(--card);
+      border-radius: var(--radius-xl);
+      padding: var(--spacing-xl);
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
 
-  .tiny-note {
-    font-size: .7rem;
-    color: var(--muted);
-    line-height: 1.3;
-    font-weight: 400;
-  }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+      border-color: var(--primary-light);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .alert-card {
+      position: fixed;
+      bottom: var(--spacing-lg);
+      right: var(--spacing-lg);
+      background: linear-gradient(135deg, var(--danger-bg) 0%, #fef2f2 100%);
+      border-radius: var(--radius-xl);
+      padding: var(--spacing-lg);
+      box-shadow: var(--shadow-xl);
+      border: 2px solid var(--danger-border);
+      z-index: 1000;
+      max-width: 400px;
+      width: calc(100% - 2 * var(--spacing-lg));
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+    }
+
+    .alert-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--danger);
+    }
+
+    .alert-card.collapsed {
+      max-width: 265px;
+      padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    .alert-card.collapsed .alert-content {
+      display: none;
+    }
+
+    .alert-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+      gap: var(--spacing-xs);
+    }
+
+    .alert-toggle:hover {
+      opacity: 0.9;
+    }
+
+    .alert-toggle-text {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--danger-text);
+      margin: 0;
+      flex: 1;
+      line-height: 1.3;
+    }
+
+    .alert-card.collapsed .alert-toggle-text {
+      font-size: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .alert-arrow {
+      font-size: 1rem;
+      color: var(--danger-text);
+      transition: transform 0.3s ease;
+      flex-shrink: 0;
+    }
+
+    .alert-card.collapsed .alert-arrow {
+      font-size: 0.875rem;
+    }
+
+    .alert-card.collapsed .alert-arrow {
+      transform: rotate(180deg);
+    }
+
+    .alert-content {
+      margin-top: var(--spacing-lg);
+      animation: slideDown 0.3s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .alert-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--danger-text);
+      margin: 0 0 1rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+    }
+
+    /* Responsive adjustments for alert card */
+    @media (max-width: 768px) {
+      .alert-card {
+        right: var(--spacing-md);
+        bottom: var(--spacing-md);
+        max-width: calc(100% - 2 * var(--spacing-md));
+      }
+
+      .alert-card.collapsed {
+        max-width: 200px;
+        padding: var(--spacing-xs) var(--spacing-sm);
+      }
+    }
+
+    .alert-list {
+      margin: 0;
+      padding-left: 1.5rem;
+      color: var(--text);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .alert-list li {
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      margin-bottom: var(--spacing-lg);
+      flex-wrap: wrap;
+      row-gap: var(--spacing-md);
+      column-gap: var(--spacing-lg);
+    }
+
+    .section-left {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+    }
+
+    .section-left h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0;
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      letter-spacing: -0.01em;
+    }
+
+    .pill {
+      background: var(--primary-bg);
+      border: 1px solid var(--primary);
+      color: var(--primary-dark);
+      font-size: 0.75rem;
+      padding: 0.375rem 0.875rem;
+      border-radius: 999px;
+      font-weight: 600;
+      line-height: 1.3;
+      white-space: nowrap;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .tiny-note {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.5;
+      font-weight: 400;
+    }
 
   .section-right {
     display: flex;
@@ -155,58 +385,103 @@
     flex-wrap: wrap;
   }
 
-  button.main-btn {
-    flex: 1;
-    min-width: calc(50% - .4rem);
-    background-color: var(--accent);
-    color: #0f172a;
-    border: 0;
-    border-radius: .75rem;
-    font-size: 1rem;
-    font-weight: 600;
-    padding: 1rem;
-    line-height: 1.2;
-    box-shadow: 0 14px 30px rgba(56,189,248,.4);
-    cursor: pointer;
-  }
+    button.main-btn {
+      flex: 1;
+      min-width: calc(50% - 0.5rem);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: #ffffff;
+      border: 0;
+      border-radius: var(--radius-md);
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 0.875rem 1.5rem;
+      line-height: 1.5;
+      box-shadow: var(--shadow-md);
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
 
-  button.sec-btn {
-    background-color: transparent;
-    color: var(--accent);
-    border: 1px solid var(--accent);
-    border-radius: .75rem;
-    font-size: .8rem;
-    font-weight: 500;
-    line-height: 1.2;
-    padding: .6rem .9rem;
-    cursor: pointer;
-  }
+    button.main-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
 
-  button.danger-btn {
-    background-color: transparent;
-    color: var(--danger-text);
-    border: 1px solid var(--danger-text);
-    border-radius: .5rem;
-    font-size: .7rem;
-    font-weight: 500;
-    line-height: 1.2;
-    padding: .4rem .6rem;
-    cursor: pointer;
-  }
+    button.main-btn:hover {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
 
-  .drawer-card {
-    display: none;
-    flex-direction: column;
-    gap: 1.5rem;
-    margin-top: .75rem;
-    background-color: #0b1220;
-    border-radius: var(--radius-lg);
-    border: 1px solid rgba(148,163,184,.2);
-    padding: 1rem 1rem 1.5rem;
-  }
-  .drawer-card.active {
-    display: flex;
-  }
+    button.main-btn:hover::before {
+      left: 100%;
+    }
+
+    button.main-btn:active {
+      transform: translateY(0);
+      box-shadow: var(--shadow-sm);
+    }
+
+    button.sec-btn {
+      background-color: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-md);
+      font-size: 0.875rem;
+      font-weight: 600;
+      line-height: 1.5;
+      padding: 0.625rem 1.25rem;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    button.sec-btn:hover {
+      background-color: var(--primary-bg);
+      border-color: var(--primary-dark);
+      color: var(--primary-dark);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    button.danger-btn {
+      background-color: transparent;
+      color: var(--danger-text);
+      border: 1.5px solid var(--danger-text);
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-weight: 500;
+      line-height: 1.4;
+      padding: 0.5rem 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    button.danger-btn:hover {
+      background-color: var(--danger-bg);
+    }
+
+    .drawer-card {
+      display: none;
+      flex-direction: column;
+      gap: var(--spacing-xl);
+      margin-top: var(--spacing-lg);
+      background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-light) 100%);
+      border-radius: var(--radius-xl);
+      border: 2px solid var(--primary);
+      padding: var(--spacing-xl);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .drawer-card.active {
+      display: flex;
+    }
 
   .block-group {
     display: flex;
@@ -214,57 +489,71 @@
     gap: 1.25rem;
   }
 
-  .flex-row-wrap {
-    display: flex;
-    flex-wrap: wrap;
-    column-gap: 1rem;
-    row-gap: 1rem;
-  }
+    .flex-row-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      column-gap: 1.25rem;
+      row-gap: 1.25rem;
+      align-items: flex-start;
+    }
 
-  .field {
-    display: flex;
-    flex-direction: column;
-    flex: 1 1 260px;
-    min-width: 260px;
-  }
+    .field {
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 200px;
+      min-width: 0;
+      max-width: 100%;
+    }
 
-  .field-can-drop {
-    flex: 1 1 220px;
-    min-width: 220px;
-  }
+    .field-can-drop {
+      flex: 1 1 180px;
+      min-width: 0;
+      max-width: 100%;
+    }
 
-  .field label {
-    font-size: .8rem;
-    color: var(--muted);
-    font-weight: 500;
-    line-height: 1.3;
-    margin-bottom: .3rem;
-  }
+    .field label {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-weight: 500;
+      line-height: 1.4;
+      margin-bottom: 0.5rem;
+      word-wrap: break-word;
+    }
 
-  input, select, textarea {
-    width: 100%;
-    background-color: var(--card);
-    color: var(--text);
-    border: 1px solid rgba(148,163,184,.4);
-    border-radius: var(--radius-sm);
-    padding: .7rem .75rem;
-    font-size: 1rem;
-    line-height: 1.3;
-  }
+    input, select, textarea {
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      background-color: var(--card);
+      color: var(--text);
+      border: 2px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 0.875rem 1rem;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-family: inherit;
+    }
 
-  input:focus,
-  select:focus,
-  textarea:focus {
-    outline: 2px solid var(--accent);
-    outline-offset: 0;
-    border-color: var(--accent);
-    background-color: #1f2f46;
-  }
+    input:hover,
+    select:hover,
+    textarea:hover {
+      border-color: var(--primary-light);
+    }
 
-  textarea {
-    min-height: 3.5rem;
-    resize: vertical;
-  }
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      background-color: var(--card);
+      box-shadow: 0 0 0 4px var(--primary-bg);
+    }
+
+    textarea {
+      min-height: 4rem;
+      resize: vertical;
+    }
 
   .save-row {
     display: flex;
@@ -276,42 +565,55 @@
     min-width: calc(50% - .5rem);
   }
 
-  .table-wrapper {
-    overflow-x: auto;
-    border-radius: var(--radius-lg);
-    border: 1px solid rgba(148,163,184,.2);
-  }
+    .table-wrapper {
+      overflow-x: auto;
+      border-radius: var(--radius-xl);
+      border: 2px solid var(--border);
+      box-shadow: var(--shadow-md);
+      background: var(--card);
+    }
 
-  table {
-    border-collapse: collapse;
-    width: 100%;
-    min-width: 800px;
-    background-color: #0b1220;
-    color: var(--text);
-    font-size: .8rem;
-  }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 800px;
+      background-color: var(--card);
+      color: var(--text);
+      font-size: 0.875rem;
+    }
 
-  thead {
-    background-color: rgba(148,163,184,.08);
-  }
+    thead {
+      background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-light) 100%);
+    }
 
-  th, td {
-    text-align: left;
-    padding: .6rem .75rem;
-    vertical-align: top;
-    border-bottom: 1px solid rgba(148,163,184,.12);
-    line-height: 1.4;
-  }
+    th, td {
+      text-align: left;
+      padding: 1rem 1.25rem;
+      vertical-align: top;
+      border-bottom: 1px solid var(--border);
+      line-height: 1.6;
+    }
 
-  th {
-    font-weight: 600;
-    color: var(--muted);
-    white-space: nowrap;
-  }
+    th {
+      font-weight: 700;
+      color: var(--primary-dark);
+      white-space: nowrap;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
 
-  tbody tr:last-child td {
-    border-bottom: none;
-  }
+    tbody tr {
+      transition: all 0.2s ease;
+    }
+
+    tbody tr:hover {
+      background-color: var(--primary-bg);
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
 
   .actions-cell {
     white-space: nowrap;
@@ -334,17 +636,26 @@
     gap: .5rem;
   }
 
-  .chip-btn {
-    background-color: rgba(56,189,248,.15);
-    border: 1px solid var(--accent);
-    border-radius: .6rem;
-    padding: .6rem .8rem;
-    font-size: .8rem;
-    line-height: 1.2;
-    font-weight: 500;
-    color: var(--accent);
-    cursor: pointer;
-  }
+    .chip-btn {
+      background-color: var(--primary-bg);
+      border: 2px solid var(--primary);
+      border-radius: var(--radius-md);
+      padding: 0.625rem 1.125rem;
+      font-size: 0.875rem;
+      line-height: 1.4;
+      font-weight: 600;
+      color: var(--primary-dark);
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .chip-btn:hover {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--primary-dark);
+    }
 
   .chip-row-smallnote {
     font-size: .7rem;
@@ -369,35 +680,74 @@
     padding: 0;
   }
 
-  footer {
-    font-size: .7rem;
-    color: var(--muted);
-    text-align: center;
-    line-height: 1.4;
-    padding-bottom: 4rem;
-  }
+    footer {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      text-align: center;
+      line-height: 1.8;
+      padding: var(--spacing-2xl) var(--spacing-lg) var(--spacing-2xl);
+      margin-top: var(--spacing-2xl);
+      background: var(--card);
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
 
-  footer a {
-    color: var(--accent);
-    text-decoration: none;
-  }
-</style>
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    footer a:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+
+    .footer-brand {
+      font-size: 1.1rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .footer-credits {
+      margin: var(--spacing-md) 0;
+      color: var(--text-secondary);
+    }
+
+    .footer-license {
+      margin-top: var(--spacing-md);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+  </style>
 </head>
 
 <body>
-
-<header>
-  <h1>Care Tracker</h1>
-  <div class="subtitle">
-    Output / meds / oxygen / meals / vitals / sleep / activity.
-    Saved only on THIS device.
-  </div>
-  <div class="section-right" style="margin-top:.5rem;flex-wrap:wrap;">
-    <button class="main-btn" id="exportAllBtn" style="flex:0 0 auto;min-width:auto;padding:.8rem 1rem;font-size:.9rem;">
-      Export ALL Logs (Summary CSV)
-    </button>
-  </div>
-</header>
+  <div class="app-container">
+    <!-- Professional Brand Header -->
+    <div class="brand-header">
+      <div class="brand-logo">
+        <img src="logo.png" alt="HomePAL Logo" class="brand-logo-img" />
+      </div>
+      <header>
+        <h1>Care Tracker</h1>
+        <div class="subtitle">
+          Comprehensive tracking for output, medications, oxygen, meals, vitals, sleep, and activity.
+          All data is securely stored locally on this device.
+        </div>
+        <div class="section-right" style="margin-top: 1rem; flex-wrap: wrap;">
+          <button class="main-btn" id="exportAllBtn" style="flex: 0 0 auto; min-width: auto; padding: 0.875rem 1.5rem; font-size: 0.95rem;">
+            Export ALL Logs (Summary CSV)
+          </button>
+        </div>
+      </header>
+    </div>
 
 <!-- === Patient / Hospice Info Card === -->
 <section class="card">
@@ -439,22 +789,25 @@
   </div>
 </section>
 
-<!-- === Emergency / Red Flag Card === -->
-<section class="alert-card">
-  <div class="alert-title">
-    <span>🚨 Call hospice NOW if you see this:</span>
+<!-- === Emergency / Red Flag Card - Collapsible Pop-up === -->
+<section class="alert-card collapsed" id="alertCard">
+  <div class="alert-toggle" id="alertToggle">
+    <span class="alert-toggle-text">🚨 Call hospice NOW if you see this:</span>
+    <span class="alert-arrow">▲</span>
   </div>
-  <ul class="alert-list">
-    <li>No urine for many hours and belly looks bigger / tight / painful</li>
-    <li>New bright red urine OR black / tarry stool</li>
-    <li>Breathing looks like gasping / pulling at neck or ribs / RR very fast even at rest</li>
-    <li>You cannot wake him or he’s not responding like normal</li>
-    <li>New seizure activity</li>
-    <li>Sudden severe pain that morphine did not help</li>
-    <li>Your gut says “he looks different and I’m scared”</li>
-  </ul>
-  <div class="tiny-note" style="color:var(--danger-text);margin-top:.5rem;">
-    Call hospice 24/7: <span id="profilePhoneDisplay" style="font-weight:600;color:#fff;">800-825-8556</span>
+  <div class="alert-content">
+    <ul class="alert-list">
+      <li>No urine for many hours and belly looks bigger / tight / painful</li>
+      <li>New bright red urine OR black / tarry stool</li>
+      <li>Breathing looks like gasping / pulling at neck or ribs / RR very fast even at rest</li>
+      <li>You cannot wake the patient or they're not responding like normal</li>
+      <li>New seizure activity</li>
+      <li>Sudden severe pain that morphine did not help</li>
+      <li>Your gut says "the patient looks different and I'm scared"</li>
+    </ul>
+    <div class="tiny-note" style="color: var(--danger-text); margin-top: 1rem; font-weight: 500;">
+      Call hospice 24/7: <span id="profilePhoneDisplay" style="font-weight: 700; color: var(--danger-text); font-size: 1rem;">800-825-8556</span>
+    </div>
   </div>
 </section>
 
@@ -467,7 +820,7 @@
         <span class="pill">Urine / Stool</span>
       </h2>
       <div class="tiny-note">
-        Amount, color, straining, and if he needed help.
+        Amount, color, straining, and if the patient needed help.
       </div>
     </div>
     <div class="section-right">
@@ -779,7 +1132,7 @@
         <span class="pill">Nutrition</span>
       </h2>
       <div class="tiny-note">
-        How much he actually took in, and nausea/vomiting.
+        How much the patient actually took in, and nausea/vomiting.
       </div>
     </div>
     <div class="section-right">
@@ -987,7 +1340,7 @@
         <span class="pill">Overnight / Naps</span>
       </h2>
       <div class="tiny-note">
-        Start/end, total hours, how restful he seemed.
+        Start/end, total hours, how restful the patient seemed.
       </div>
     </div>
     <div class="section-right">
@@ -1163,96 +1516,166 @@
   </div>
 </section>
 
-<footer>
-  <a href="https://example.com">HomePAL</a> © 2025 by <a href="https://sites.google.com/view/sabourshaik/home?authuser=0">Abdus Sabour Shaik</a> is licensed under <a href="https://creativecommons.org/licenses/by-nd/4.0/">CC BY-ND 4.0</a><img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;"><img src="https://mirrors.creativecommons.org/presskit/icons/nd.svg" alt="" style="max-width: 1em;max-height:1em;margin-left: .2em;">
-  <div>Built with love for our family and care team.</div>
-  <div>Redwood Hospice 24/7 Line: <a href="tel:8008258556">800-825-8556</a></div>
-  <div>All entries stay securely on this device. This does not replace medical advice. Call hospice for urgent concerns.</div>
-</footer>
+    <footer>
+      <div class="footer-brand">HomePAL</div>
+      <div class="footer-credits">
+        © 2025 by <a href="https://sites.google.com/view/sabourshaik/home?authuser=0">Abdus Sabour Shaik</a> and <a href="https://www.linkedin.com/in/joshua-robert/">Joshua Robert</a>
+      </div>
+      <div class="footer-license">
+        Licensed under <a href="https://creativecommons.org/licenses/by-nd/4.0/">CC BY-ND 4.0</a>
+        <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg" alt="CC" style="max-width: 1em; max-height: 1em; margin-left: 0.3em; vertical-align: middle;">
+        <img src="https://mirrors.creativecommons.org/presskit/icons/by.svg" alt="BY" style="max-width: 1em; max-height: 1em; margin-left: 0.2em; vertical-align: middle;">
+        <img src="https://mirrors.creativecommons.org/presskit/icons/nd.svg" alt="ND" style="max-width: 1em; max-height: 1em; margin-left: 0.2em; vertical-align: middle;">
+      </div>
+      <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border); color: var(--text-secondary);">
+        <div style="margin-bottom: 0.5rem;">Built with care for families and care teams.</div>
+        <div style="margin-bottom: 0.5rem; font-weight: 600; color: var(--primary-dark);">
+          <span id="footerHospiceName">Redwood Hospice</span> 24/7 Line: <a id="footerHospicePhone" href="tel:8008258556" style="color: var(--primary);">800-825-8556</a>
+        </div>
+        <div style="font-size: 0.8rem; color: var(--text-muted);">
+          All entries stay securely on this device. This does not replace medical advice. Call hospice for urgent concerns.
+        </div>
+      </div>
+    </footer>
+  </div> <!-- End app-container -->
 
-<script>
-/* ========= Local storage helpers ========= */
-function loadArr(key) {
-  try { return JSON.parse(localStorage.getItem(key)) || []; }
-  catch (e) { return []; }
-}
-function saveArr(key, arr) {
-  localStorage.setItem(key, JSON.stringify(arr));
-}
-function loadField(key, fallback="") {
-  return localStorage.getItem(key) || fallback;
-}
-function saveField(key, val) {
-  localStorage.setItem(key, val || "");
-}
+  <script>
+    /* ========= Local storage helpers ========= */
+    function loadArr(key) {
+      try {
+        return JSON.parse(localStorage.getItem(key)) || [];
+      } catch (e) {
+        return [];
+      }
+    }
 
-/* ========= ID helper ========= */
-function newId() {
-  return Date.now().toString() + "_" + Math.random().toString(16).slice(2);
-}
+    function saveArr(key, arr) {
+      localStorage.setItem(key, JSON.stringify(arr));
+    }
 
-/* ========= Timestamp Helpers ========= */
-function nowLocalDatetimeValue() {
-  const d = new Date();
-  const pad = (n)=> String(n).padStart(2,"0");
-  const yyyy = d.getFullYear();
-  const mm = pad(d.getMonth()+1);
-  const dd = pad(d.getDate());
-  const hh = pad(d.getHours());
-  const mi = pad(d.getMinutes());
-  return `${yyyy}-${mm}-${dd}T${hh}:${mi}`;
-}
-function niceNowStamp() {
-  const d = new Date();
-  const pad = n => String(n).padStart(2,"0");
-  const yyyy = d.getFullYear();
-  const mm = pad(d.getMonth()+1);
-  const dd = pad(d.getDate());
-  const hh = pad(d.getHours());
-  const mi = pad(d.getMinutes());
-  return `${yyyy}-${mm}-${dd} ${hh}:${mi}`;
-}
-function fileStamp() {
-  const d = new Date();
-  const pad = n => String(n).padStart(2,"0");
-  const yyyy = d.getFullYear();
-  const mm = pad(d.getMonth()+1);
-  const dd = pad(d.getDate());
-  const hh = pad(d.getHours());
-  const mi = pad(d.getMinutes());
-  return `${yyyy}-${mm}-${dd}_${hh}-${mi}`;
-}
+    function loadField(key, fallback = "") {
+      return localStorage.getItem(key) || fallback;
+    }
 
-/* ========= Global arrays ========= */
-let outputEntries  = loadArr("outputEntries");   // urine/stool
-let medEntries     = loadArr("medEntries");      // meds
-let oxyEntries     = loadArr("oxyEntries");      // oxygen
-let mealEntries    = loadArr("mealEntries");     // meals
-let vitalEntries   = loadArr("vitalEntries");    // vitals
-let sleepEntries   = loadArr("sleepEntries");    // sleep
-let actEntries     = loadArr("actEntries");      // activity
+    function saveField(key, val) {
+      localStorage.setItem(key, val || "");
+    }
 
-/* ========= Profile load ========= */
-const profileNameEl    = document.getElementById("profileName");
-const profileDOBEl     = document.getElementById("profileDOB");
-const profileHospiceEl = document.getElementById("profileHospice");
-const profilePhoneEl   = document.getElementById("profilePhone");
-const profilePhoneDisplay = document.getElementById("profilePhoneDisplay");
+    /* ========= ID helper ========= */
+    function newId() {
+      return Date.now().toString() + "_" + Math.random().toString(16).slice(2);
+    }
 
-profileNameEl.value    = loadField("profileName","");
-profileDOBEl.value     = loadField("profileDOB","");
-profileHospiceEl.value = loadField("profileHospice","Redwood Hospice");
-profilePhoneEl.value   = loadField("profilePhone","800-825-8556");
-profilePhoneDisplay.textContent = profilePhoneEl.value || "800-825-8556";
+    /* ========= Timestamp Helpers ========= */
+    function nowLocalDatetimeValue() {
+      const d = new Date();
+      const pad = (n) => String(n).padStart(2, "0");
+      const yyyy = d.getFullYear();
+      const mm = pad(d.getMonth() + 1);
+      const dd = pad(d.getDate());
+      const hh = pad(d.getHours());
+      const mi = pad(d.getMinutes());
+      return `${yyyy}-${mm}-${dd}T${hh}:${mi}`;
+    }
 
-document.getElementById("saveProfileBtn").addEventListener("click", ()=>{
-  saveField("profileName", profileNameEl.value);
-  saveField("profileDOB", profileDOBEl.value);
-  saveField("profileHospice", profileHospiceEl.value);
-  saveField("profilePhone", profilePhoneEl.value);
-  profilePhoneDisplay.textContent = profilePhoneEl.value || "800-825-8556";
-  alert("Profile saved on this device.");
-});
+    function niceNowStamp() {
+      const d = new Date();
+      const pad = n => String(n).padStart(2, "0");
+      const yyyy = d.getFullYear();
+      const mm = pad(d.getMonth() + 1);
+      const dd = pad(d.getDate());
+      const hh = pad(d.getHours());
+      const mi = pad(d.getMinutes());
+      return `${yyyy}-${mm}-${dd} ${hh}:${mi}`;
+    }
+
+    function fileStamp() {
+      const d = new Date();
+      const pad = n => String(n).padStart(2, "0");
+      const yyyy = d.getFullYear();
+      const mm = pad(d.getMonth() + 1);
+      const dd = pad(d.getDate());
+      const hh = pad(d.getHours());
+      const mi = pad(d.getMinutes());
+      return `${yyyy}-${mm}-${dd}_${hh}-${mi}`;
+    }
+
+    /* ========= Global arrays ========= */
+    let outputEntries = loadArr("outputEntries");   // urine/stool
+    let medEntries = loadArr("medEntries");         // meds
+    let oxyEntries = loadArr("oxyEntries");         // oxygen
+    let mealEntries = loadArr("mealEntries");        // meals
+    let vitalEntries = loadArr("vitalEntries");      // vitals
+    let sleepEntries = loadArr("sleepEntries");      // sleep
+    let actEntries = loadArr("actEntries");          // activity
+
+    /* ========= Profile load ========= */
+    const profileNameEl = document.getElementById("profileName");
+    const profileDOBEl = document.getElementById("profileDOB");
+    const profileHospiceEl = document.getElementById("profileHospice");
+    const profilePhoneEl = document.getElementById("profilePhone");
+    const profilePhoneDisplay = document.getElementById("profilePhoneDisplay");
+    const footerHospiceName = document.getElementById("footerHospiceName");
+    const footerHospicePhone = document.getElementById("footerHospicePhone");
+
+    // Function to update all hospice references throughout the page
+    function updateHospiceReferences() {
+      const hospiceName = profileHospiceEl.value || "Redwood Hospice";
+      const hospicePhone = profilePhoneEl.value || "800-825-8556";
+      const hospicePhoneClean = hospicePhone.replace(/\D/g, ""); // Remove non-digits for tel: link
+
+      // Update alert card phone display
+      if (profilePhoneDisplay) {
+        profilePhoneDisplay.textContent = hospicePhone;
+      }
+
+      // Update footer hospice name and phone
+      if (footerHospiceName) {
+        footerHospiceName.textContent = hospiceName;
+      }
+      if (footerHospicePhone) {
+        footerHospicePhone.textContent = hospicePhone;
+        footerHospicePhone.href = `tel:${hospicePhoneClean}`;
+      }
+    }
+
+    // Load profile values
+    profileNameEl.value = loadField("profileName", "");
+    profileDOBEl.value = loadField("profileDOB", "");
+    profileHospiceEl.value = loadField("profileHospice", "Redwood Hospice");
+    profilePhoneEl.value = loadField("profilePhone", "800-825-8556");
+
+    // Update all references on page load
+    updateHospiceReferences();
+
+    /* ========= Profile Save ========= */
+    // Saves patient profile info (name, DOB, hospice name, phone) to browser localStorage
+    // This data persists on this device and is used to:
+    // 1. Pre-fill the form when you return
+    // 2. Display the hospice name and phone number throughout the app (alert card, footer)
+    // All data stays local - never sent to any server
+    document.getElementById("saveProfileBtn").addEventListener("click", () => {
+      saveField("profileName", profileNameEl.value);
+      saveField("profileDOB", profileDOBEl.value);
+      saveField("profileHospice", profileHospiceEl.value);
+      saveField("profilePhone", profilePhoneEl.value);
+      updateHospiceReferences();
+      alert("Profile saved on this device.");
+    });
+
+    // Also update when user types in the fields (optional - for real-time updates)
+    profileHospiceEl.addEventListener("input", updateHospiceReferences);
+    profilePhoneEl.addEventListener("input", updateHospiceReferences);
+
+    /* ========= Alert Card Toggle ========= */
+    const alertCard = document.getElementById("alertCard");
+    const alertToggle = document.getElementById("alertToggle");
+
+    if (alertToggle) {
+      alertToggle.addEventListener("click", () => {
+        alertCard.classList.toggle("collapsed");
+      });
+    }
 
 /* ========= DOM refs for Output ========= */
 const urineBtn       = document.getElementById("urineBtn");
@@ -1379,39 +1802,39 @@ let prnMeds = [
   { name: "Phenobarbital 60 mg tab", category: "prn" }
 ];
 
-/* ========= Drawer helpers ========= */
-function closeAllDrawers() {
-  [formCard, medCard, oxyCard, mealCard, vitalsCard, sleepCard, actCard].forEach(el=> {
-    el.classList.remove("active");
-  });
-}
+    /* ========= Drawer helpers ========= */
+    function closeAllDrawers() {
+      [formCard, medCard, oxyCard, mealCard, vitalsCard, sleepCard, actCard].forEach(el => {
+        el.classList.remove("active");
+      });
+    }
 
-/* ========= Render chips for meds ========= */
-function renderChips() {
-  scheduledChipsDiv.innerHTML = "";
-  scheduledMeds.forEach(m => {
-    const btn = document.createElement("button");
-    btn.className = "chip-btn";
-    btn.textContent = m.name;
-    btn.onclick = () => {
-      medChosenName.value = m.name;
-      medCategory.value   = m.category;
-    };
-    scheduledChipsDiv.appendChild(btn);
-  });
+    /* ========= Render chips for meds ========= */
+    function renderChips() {
+      scheduledChipsDiv.innerHTML = "";
+      scheduledMeds.forEach(m => {
+        const btn = document.createElement("button");
+        btn.className = "chip-btn";
+        btn.textContent = m.name;
+        btn.onclick = () => {
+          medChosenName.value = m.name;
+          medCategory.value = m.category;
+        };
+        scheduledChipsDiv.appendChild(btn);
+      });
 
-  prnChipsDiv.innerHTML = "";
-  prnMeds.forEach(m => {
-    const btn = document.createElement("button");
-    btn.className = "chip-btn";
-    btn.textContent = m.name;
-    btn.onclick = () => {
-      medChosenName.value = m.name;
-      medCategory.value   = m.category;
-    };
-    prnChipsDiv.appendChild(btn);
-  });
-}
+      prnChipsDiv.innerHTML = "";
+      prnMeds.forEach(m => {
+        const btn = document.createElement("button");
+        btn.className = "chip-btn";
+        btn.textContent = m.name;
+        btn.onclick = () => {
+          medChosenName.value = m.name;
+          medCategory.value = m.category;
+        };
+        prnChipsDiv.appendChild(btn);
+      });
+    }
 
 /* ========= State for edit modes ========= */
 let editOutputId = null;
@@ -1422,27 +1845,27 @@ let editVitalId  = null;
 let editSleepId  = null;
 let editActId    = null;
 
-/* ========= RENDER TABLES (with Edit/Delete buttons) ========= */
-function renderOutputTable() {
-  logTableBody.innerHTML = "";
-  [...outputEntries].slice().sort((a,b)=>b.time.localeCompare(a.time)).forEach(e => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${e.time||""}</td>
-      <td>${e.type||""}</td>
-      <td>${e.assist||""}</td>
-      <td>${e.amount||""}</td>
-      <td>${e.color||""}</td>
-      <td>${e.blood||""}</td>
-      <td>${e.pain||""}</td>
-      <td>${e.notes||""}</td>
-      <td class="actions-cell">
-        <button class="sec-btn" onclick="editOutput('${e.id}')">Edit</button>
-        <button class="danger-btn" onclick="deleteOutput('${e.id}')">Delete</button>
-      </td>`;
-    logTableBody.appendChild(tr);
-  });
-}
+    /* ========= RENDER TABLES (with Edit/Delete buttons) ========= */
+    function renderOutputTable() {
+      logTableBody.innerHTML = "";
+      [...outputEntries].slice().sort((a, b) => b.time.localeCompare(a.time)).forEach(e => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${e.time || ""}</td>
+          <td>${e.type || ""}</td>
+          <td>${e.assist || ""}</td>
+          <td>${e.amount || ""}</td>
+          <td>${e.color || ""}</td>
+          <td>${e.blood || ""}</td>
+          <td>${e.pain || ""}</td>
+          <td>${e.notes || ""}</td>
+          <td class="actions-cell">
+            <button class="sec-btn" onclick="editOutput('${e.id}')">Edit</button>
+            <button class="danger-btn" onclick="deleteOutput('${e.id}')">Delete</button>
+          </td>`;
+        logTableBody.appendChild(tr);
+      });
+    }
 
 function renderMedTable() {
   medTableBody.innerHTML = "";
@@ -1559,30 +1982,31 @@ function renderActTable() {
   });
 }
 
-/* ========= EDIT / DELETE HANDLERS ========= */
-/* Output */
-window.editOutput = function(id) {
-  const e = outputEntries.find(x=>x.id===id);
-  if(!e) return;
-  editOutputId = id;
-  closeAllDrawers();
-  entryTypeLabel.textContent = e.type||"";
-  dateTimeInput.value = e.time || nowLocalDatetimeValue();
-  assistSelect.value = e.assist || "unassisted";
-  amountInput.value  = e.amount || "";
-  colorInput.value   = e.color || "";
-  bloodSelect.value  = e.blood || "no";
-  painSelect.value   = e.pain  || "0";
-  notesInput.value   = e.notes || "";
-  formCard.classList.add("active");
-  saveOutputBtn.textContent = "Update Entry";
-};
-window.deleteOutput = function(id){
-  if(!confirm("Delete this output entry?")) return;
-  outputEntries = outputEntries.filter(x=>x.id!==id);
-  saveArr("outputEntries", outputEntries);
-  renderOutputTable();
-};
+    /* ========= EDIT / DELETE HANDLERS ========= */
+    /* Output */
+    window.editOutput = function(id) {
+      const e = outputEntries.find(x => x.id === id);
+      if (!e) return;
+      editOutputId = id;
+      closeAllDrawers();
+      entryTypeLabel.textContent = e.type || "";
+      dateTimeInput.value = e.time || nowLocalDatetimeValue();
+      assistSelect.value = e.assist || "unassisted";
+      amountInput.value = e.amount || "";
+      colorInput.value = e.color || "";
+      bloodSelect.value = e.blood || "no";
+      painSelect.value = e.pain || "0";
+      notesInput.value = e.notes || "";
+      formCard.classList.add("active");
+      saveOutputBtn.textContent = "Update Entry";
+    };
+
+    window.deleteOutput = function(id) {
+      if (!confirm("Delete this output entry?")) return;
+      outputEntries = outputEntries.filter(x => x.id !== id);
+      saveArr("outputEntries", outputEntries);
+      renderOutputTable();
+    };
 
 /* Meds */
 window.editMed = function(id){
@@ -1719,64 +2143,67 @@ window.deleteAct = function(id){
   renderActTable();
 };
 
-/* ========= NEW ENTRY HANDLERS ========= */
-/* OUTPUT new */
-let currentOutputType = "";
-urineBtn.addEventListener("click", ()=>{
-  closeAllDrawers();
-  editOutputId = null;
-  currentOutputType = "urine";
-  entryTypeLabel.textContent = "Urine";
-  dateTimeInput.value = nowLocalDatetimeValue();
-  assistSelect.value = "unassisted";
-  amountInput.value  = "";
-  colorInput.value   = "";
-  bloodSelect.value  = "no";
-  painSelect.value   = "0";
-  notesInput.value   = "";
-  formCard.classList.add("active");
-  saveOutputBtn.textContent = "Save Entry";
-});
-stoolBtn.addEventListener("click", ()=>{
-  closeAllDrawers();
-  editOutputId = null;
-  currentOutputType = "stool";
-  entryTypeLabel.textContent = "Stool";
-  dateTimeInput.value = nowLocalDatetimeValue();
-  assistSelect.value = "unassisted";
-  amountInput.value  = "";
-  colorInput.value   = "";
-  bloodSelect.value  = "no";
-  painSelect.value   = "0";
-  notesInput.value   = "";
-  formCard.classList.add("active");
-  saveOutputBtn.textContent = "Save Entry";
-});
-cancelOutputBtn.addEventListener("click", ()=>{
-  formCard.classList.remove("active");
-});
-saveOutputBtn.addEventListener("click", ()=>{
-  const newData = {
-    id: editOutputId || newId(),
-    time:  dateTimeInput.value,
-    type:  currentOutputType || entryTypeLabel.textContent || "",
-    assist: assistSelect.value,
-    amount: amountInput.value,
-    color:  colorInput.value,
-    blood:  bloodSelect.value,
-    pain:   painSelect.value,
-    notes:  notesInput.value
-  };
+    /* ========= NEW ENTRY HANDLERS ========= */
+    /* OUTPUT new */
+    let currentOutputType = "";
+    urineBtn.addEventListener("click", () => {
+      closeAllDrawers();
+      editOutputId = null;
+      currentOutputType = "urine";
+      entryTypeLabel.textContent = "Urine";
+      dateTimeInput.value = nowLocalDatetimeValue();
+      assistSelect.value = "unassisted";
+      amountInput.value = "";
+      colorInput.value = "";
+      bloodSelect.value = "no";
+      painSelect.value = "0";
+      notesInput.value = "";
+      formCard.classList.add("active");
+      saveOutputBtn.textContent = "Save Entry";
+    });
 
-  if(editOutputId){
-    outputEntries = outputEntries.map(x=> x.id===editOutputId ? newData : x);
-  } else {
-    outputEntries.push(newData);
-  }
-  saveArr("outputEntries", outputEntries);
-  renderOutputTable();
-  formCard.classList.remove("active");
-});
+    stoolBtn.addEventListener("click", () => {
+      closeAllDrawers();
+      editOutputId = null;
+      currentOutputType = "stool";
+      entryTypeLabel.textContent = "Stool";
+      dateTimeInput.value = nowLocalDatetimeValue();
+      assistSelect.value = "unassisted";
+      amountInput.value = "";
+      colorInput.value = "";
+      bloodSelect.value = "no";
+      painSelect.value = "0";
+      notesInput.value = "";
+      formCard.classList.add("active");
+      saveOutputBtn.textContent = "Save Entry";
+    });
+
+    cancelOutputBtn.addEventListener("click", () => {
+      formCard.classList.remove("active");
+    });
+
+    saveOutputBtn.addEventListener("click", () => {
+      const newData = {
+        id: editOutputId || newId(),
+        time: dateTimeInput.value,
+        type: currentOutputType || entryTypeLabel.textContent || "",
+        assist: assistSelect.value,
+        amount: amountInput.value,
+        color: colorInput.value,
+        blood: bloodSelect.value,
+        pain: painSelect.value,
+        notes: notesInput.value
+      };
+
+      if (editOutputId) {
+        outputEntries = outputEntries.map(x => x.id === editOutputId ? newData : x);
+      } else {
+        outputEntries.push(newData);
+      }
+      saveArr("outputEntries", outputEntries);
+      renderOutputTable();
+      formCard.classList.remove("active");
+    });
 
 /* MEDS new */
 openMedBtn.addEventListener("click", ()=>{
@@ -2007,34 +2434,34 @@ actSaveBtn.addEventListener("click", ()=>{
   actCard.classList.remove("active");
 });
 
-/* ========= CSV EXPORT HELPERS ========= */
-function csvEscape(v){
-  return `"${(v ?? "").toString().replace(/"/g,'""')}"`;
-}
+    /* ========= CSV EXPORT HELPERS ========= */
+    function csvEscape(v) {
+      return `"${(v ?? "").toString().replace(/"/g, '""')}"`;
+    }
 
-function exportSectionCSV(fnameBase, headerLabelRow, headers, rows, mapFn){
-  const ts = fileStamp();
-  const filename = `${fnameBase}_as_of_${ts}.csv`;
+    function exportSectionCSV(fnameBase, headerLabelRow, headers, rows, mapFn) {
+      const ts = fileStamp();
+      const filename = `${fnameBase}_as_of_${ts}.csv`;
 
-  const csvLines = [];
-  csvLines.push(csvEscape(headerLabelRow));
-  csvLines.push(""); // blank line
-  csvLines.push(headers.map(h=>csvEscape(h)).join(","));
+      const csvLines = [];
+      csvLines.push(csvEscape(headerLabelRow));
+      csvLines.push(""); // blank line
+      csvLines.push(headers.map(h => csvEscape(h)).join(","));
 
-  rows.forEach(r=>{
-    const mapped = mapFn(r);
-    const line = headers.map(h=>csvEscape(mapped[h] ?? "")).join(",");
-    csvLines.push(line);
-  });
+      rows.forEach(r => {
+        const mapped = mapFn(r);
+        const line = headers.map(h => csvEscape(mapped[h] ?? "")).join(",");
+        csvLines.push(line);
+      });
 
-  const blob = new Blob([csvLines.join("\n")], {type:"text/csv"});
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement("a");
-  a.href     = url;
-  a.download = filename;
-  a.click();
-  URL.revokeObjectURL(url);
-}
+      const blob = new Blob([csvLines.join("\n")], { type: "text/csv" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
 
 /* Per-section export buttons */
 exportOutputBtn.addEventListener("click", ()=>{
@@ -2222,118 +2649,118 @@ exportActBtn.addEventListener("click", ()=>{
   );
 });
 
-/* ========= EXPORT ALL SUMMARY ========= */
-function buildSummaryRows(){
-  let summary = [];
+    /* ========= EXPORT ALL SUMMARY ========= */
+    function buildSummaryRows() {
+      let summary = [];
 
-  outputEntries.forEach(r=>{
-    summary.push({
-      t: r.time || "",
-      category: "Output",
-      summary: `${r.type||""} ${r.amount||""} ${r.color||""} assist:${r.assist||""} pain:${r.pain||""} blood:${r.blood||""}`,
-      notes: r.notes||""
+      outputEntries.forEach(r => {
+        summary.push({
+          t: r.time || "",
+          category: "Output",
+          summary: `${r.type || ""} ${r.amount || ""} ${r.color || ""} assist:${r.assist || ""} pain:${r.pain || ""} blood:${r.blood || ""}`,
+          notes: r.notes || ""
+        });
+      });
+
+      medEntries.forEach(r => {
+        summary.push({
+          t: r.time || "",
+          category: "Medication",
+          summary: `${r.name || ""} (${r.category || ""}) ${r.dose || ""} for ${r.reason || ""}`,
+          notes: r.notes || ""
+        });
+      });
+
+      oxyEntries.forEach(r => {
+        summary.push({
+          t: r.time || "",
+          category: "Oxygen",
+          summary: `${r.flow || ""} L/min ${r.method || ""} x${r.duration || ""}min for ${r.reason || ""}`,
+          notes: r.relief || ""
+        });
+      });
+
+      mealEntries.forEach(r => {
+        summary.push({
+          t: r.time || "",
+          category: "Meal",
+          summary: `${r.mealType || ""}, ${r.texture || ""}, ate ${r.portion || ""}, nausea:${r.nausea || ""}`,
+          notes: r.notes || ""
+        });
+      });
+
+      vitalEntries.forEach(r => {
+        summary.push({
+          t: r.time || "",
+          category: "Vitals",
+          summary: `BP ${r.sys || ""}/${r.dia || ""}, HR ${r.pulse || ""}, RR ${r.rr || ""}, SpO2 ${r.spO2 || ""}, ${r.position || ""}, ${r.timing || ""}`,
+          notes: r.notes || ""
+        });
+      });
+
+      sleepEntries.forEach(r => {
+        summary.push({
+          t: r.start || "",
+          category: "Sleep",
+          summary: `${r.total || ""} hrs, quality:${r.quality || ""}, assist:${r.assist || ""}`,
+          notes: r.notes || `(end ${r.end || ""})`
+        });
+      });
+
+      actEntries.forEach(r => {
+        summary.push({
+          t: r.time || "",
+          category: "Activity",
+          summary: `${r.activity || ""}, assist:${r.assist || ""}, ${r.duration || ""} min, tol:${r.tolerance || ""}`,
+          notes: r.notes || ""
+        });
+      });
+
+      // sort ascending by time-ish string
+      summary.sort((a, b) => (a.t || "").localeCompare(b.t || ""));
+      return summary;
+    }
+
+    exportAllBtn.addEventListener("click", () => {
+      const rows = buildSummaryRows();
+      const ts = fileStamp();
+      const filename = `care_summary_as_of_${ts}.csv`;
+
+      const csvLines = [];
+      csvLines.push(csvEscape(`Full care summary export as of ${niceNowStamp()}`));
+      csvLines.push("");
+      csvLines.push(["Time", "Category", "Summary", "Notes"]
+        .map(h => csvEscape(h)).join(","));
+
+      rows.forEach(r => {
+        const line = [
+          csvEscape(r.t),
+          csvEscape(r.category),
+          csvEscape(r.summary),
+          csvEscape(r.notes)
+        ].join(",");
+        csvLines.push(line);
+      });
+
+      const blob = new Blob([csvLines.join("\n")], { type: "text/csv" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      a.click();
+      URL.revokeObjectURL(url);
     });
-  });
 
-  medEntries.forEach(r=>{
-    summary.push({
-      t: r.time || "",
-      category: "Medication",
-      summary: `${r.name||""} (${r.category||""}) ${r.dose||""} for ${r.reason||""}`,
-      notes: r.notes||""
-    });
-  });
-
-  oxyEntries.forEach(r=>{
-    summary.push({
-      t: r.time || "",
-      category: "Oxygen",
-      summary: `${r.flow||""} L/min ${r.method||""} x${r.duration||""}min for ${r.reason||""}`,
-      notes: r.relief||""
-    });
-  });
-
-  mealEntries.forEach(r=>{
-    summary.push({
-      t: r.time || "",
-      category: "Meal",
-      summary: `${r.mealType||""}, ${r.texture||""}, ate ${r.portion||""}, nausea:${r.nausea||""}`,
-      notes: r.notes||""
-    });
-  });
-
-  vitalEntries.forEach(r=>{
-    summary.push({
-      t: r.time || "",
-      category: "Vitals",
-      summary: `BP ${r.sys||""}/${r.dia||""}, HR ${r.pulse||""}, RR ${r.rr||""}, SpO2 ${r.spO2||""}, ${r.position||""}, ${r.timing||""}`,
-      notes: r.notes||""
-    });
-  });
-
-  sleepEntries.forEach(r=>{
-    summary.push({
-      t: r.start || "",
-      category: "Sleep",
-      summary: `${r.total||""} hrs, quality:${r.quality||""}, assist:${r.assist||""}`,
-      notes: r.notes||`(end ${r.end||""})`
-    });
-  });
-
-  actEntries.forEach(r=>{
-    summary.push({
-      t: r.time || "",
-      category: "Activity",
-      summary: `${r.activity||""}, assist:${r.assist||""}, ${r.duration||""} min, tol:${r.tolerance||""}`,
-      notes: r.notes||""
-    });
-  });
-
-  // sort ascending by time-ish string
-  summary.sort((a,b)=> (a.t||"").localeCompare(b.t||""));
-  return summary;
-}
-
-exportAllBtn.addEventListener("click", ()=>{
-  const rows = buildSummaryRows();
-  const ts = fileStamp();
-  const filename = `care_summary_as_of_${ts}.csv`;
-
-  const csvLines = [];
-  csvLines.push(csvEscape(`Full care summary export as of ${niceNowStamp()}`));
-  csvLines.push("");
-  csvLines.push(["Time","Category","Summary","Notes"]
-    .map(h=>csvEscape(h)).join(","));
-
-  rows.forEach(r=>{
-    const line = [
-      csvEscape(r.t),
-      csvEscape(r.category),
-      csvEscape(r.summary),
-      csvEscape(r.notes)
-    ].join(",");
-    csvLines.push(line);
-  });
-
-  const blob = new Blob([csvLines.join("\n")], {type:"text/csv"});
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement("a");
-  a.href     = url;
-  a.download = filename;
-  a.click();
-  URL.revokeObjectURL(url);
-});
-
-/* ========= Initial render ========= */
-renderChips();
-renderOutputTable();
-renderMedTable();
-renderOxyTable();
-renderMealTable();
-renderVitalTable();
-renderSleepTable();
-renderActTable();
-</script>
+    /* ========= Initial render ========= */
+    renderChips();
+    renderOutputTable();
+    renderMedTable();
+    renderOxyTable();
+    renderMealTable();
+    renderVitalTable();
+    renderSleepTable();
+    renderActTable();
+  </script>
 
 </body>
 </html>
