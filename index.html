@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- iOS add-to-home-screen friendliness -->
-  <meta name="apple-mobile-web-app-capable" content="yes" />
+<!-- iOS add-to-home-screen friendliness -->
+<meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="apple-mobile-web-app-title" content="HomePAL Care Tracker" />
   <meta name="theme-color" content="#0d9488" />
@@ -13,8 +13,8 @@
 
   <title>HomePAL - Care Tracker</title>
 
-  <style>
-    :root {
+<style>
+  :root {
       /* HomePAL Professional Healthcare Design System */
       --primary: #0d9488;           /* Teal - trust, care, medical */
       --primary-dark: #0f766e;
@@ -53,7 +53,7 @@
       
       --radius-sm: 0.5rem;
       --radius-md: 0.75rem;
-      --radius-lg: 1rem;
+    --radius-lg: 1rem;
       --radius-xl: 1.5rem;
       
       --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
@@ -72,14 +72,14 @@
 
     * {
       box-sizing: border-box;
-    }
+  }
 
-    body {
+  body {
       background: var(--bg-gradient);
       background-attachment: fixed;
-      color: var(--text);
+    color: var(--text);
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", "SF Pro Display", Roboto, "Helvetica Neue", sans-serif;
-      margin: 0;
+    margin: 0;
       padding: 0;
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
@@ -90,8 +90,8 @@
       max-width: 1200px;
       margin: 0 auto;
       padding: var(--spacing-xl) var(--spacing-lg);
-      display: flex;
-      flex-direction: column;
+    display: flex;
+    flex-direction: column;
       gap: var(--spacing-xl);
       min-height: 100vh;
     }
@@ -140,31 +140,31 @@
       font-weight: 500;
       margin: 0;
       margin-top: var(--spacing-xs);
-    }
+  }
 
-    header {
-      display: flex;
-      flex-direction: column;
+  header {
+    display: flex;
+    flex-direction: column;
       gap: var(--spacing-md);
-    }
+  }
 
-    header h1 {
+  header h1 {
       font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--text);
-      margin: 0;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0;
       letter-spacing: -0.01em;
-    }
+  }
 
-    header .subtitle {
+  header .subtitle {
       color: var(--text-muted);
       font-size: 0.9rem;
-      max-width: 700px;
+    max-width: 700px;
       line-height: 1.6;
-    }
+  }
 
-    .card {
-      background-color: var(--card);
+  .card {
+    background-color: var(--card);
       border-radius: var(--radius-xl);
       padding: var(--spacing-xl);
       box-shadow: var(--shadow-md);
@@ -194,9 +194,9 @@
 
     .card:hover::before {
       opacity: 1;
-    }
+  }
 
-    .alert-card {
+  .alert-card {
       position: fixed;
       bottom: var(--spacing-lg);
       right: var(--spacing-lg);
@@ -259,7 +259,7 @@
     }
 
     .alert-arrow {
-      font-size: 1rem;
+    font-size: 1rem;
       color: var(--danger-text);
       transition: transform 0.3s ease;
       flex-shrink: 0;
@@ -291,11 +291,11 @@
 
     .alert-title {
       font-size: 1.1rem;
-      font-weight: 600;
-      color: var(--danger-text);
+    font-weight: 600;
+    color: var(--danger-text);
       margin: 0 0 1rem;
-      display: flex;
-      align-items: baseline;
+    display: flex;
+    align-items: baseline;
       gap: 0.5rem;
     }
 
@@ -311,67 +311,67 @@
         max-width: 200px;
         padding: var(--spacing-xs) var(--spacing-sm);
       }
-    }
+  }
 
-    .alert-list {
-      margin: 0;
+  .alert-list {
+    margin: 0;
       padding-left: 1.5rem;
-      color: var(--text);
+    color: var(--text);
       font-size: 0.9rem;
       line-height: 1.6;
-    }
+  }
 
-    .alert-list li {
+  .alert-list li {
       margin-bottom: 0.75rem;
-    }
+  }
 
-    .section-title {
-      display: flex;
-      align-items: start;
-      justify-content: space-between;
+  .section-title {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
       margin-bottom: var(--spacing-lg);
-      flex-wrap: wrap;
+    flex-wrap: wrap;
       row-gap: var(--spacing-md);
       column-gap: var(--spacing-lg);
-    }
+  }
 
-    .section-left {
-      display: flex;
-      flex-direction: column;
+  .section-left {
+    display: flex;
+    flex-direction: column;
       gap: var(--spacing-sm);
-    }
+  }
 
-    .section-left h2 {
+  .section-left h2 {
       font-size: 1.25rem;
       font-weight: 700;
-      color: var(--text);
-      margin: 0;
-      display: flex;
-      align-items: baseline;
+    color: var(--text);
+    margin: 0;
+    display: flex;
+    align-items: baseline;
       gap: 0.75rem;
       letter-spacing: -0.01em;
-    }
+  }
 
-    .pill {
+  .pill {
       background: var(--primary-bg);
       border: 1px solid var(--primary);
       color: var(--primary-dark);
       font-size: 0.75rem;
       padding: 0.375rem 0.875rem;
-      border-radius: 999px;
+    border-radius: 999px;
       font-weight: 600;
       line-height: 1.3;
-      white-space: nowrap;
+    white-space: nowrap;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-    }
+  }
 
-    .tiny-note {
+  .tiny-note {
       font-size: 0.8rem;
-      color: var(--muted);
+    color: var(--muted);
       line-height: 1.5;
-      font-weight: 400;
-    }
+    font-weight: 400;
+  }
 
   .section-right {
     display: flex;
@@ -385,19 +385,19 @@
     flex-wrap: wrap;
   }
 
-    button.main-btn {
-      flex: 1;
+  button.main-btn {
+    flex: 1;
       min-width: calc(50% - 0.5rem);
       background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
       color: #ffffff;
-      border: 0;
+    border: 0;
       border-radius: var(--radius-md);
-      font-size: 1rem;
-      font-weight: 600;
+    font-size: 1rem;
+    font-weight: 600;
       padding: 0.875rem 1.5rem;
       line-height: 1.5;
       box-shadow: var(--shadow-md);
-      cursor: pointer;
+    cursor: pointer;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
       overflow: hidden;
@@ -427,10 +427,10 @@
     button.main-btn:active {
       transform: translateY(0);
       box-shadow: var(--shadow-sm);
-    }
+  }
 
-    button.sec-btn {
-      background-color: transparent;
+  button.sec-btn {
+    background-color: transparent;
       color: var(--primary);
       border: 2px solid var(--primary);
       border-radius: var(--radius-md);
@@ -438,7 +438,7 @@
       font-weight: 600;
       line-height: 1.5;
       padding: 0.625rem 1.25rem;
-      cursor: pointer;
+    cursor: pointer;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
@@ -448,28 +448,28 @@
       color: var(--primary-dark);
       transform: translateY(-1px);
       box-shadow: var(--shadow-sm);
-    }
+  }
 
-    button.danger-btn {
-      background-color: transparent;
-      color: var(--danger-text);
+  button.danger-btn {
+    background-color: transparent;
+    color: var(--danger-text);
       border: 1.5px solid var(--danger-text);
       border-radius: var(--radius-sm);
       font-size: 0.75rem;
-      font-weight: 500;
+    font-weight: 500;
       line-height: 1.4;
       padding: 0.5rem 0.75rem;
-      cursor: pointer;
+    cursor: pointer;
       transition: all 0.2s ease;
     }
 
     button.danger-btn:hover {
       background-color: var(--danger-bg);
-    }
+  }
 
-    .drawer-card {
-      display: none;
-      flex-direction: column;
+  .drawer-card {
+    display: none;
+    flex-direction: column;
       gap: var(--spacing-xl);
       margin-top: var(--spacing-lg);
       background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-light) 100%);
@@ -479,9 +479,9 @@
       box-shadow: var(--shadow-lg);
     }
 
-    .drawer-card.active {
-      display: flex;
-    }
+  .drawer-card.active {
+    display: flex;
+  }
 
   .block-group {
     display: flex;
@@ -489,43 +489,43 @@
     gap: 1.25rem;
   }
 
-    .flex-row-wrap {
-      display: flex;
-      flex-wrap: wrap;
+  .flex-row-wrap {
+    display: flex;
+    flex-wrap: wrap;
       column-gap: 1.25rem;
       row-gap: 1.25rem;
       align-items: flex-start;
-    }
+  }
 
-    .field {
-      display: flex;
-      flex-direction: column;
+  .field {
+    display: flex;
+    flex-direction: column;
       flex: 1 1 200px;
       min-width: 0;
       max-width: 100%;
-    }
+  }
 
-    .field-can-drop {
+  .field-can-drop {
       flex: 1 1 180px;
       min-width: 0;
       max-width: 100%;
-    }
+  }
 
-    .field label {
+  .field label {
       font-size: 0.8rem;
-      color: var(--muted);
-      font-weight: 500;
+    color: var(--muted);
+    font-weight: 500;
       line-height: 1.4;
       margin-bottom: 0.5rem;
       word-wrap: break-word;
-    }
+  }
 
-    input, select, textarea {
-      width: 100%;
+  input, select, textarea {
+    width: 100%;
       max-width: 100%;
       box-sizing: border-box;
-      background-color: var(--card);
-      color: var(--text);
+    background-color: var(--card);
+    color: var(--text);
       border: 2px solid var(--border);
       border-radius: var(--radius-md);
       padding: 0.875rem 1rem;
@@ -539,21 +539,21 @@
     select:hover,
     textarea:hover {
       border-color: var(--primary-light);
-    }
+  }
 
-    input:focus,
-    select:focus,
-    textarea:focus {
+  input:focus,
+  select:focus,
+  textarea:focus {
       outline: none;
       border-color: var(--primary);
       background-color: var(--card);
       box-shadow: 0 0 0 4px var(--primary-bg);
-    }
+  }
 
-    textarea {
+  textarea {
       min-height: 4rem;
-      resize: vertical;
-    }
+    resize: vertical;
+  }
 
   .save-row {
     display: flex;
@@ -565,39 +565,39 @@
     min-width: calc(50% - .5rem);
   }
 
-    .table-wrapper {
-      overflow-x: auto;
+  .table-wrapper {
+    overflow-x: auto;
       border-radius: var(--radius-xl);
       border: 2px solid var(--border);
       box-shadow: var(--shadow-md);
       background: var(--card);
-    }
+  }
 
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      min-width: 800px;
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 800px;
       background-color: var(--card);
-      color: var(--text);
+    color: var(--text);
       font-size: 0.875rem;
-    }
+  }
 
-    thead {
+  thead {
       background: linear-gradient(135deg, var(--primary-bg) 0%, var(--secondary-light) 100%);
-    }
+  }
 
-    th, td {
-      text-align: left;
+  th, td {
+    text-align: left;
       padding: 1rem 1.25rem;
-      vertical-align: top;
+    vertical-align: top;
       border-bottom: 1px solid var(--border);
       line-height: 1.6;
-    }
+  }
 
-    th {
+  th {
       font-weight: 700;
       color: var(--primary-dark);
-      white-space: nowrap;
+    white-space: nowrap;
       font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 0.1em;
@@ -609,11 +609,11 @@
 
     tbody tr:hover {
       background-color: var(--primary-bg);
-    }
+  }
 
-    tbody tr:last-child td {
-      border-bottom: none;
-    }
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
 
   .actions-cell {
     white-space: nowrap;
@@ -636,7 +636,7 @@
     gap: .5rem;
   }
 
-    .chip-btn {
+  .chip-btn {
       background-color: var(--primary-bg);
       border: 2px solid var(--primary);
       border-radius: var(--radius-md);
@@ -645,7 +645,7 @@
       line-height: 1.4;
       font-weight: 600;
       color: var(--primary-dark);
-      cursor: pointer;
+    cursor: pointer;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
@@ -655,7 +655,7 @@
       transform: translateY(-2px);
       box-shadow: var(--shadow-md);
       border-color: var(--primary-dark);
-    }
+  }
 
   .chip-row-smallnote {
     font-size: .7rem;
@@ -680,10 +680,10 @@
     padding: 0;
   }
 
-    footer {
+  footer {
       font-size: 0.875rem;
       color: var(--text-muted);
-      text-align: center;
+    text-align: center;
       line-height: 1.8;
       padding: var(--spacing-2xl) var(--spacing-lg) var(--spacing-2xl);
       margin-top: var(--spacing-2xl);
@@ -691,11 +691,11 @@
       border-radius: var(--radius-xl);
       border: 1px solid var(--border);
       box-shadow: var(--shadow-sm);
-    }
+  }
 
-    footer a {
+  footer a {
       color: var(--primary);
-      text-decoration: none;
+    text-decoration: none;
       font-weight: 600;
       transition: all 0.2s ease;
     }
@@ -724,8 +724,8 @@
       margin-top: var(--spacing-md);
       font-size: 0.8rem;
       color: var(--text-muted);
-    }
-  </style>
+  }
+</style>
 </head>
 
 <body>
@@ -735,18 +735,18 @@
       <div class="brand-logo">
         <img src="logo.png" alt="HomePAL Logo" class="brand-logo-img" />
       </div>
-      <header>
-        <h1>Care Tracker</h1>
-        <div class="subtitle">
+<header>
+  <h1>Care Tracker</h1>
+  <div class="subtitle">
           Comprehensive tracking for output, medications, oxygen, meals, vitals, sleep, and activity.
           All data is securely stored locally on this device.
-        </div>
+  </div>
         <div class="section-right" style="margin-top: 1rem; flex-wrap: wrap;">
           <button class="main-btn" id="exportAllBtn" style="flex: 0 0 auto; min-width: auto; padding: 0.875rem 1.5rem; font-size: 0.95rem;">
-            Export ALL Logs (Summary CSV)
-          </button>
-        </div>
-      </header>
+      Export ALL Logs (Summary CSV)
+    </button>
+  </div>
+</header>
     </div>
 
 <!-- === Patient / Hospice Info Card === -->
@@ -796,15 +796,15 @@
     <span class="alert-arrow">▲</span>
   </div>
   <div class="alert-content">
-    <ul class="alert-list">
-      <li>No urine for many hours and belly looks bigger / tight / painful</li>
-      <li>New bright red urine OR black / tarry stool</li>
-      <li>Breathing looks like gasping / pulling at neck or ribs / RR very fast even at rest</li>
+  <ul class="alert-list">
+    <li>No urine for many hours and belly looks bigger / tight / painful</li>
+    <li>New bright red urine OR black / tarry stool</li>
+    <li>Breathing looks like gasping / pulling at neck or ribs / RR very fast even at rest</li>
       <li>You cannot wake the patient or they're not responding like normal</li>
-      <li>New seizure activity</li>
-      <li>Sudden severe pain that morphine did not help</li>
+    <li>New seizure activity</li>
+    <li>Sudden severe pain that morphine did not help</li>
       <li>Your gut says "the patient looks different and I'm scared"</li>
-    </ul>
+  </ul>
     <div class="tiny-note" style="color: var(--danger-text); margin-top: 1rem; font-weight: 500;">
       Call hospice 24/7: <span id="profilePhoneDisplay" style="font-weight: 700; color: var(--danger-text); font-size: 1rem;">800-825-8556</span>
     </div>
@@ -1516,7 +1516,7 @@
   </div>
 </section>
 
-    <footer>
+<footer>
       <div class="footer-brand">HomePAL</div>
       <div class="footer-credits">
         © 2025 by <a href="https://sites.google.com/view/sabourshaik/home?authuser=0">Abdus Sabour Shaik</a> and <a href="https://www.linkedin.com/in/joshua-robert/">Joshua Robert</a>
@@ -1536,37 +1536,315 @@
           All entries stay securely on this device. This does not replace medical advice. Call hospice for urgent concerns.
         </div>
       </div>
-    </footer>
+</footer>
   </div> <!-- End app-container -->
 
-  <script>
-    /* ========= Local storage helpers ========= */
-    function loadArr(key) {
-      try {
-        return JSON.parse(localStorage.getItem(key)) || [];
-      } catch (e) {
-        return [];
+<script>
+    /* ========= MODULAR ARCHITECTURE: Data Service with Error Handling ========= */
+    const DataService = {
+      loadArr(key) {
+        try {
+          const data = localStorage.getItem(key);
+          return data ? JSON.parse(data) : [];
+        } catch (e) {
+          console.error(`Error loading ${key}:`, e);
+          this.showError(`Failed to load ${key}. Data may be corrupted.`);
+          return [];
+        }
+      },
+
+      saveArr(key, arr) {
+        try {
+          const serialized = JSON.stringify(arr);
+          const sizeMB = (serialized.length / (1024 * 1024)).toFixed(2);
+          
+          // Check storage quota (localStorage typically 5-10MB)
+          if (serialized.length > 4.5 * 1024 * 1024) {
+            throw new Error("QUOTA_EXCEEDED");
+          }
+          
+          localStorage.setItem(key, serialized);
+          
+          // Warn if approaching limit
+          if (serialized.length > 3 * 1024 * 1024) {
+            this.showWarning(`Storage is getting full (${sizeMB}MB). Consider exporting old data.`);
+          }
+          
+          return { success: true };
+        } catch (e) {
+          if (e.message === "QUOTA_EXCEEDED" || e.name === "QuotaExceededError") {
+            this.showError("Storage full! Please export your data and clear old entries.");
+            return { success: false, error: "QUOTA_EXCEEDED" };
+          }
+          console.error(`Error saving ${key}:`, e);
+          this.showError(`Failed to save ${key}. Please try again.`);
+          return { success: false, error: e.message };
+        }
+      },
+
+      loadField(key, fallback = "") {
+        try {
+  return localStorage.getItem(key) || fallback;
+        } catch (e) {
+          console.error(`Error loading field ${key}:`, e);
+          return fallback;
+        }
+      },
+
+      saveField(key, val) {
+        try {
+          const value = val || "";
+          if (value.length > 100000) {
+            throw new Error("Value too large");
+          }
+          localStorage.setItem(key, value);
+          return { success: true };
+        } catch (e) {
+          if (e.name === "QuotaExceededError") {
+            this.showError("Storage full! Please export your data.");
+            return { success: false, error: "QUOTA_EXCEEDED" };
+          }
+          console.error(`Error saving field ${key}:`, e);
+          return { success: false, error: e.message };
+        }
+      },
+
+      showError(message) {
+        // Create or update error notification
+        let errorDiv = document.getElementById("error-notification");
+        if (!errorDiv) {
+          errorDiv = document.createElement("div");
+          errorDiv.id = "error-notification";
+          errorDiv.style.cssText = `
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--danger-bg);
+            border: 2px solid var(--danger-border);
+            color: var(--danger-text);
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            z-index: 10000;
+            max-width: 500px;
+            font-weight: 600;
+          `;
+          document.body.appendChild(errorDiv);
+        }
+        errorDiv.textContent = message;
+        setTimeout(() => errorDiv.remove(), 5000);
+      },
+
+      showWarning(message) {
+        let warningDiv = document.getElementById("warning-notification");
+        if (!warningDiv) {
+          warningDiv = document.createElement("div");
+          warningDiv.id = "warning-notification";
+          warningDiv.style.cssText = `
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--warning-bg);
+            border: 2px solid var(--warning);
+            color: var(--warning-text);
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            z-index: 10000;
+            max-width: 500px;
+            font-weight: 600;
+          `;
+          document.body.appendChild(warningDiv);
+        }
+        warningDiv.textContent = message;
+        setTimeout(() => warningDiv.remove(), 4000);
+      },
+
+      showSuccess(message) {
+        let successDiv = document.getElementById("success-notification");
+        if (!successDiv) {
+          successDiv = document.createElement("div");
+          successDiv.id = "success-notification";
+          successDiv.style.cssText = `
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--success-bg);
+            border: 2px solid var(--success);
+            color: var(--success-text);
+            padding: 1rem 1.5rem;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            z-index: 10000;
+            max-width: 500px;
+            font-weight: 600;
+          `;
+          document.body.appendChild(successDiv);
+        }
+        successDiv.textContent = message;
+        setTimeout(() => successDiv.remove(), 3000);
       }
-    }
+    };
 
-    function saveArr(key, arr) {
-      localStorage.setItem(key, JSON.stringify(arr));
-    }
+    /* ========= MODULAR ARCHITECTURE: Validation Service ========= */
+    const ValidationService = {
+      // Sanitize text to prevent XSS
+      sanitize(text) {
+        if (!text) return "";
+        const div = document.createElement("div");
+        div.textContent = String(text);
+        return div.innerHTML;
+      },
 
-    function loadField(key, fallback = "") {
-      return localStorage.getItem(key) || fallback;
-    }
+      // Validate vitals and return warnings
+      validateVitals(sys, dia, pulse, rr, spO2) {
+        const warnings = [];
+        const errors = [];
 
-    function saveField(key, val) {
-      localStorage.setItem(key, val || "");
-    }
+        // Parse numeric values
+        const sysNum = sys ? parseFloat(sys) : null;
+        const diaNum = dia ? parseFloat(dia) : null;
+        const pulseNum = pulse ? parseFloat(pulse) : null;
+        const rrNum = rr ? parseFloat(rr) : null;
+        const spO2Num = spO2 ? parseFloat(spO2.toString().replace('%', '')) : null;
 
-    /* ========= ID helper ========= */
-    function newId() {
-      return Date.now().toString() + "_" + Math.random().toString(16).slice(2);
-    }
+        // Critical alerts (red flags)
+        if (spO2Num !== null) {
+          if (spO2Num < 85) {
+            errors.push("🚨 CRITICAL: SpO2 < 85% - Call hospice immediately!");
+          } else if (spO2Num < 90) {
+            warnings.push("⚠️ Low SpO2 (< 90%) - Consider calling hospice");
+          }
+        }
 
-    /* ========= Timestamp Helpers ========= */
+        if (rrNum !== null) {
+          if (rrNum > 35) {
+            errors.push("🚨 CRITICAL: Respiratory rate > 35 - Call hospice immediately!");
+          } else if (rrNum > 30) {
+            warnings.push("⚠️ High respiratory rate (> 30) - Monitor closely");
+          } else if (rrNum < 8) {
+            errors.push("🚨 CRITICAL: Respiratory rate < 8 - Call hospice immediately!");
+          }
+        }
+
+        if (sysNum !== null) {
+          if (sysNum > 200 || sysNum < 70) {
+            warnings.push("⚠️ BP outside normal range - Document and monitor");
+          }
+        }
+
+        if (diaNum !== null) {
+          if (diaNum > 120 || diaNum < 40) {
+            warnings.push("⚠️ Diastolic BP outside normal range - Document and monitor");
+          }
+        }
+
+        if (pulseNum !== null) {
+          if (pulseNum > 150) {
+            warnings.push("⚠️ High pulse rate (> 150) - Monitor closely");
+          } else if (pulseNum < 40) {
+            warnings.push("⚠️ Low pulse rate (< 40) - Monitor closely");
+          }
+        }
+
+        return { warnings, errors, isValid: errors.length === 0 };
+      },
+
+      // Check medication dosing limits
+      checkMedicationLimit(medName, medTime, allMedEntries, timeWindowHours = 24) {
+        const medLimits = {
+          "Morphine oral 0.5 mg (0.25 mL)": { max: 6, window: 24 },
+          "Lorazepam liquid 1 mg": { max: 6, window: 24 },
+          "Hyoscyamine 0.125 mg ODT": { max: 6, window: 24 },
+          "Acetaminophen 650 mg suppository": { max: 4, window: 24 },
+          "Bisacodyl 10 mg suppository": { max: 1, window: 24 },
+          "Senna 8.6 mg tabs (2 tabs)": { max: 12, window: 24 },
+          "Phenobarbital 60 mg tab": { max: 3, window: 24 }
+        };
+
+        const limit = medLimits[medName];
+        if (!limit) return { withinLimit: true, count: 0, max: null };
+
+        const windowStart = new Date(new Date(medTime).getTime() - limit.window * 60 * 60 * 1000);
+        const recentDoses = allMedEntries.filter(e => {
+          if (e.name !== medName) return false;
+          const doseTime = new Date(e.time);
+          return doseTime >= windowStart && doseTime <= new Date(medTime);
+        });
+
+        const count = recentDoses.length;
+        const withinLimit = count < limit.max;
+
+        return {
+          withinLimit,
+          count,
+          max: limit.max,
+          window: limit.window,
+          warning: !withinLimit ? `⚠️ Maximum ${limit.max} doses per ${limit.window} hours reached!` : null
+        };
+      },
+
+      // Validate medication entry
+      validateMedication(name, dose, time, allMedEntries) {
+        const errors = [];
+        const warnings = [];
+
+        if (!name || name.trim() === "") {
+          errors.push("Medication name is required");
+        }
+
+        if (!dose || dose.trim() === "") {
+          errors.push("Dose/route is required");
+        }
+
+        if (!time) {
+          errors.push("Time is required");
+        }
+
+        // Check for future dates
+        if (time && new Date(time) > new Date()) {
+          warnings.push("⚠️ Future date detected - please verify time is correct");
+        }
+
+        // Check medication limits
+        if (name) {
+          const limitCheck = this.checkMedicationLimit(name, time, allMedEntries);
+          if (!limitCheck.withinLimit) {
+            errors.push(limitCheck.warning);
+          } else if (limitCheck.count >= limitCheck.max - 1) {
+            warnings.push(`⚠️ Approaching limit: ${limitCheck.count}/${limitCheck.max} doses in last ${limitCheck.window}h`);
+          }
+        }
+
+        return { errors, warnings, isValid: errors.length === 0 };
+      },
+
+      // Validate datetime
+      validateDateTime(dateTimeStr, allowFuture = false) {
+        if (!dateTimeStr) return { isValid: false, error: "Date/time is required" };
+        
+        const date = new Date(dateTimeStr);
+        if (isNaN(date.getTime())) {
+          return { isValid: false, error: "Invalid date/time format" };
+        }
+
+        if (!allowFuture && date > new Date()) {
+          return { isValid: false, error: "Future dates are not allowed" };
+        }
+
+        return { isValid: true };
+      }
+    };
+
+/* ========= ID helper ========= */
+function newId() {
+  return Date.now().toString() + "_" + Math.random().toString(16).slice(2);
+}
+
+/* ========= Timestamp Helpers ========= */
     function nowLocalDatetimeValue() {
       const d = new Date();
       const pad = (n) => String(n).padStart(2, "0");
@@ -1601,13 +1879,13 @@
     }
 
     /* ========= Global arrays ========= */
-    let outputEntries = loadArr("outputEntries");   // urine/stool
-    let medEntries = loadArr("medEntries");         // meds
-    let oxyEntries = loadArr("oxyEntries");         // oxygen
-    let mealEntries = loadArr("mealEntries");        // meals
-    let vitalEntries = loadArr("vitalEntries");      // vitals
-    let sleepEntries = loadArr("sleepEntries");      // sleep
-    let actEntries = loadArr("actEntries");          // activity
+    let outputEntries = DataService.loadArr("outputEntries");   // urine/stool
+    let medEntries = DataService.loadArr("medEntries");         // meds
+    let oxyEntries = DataService.loadArr("oxyEntries");         // oxygen
+    let mealEntries = DataService.loadArr("mealEntries");        // meals
+    let vitalEntries = DataService.loadArr("vitalEntries");      // vitals
+    let sleepEntries = DataService.loadArr("sleepEntries");      // sleep
+    let actEntries = DataService.loadArr("actEntries");          // activity
 
     /* ========= Profile load ========= */
     const profileNameEl = document.getElementById("profileName");
@@ -1640,10 +1918,10 @@
     }
 
     // Load profile values
-    profileNameEl.value = loadField("profileName", "");
-    profileDOBEl.value = loadField("profileDOB", "");
-    profileHospiceEl.value = loadField("profileHospice", "Redwood Hospice");
-    profilePhoneEl.value = loadField("profilePhone", "800-825-8556");
+    profileNameEl.value = DataService.loadField("profileName", "");
+    profileDOBEl.value = DataService.loadField("profileDOB", "");
+    profileHospiceEl.value = DataService.loadField("profileHospice", "Redwood Hospice");
+    profilePhoneEl.value = DataService.loadField("profilePhone", "800-825-8556");
 
     // Update all references on page load
     updateHospiceReferences();
@@ -1655,12 +1933,17 @@
     // 2. Display the hospice name and phone number throughout the app (alert card, footer)
     // All data stays local - never sent to any server
     document.getElementById("saveProfileBtn").addEventListener("click", () => {
-      saveField("profileName", profileNameEl.value);
-      saveField("profileDOB", profileDOBEl.value);
-      saveField("profileHospice", profileHospiceEl.value);
-      saveField("profilePhone", profilePhoneEl.value);
-      updateHospiceReferences();
-      alert("Profile saved on this device.");
+      const results = [
+        DataService.saveField("profileName", profileNameEl.value),
+        DataService.saveField("profileDOB", profileDOBEl.value),
+        DataService.saveField("profileHospice", profileHospiceEl.value),
+        DataService.saveField("profilePhone", profilePhoneEl.value)
+      ];
+      
+      if (results.every(r => r.success)) {
+        updateHospiceReferences();
+        DataService.showSuccess("Profile saved on this device.");
+      }
     });
 
     // Also update when user types in the fields (optional - for real-time updates)
@@ -1802,39 +2085,39 @@ let prnMeds = [
   { name: "Phenobarbital 60 mg tab", category: "prn" }
 ];
 
-    /* ========= Drawer helpers ========= */
-    function closeAllDrawers() {
+/* ========= Drawer helpers ========= */
+function closeAllDrawers() {
       [formCard, medCard, oxyCard, mealCard, vitalsCard, sleepCard, actCard].forEach(el => {
-        el.classList.remove("active");
-      });
-    }
+    el.classList.remove("active");
+  });
+}
 
-    /* ========= Render chips for meds ========= */
-    function renderChips() {
-      scheduledChipsDiv.innerHTML = "";
-      scheduledMeds.forEach(m => {
-        const btn = document.createElement("button");
-        btn.className = "chip-btn";
-        btn.textContent = m.name;
-        btn.onclick = () => {
-          medChosenName.value = m.name;
+/* ========= Render chips for meds ========= */
+function renderChips() {
+  scheduledChipsDiv.innerHTML = "";
+  scheduledMeds.forEach(m => {
+    const btn = document.createElement("button");
+    btn.className = "chip-btn";
+    btn.textContent = m.name;
+    btn.onclick = () => {
+      medChosenName.value = m.name;
           medCategory.value = m.category;
-        };
-        scheduledChipsDiv.appendChild(btn);
-      });
+    };
+    scheduledChipsDiv.appendChild(btn);
+  });
 
-      prnChipsDiv.innerHTML = "";
-      prnMeds.forEach(m => {
-        const btn = document.createElement("button");
-        btn.className = "chip-btn";
-        btn.textContent = m.name;
-        btn.onclick = () => {
-          medChosenName.value = m.name;
+  prnChipsDiv.innerHTML = "";
+  prnMeds.forEach(m => {
+    const btn = document.createElement("button");
+    btn.className = "chip-btn";
+    btn.textContent = m.name;
+    btn.onclick = () => {
+      medChosenName.value = m.name;
           medCategory.value = m.category;
-        };
-        prnChipsDiv.appendChild(btn);
-      });
-    }
+    };
+    prnChipsDiv.appendChild(btn);
+  });
+}
 
 /* ========= State for edit modes ========= */
 let editOutputId = null;
@@ -1845,168 +2128,320 @@ let editVitalId  = null;
 let editSleepId  = null;
 let editActId    = null;
 
-    /* ========= RENDER TABLES (with Edit/Delete buttons) ========= */
-    function renderOutputTable() {
-      logTableBody.innerHTML = "";
+    /* ========= RENDER TABLES (with Edit/Delete buttons) - XSS Safe ========= */
+function renderOutputTable() {
+  logTableBody.innerHTML = "";
       [...outputEntries].slice().sort((a, b) => b.time.localeCompare(a.time)).forEach(e => {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${e.time || ""}</td>
-          <td>${e.type || ""}</td>
-          <td>${e.assist || ""}</td>
-          <td>${e.amount || ""}</td>
-          <td>${e.color || ""}</td>
-          <td>${e.blood || ""}</td>
-          <td>${e.pain || ""}</td>
-          <td>${e.notes || ""}</td>
-          <td class="actions-cell">
-            <button class="sec-btn" onclick="editOutput('${e.id}')">Edit</button>
-            <button class="danger-btn" onclick="deleteOutput('${e.id}')">Delete</button>
-          </td>`;
-        logTableBody.appendChild(tr);
-      });
-    }
+    const tr = document.createElement("tr");
+        
+        // Create cells safely to prevent XSS
+        const cells = [
+          ValidationService.sanitize(e.time || ""),
+          ValidationService.sanitize(e.type || ""),
+          ValidationService.sanitize(e.assist || ""),
+          ValidationService.sanitize(e.amount || ""),
+          ValidationService.sanitize(e.color || ""),
+          ValidationService.sanitize(e.blood || ""),
+          ValidationService.sanitize(e.pain || ""),
+          ValidationService.sanitize(e.notes || "")
+        ];
+        
+        cells.forEach(text => {
+          const td = document.createElement("td");
+          td.textContent = text;
+          tr.appendChild(td);
+        });
+        
+        // Actions cell
+        const actionsCell = document.createElement("td");
+        actionsCell.className = "actions-cell";
+        
+        const editBtn = document.createElement("button");
+        editBtn.className = "sec-btn";
+        editBtn.textContent = "Edit";
+        editBtn.onclick = () => editOutput(e.id);
+        actionsCell.appendChild(editBtn);
+        
+        const deleteBtn = document.createElement("button");
+        deleteBtn.className = "danger-btn";
+        deleteBtn.textContent = "Delete";
+        deleteBtn.onclick = () => deleteOutput(e.id);
+        actionsCell.appendChild(deleteBtn);
+        
+        tr.appendChild(actionsCell);
+    logTableBody.appendChild(tr);
+  });
+}
 
 function renderMedTable() {
   medTableBody.innerHTML = "";
-  [...medEntries].slice().sort((a,b)=>b.time.localeCompare(a.time)).forEach(e => {
+      [...medEntries].slice().sort((a, b) => b.time.localeCompare(a.time)).forEach(e => {
     const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${e.time||""}</td>
-      <td>${e.name||""}</td>
-      <td>${e.category||""}</td>
-      <td>${e.dose||""}</td>
-      <td>${e.reason||""}</td>
-      <td>${e.notes||""}</td>
-      <td class="actions-cell">
-        <button class="sec-btn" onclick="editMed('${e.id}')">Edit</button>
-        <button class="danger-btn" onclick="deleteMed('${e.id}')">Delete</button>
-      </td>`;
+        
+        const cells = [
+          ValidationService.sanitize(e.time || ""),
+          ValidationService.sanitize(e.name || ""),
+          ValidationService.sanitize(e.category || ""),
+          ValidationService.sanitize(e.dose || ""),
+          ValidationService.sanitize(e.reason || ""),
+          ValidationService.sanitize(e.notes || "")
+        ];
+        
+        cells.forEach(text => {
+          const td = document.createElement("td");
+          td.textContent = text;
+          tr.appendChild(td);
+        });
+        
+        const actionsCell = document.createElement("td");
+        actionsCell.className = "actions-cell";
+        
+        const editBtn = document.createElement("button");
+        editBtn.className = "sec-btn";
+        editBtn.textContent = "Edit";
+        editBtn.onclick = () => editMed(e.id);
+        actionsCell.appendChild(editBtn);
+        
+        const deleteBtn = document.createElement("button");
+        deleteBtn.className = "danger-btn";
+        deleteBtn.textContent = "Delete";
+        deleteBtn.onclick = () => deleteMed(e.id);
+        actionsCell.appendChild(deleteBtn);
+        
+        tr.appendChild(actionsCell);
     medTableBody.appendChild(tr);
   });
 }
 
 function renderOxyTable() {
   oxyTableBody.innerHTML = "";
-  [...oxyEntries].slice().sort((a,b)=>b.time.localeCompare(a.time)).forEach(e => {
+      [...oxyEntries].slice().sort((a, b) => b.time.localeCompare(a.time)).forEach(e => {
     const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${e.time||""}</td>
-      <td>${e.flow||""} / ${e.method||""}</td>
-      <td>${e.duration||""}</td>
-      <td>${e.reason||""}</td>
-      <td>${e.relief||""}</td>
-      <td class="actions-cell">
-        <button class="sec-btn" onclick="editOxy('${e.id}')">Edit</button>
-        <button class="danger-btn" onclick="deleteOxy('${e.id}')">Delete</button>
-      </td>`;
+        
+        const cells = [
+          ValidationService.sanitize(e.time || ""),
+          ValidationService.sanitize(`${e.flow || ""} / ${e.method || ""}`),
+          ValidationService.sanitize(e.duration || ""),
+          ValidationService.sanitize(e.reason || ""),
+          ValidationService.sanitize(e.relief || "")
+        ];
+        
+        cells.forEach(text => {
+          const td = document.createElement("td");
+          td.textContent = text;
+          tr.appendChild(td);
+        });
+        
+        const actionsCell = document.createElement("td");
+        actionsCell.className = "actions-cell";
+        
+        const editBtn = document.createElement("button");
+        editBtn.className = "sec-btn";
+        editBtn.textContent = "Edit";
+        editBtn.onclick = () => editOxy(e.id);
+        actionsCell.appendChild(editBtn);
+        
+        const deleteBtn = document.createElement("button");
+        deleteBtn.className = "danger-btn";
+        deleteBtn.textContent = "Delete";
+        deleteBtn.onclick = () => deleteOxy(e.id);
+        actionsCell.appendChild(deleteBtn);
+        
+        tr.appendChild(actionsCell);
     oxyTableBody.appendChild(tr);
   });
 }
 
 function renderMealTable() {
   mealTableBody.innerHTML = "";
-  [...mealEntries].slice().sort((a,b)=>b.time.localeCompare(a.time)).forEach(e => {
+      [...mealEntries].slice().sort((a, b) => b.time.localeCompare(a.time)).forEach(e => {
     const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${e.time||""}</td>
-      <td>${e.mealType||""}</td>
-      <td>${e.texture||""}</td>
-      <td>${e.portion||""}</td>
-      <td>${e.nausea||""}</td>
-      <td>${e.notes||""}</td>
-      <td class="actions-cell">
-        <button class="sec-btn" onclick="editMeal('${e.id}')">Edit</button>
-        <button class="danger-btn" onclick="deleteMeal('${e.id}')">Delete</button>
-      </td>`;
+        
+        const cells = [
+          ValidationService.sanitize(e.time || ""),
+          ValidationService.sanitize(e.mealType || ""),
+          ValidationService.sanitize(e.texture || ""),
+          ValidationService.sanitize(e.portion || ""),
+          ValidationService.sanitize(e.nausea || ""),
+          ValidationService.sanitize(e.notes || "")
+        ];
+        
+        cells.forEach(text => {
+          const td = document.createElement("td");
+          td.textContent = text;
+          tr.appendChild(td);
+        });
+        
+        const actionsCell = document.createElement("td");
+        actionsCell.className = "actions-cell";
+        
+        const editBtn = document.createElement("button");
+        editBtn.className = "sec-btn";
+        editBtn.textContent = "Edit";
+        editBtn.onclick = () => editMeal(e.id);
+        actionsCell.appendChild(editBtn);
+        
+        const deleteBtn = document.createElement("button");
+        deleteBtn.className = "danger-btn";
+        deleteBtn.textContent = "Delete";
+        deleteBtn.onclick = () => deleteMeal(e.id);
+        actionsCell.appendChild(deleteBtn);
+        
+        tr.appendChild(actionsCell);
     mealTableBody.appendChild(tr);
   });
 }
 
 function renderVitalTable() {
   vitalTableBody.innerHTML = "";
-  [...vitalEntries].slice().sort((a,b)=>b.time.localeCompare(a.time)).forEach(e => {
+      [...vitalEntries].slice().sort((a, b) => b.time.localeCompare(a.time)).forEach(e => {
     const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${e.time||""}</td>
-      <td>${e.sys||""}/${e.dia||""}</td>
-      <td>${e.pulse||""}</td>
-      <td>${e.rr||""}</td>
-      <td>${e.spO2||""}</td>
-      <td>${e.position||""}</td>
-      <td>${e.timing||""}</td>
-      <td>${e.notes||""}</td>
-      <td class="actions-cell">
-        <button class="sec-btn" onclick="editVital('${e.id}')">Edit</button>
-        <button class="danger-btn" onclick="deleteVital('${e.id}')">Delete</button>
-      </td>`;
+        
+        const cells = [
+          ValidationService.sanitize(e.time || ""),
+          ValidationService.sanitize(`${e.sys || ""}/${e.dia || ""}`),
+          ValidationService.sanitize(e.pulse || ""),
+          ValidationService.sanitize(e.rr || ""),
+          ValidationService.sanitize(e.spO2 || ""),
+          ValidationService.sanitize(e.position || ""),
+          ValidationService.sanitize(e.timing || ""),
+          ValidationService.sanitize(e.notes || "")
+        ];
+        
+        cells.forEach(text => {
+          const td = document.createElement("td");
+          td.textContent = text;
+          tr.appendChild(td);
+        });
+        
+        const actionsCell = document.createElement("td");
+        actionsCell.className = "actions-cell";
+        
+        const editBtn = document.createElement("button");
+        editBtn.className = "sec-btn";
+        editBtn.textContent = "Edit";
+        editBtn.onclick = () => editVital(e.id);
+        actionsCell.appendChild(editBtn);
+        
+        const deleteBtn = document.createElement("button");
+        deleteBtn.className = "danger-btn";
+        deleteBtn.textContent = "Delete";
+        deleteBtn.onclick = () => deleteVital(e.id);
+        actionsCell.appendChild(deleteBtn);
+        
+        tr.appendChild(actionsCell);
     vitalTableBody.appendChild(tr);
   });
 }
 
 function renderSleepTable() {
   sleepTableBody.innerHTML = "";
-  [...sleepEntries].slice().sort((a,b)=>b.start.localeCompare(a.start)).forEach(e => {
+      [...sleepEntries].slice().sort((a, b) => b.start.localeCompare(a.start)).forEach(e => {
     const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${e.start||""}</td>
-      <td>${e.end||""}</td>
-      <td>${e.total||""}</td>
-      <td>${e.quality||""}</td>
-      <td>${e.assist||""}</td>
-      <td>${e.notes||""}</td>
-      <td class="actions-cell">
-        <button class="sec-btn" onclick="editSleep('${e.id}')">Edit</button>
-        <button class="danger-btn" onclick="deleteSleep('${e.id}')">Delete</button>
-      </td>`;
+        
+        const cells = [
+          ValidationService.sanitize(e.start || ""),
+          ValidationService.sanitize(e.end || ""),
+          ValidationService.sanitize(e.total || ""),
+          ValidationService.sanitize(e.quality || ""),
+          ValidationService.sanitize(e.assist || ""),
+          ValidationService.sanitize(e.notes || "")
+        ];
+        
+        cells.forEach(text => {
+          const td = document.createElement("td");
+          td.textContent = text;
+          tr.appendChild(td);
+        });
+        
+        const actionsCell = document.createElement("td");
+        actionsCell.className = "actions-cell";
+        
+        const editBtn = document.createElement("button");
+        editBtn.className = "sec-btn";
+        editBtn.textContent = "Edit";
+        editBtn.onclick = () => editSleep(e.id);
+        actionsCell.appendChild(editBtn);
+        
+        const deleteBtn = document.createElement("button");
+        deleteBtn.className = "danger-btn";
+        deleteBtn.textContent = "Delete";
+        deleteBtn.onclick = () => deleteSleep(e.id);
+        actionsCell.appendChild(deleteBtn);
+        
+        tr.appendChild(actionsCell);
     sleepTableBody.appendChild(tr);
   });
 }
 
 function renderActTable() {
   actTableBody.innerHTML = "";
-  [...actEntries].slice().sort((a,b)=>b.time.localeCompare(a.time)).forEach(e => {
+      [...actEntries].slice().sort((a, b) => b.time.localeCompare(a.time)).forEach(e => {
     const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${e.time||""}</td>
-      <td>${e.activity||""}</td>
-      <td>${e.assist||""}</td>
-      <td>${e.duration||""}</td>
-      <td>${e.tolerance||""}</td>
-      <td>${e.notes||""}</td>
-      <td class="actions-cell">
-        <button class="sec-btn" onclick="editAct('${e.id}')">Edit</button>
-        <button class="danger-btn" onclick="deleteAct('${e.id}')">Delete</button>
-      </td>`;
+        
+        const cells = [
+          ValidationService.sanitize(e.time || ""),
+          ValidationService.sanitize(e.activity || ""),
+          ValidationService.sanitize(e.assist || ""),
+          ValidationService.sanitize(e.duration || ""),
+          ValidationService.sanitize(e.tolerance || ""),
+          ValidationService.sanitize(e.notes || "")
+        ];
+        
+        cells.forEach(text => {
+          const td = document.createElement("td");
+          td.textContent = text;
+          tr.appendChild(td);
+        });
+        
+        const actionsCell = document.createElement("td");
+        actionsCell.className = "actions-cell";
+        
+        const editBtn = document.createElement("button");
+        editBtn.className = "sec-btn";
+        editBtn.textContent = "Edit";
+        editBtn.onclick = () => editAct(e.id);
+        actionsCell.appendChild(editBtn);
+        
+        const deleteBtn = document.createElement("button");
+        deleteBtn.className = "danger-btn";
+        deleteBtn.textContent = "Delete";
+        deleteBtn.onclick = () => deleteAct(e.id);
+        actionsCell.appendChild(deleteBtn);
+        
+        tr.appendChild(actionsCell);
     actTableBody.appendChild(tr);
   });
 }
 
-    /* ========= EDIT / DELETE HANDLERS ========= */
-    /* Output */
-    window.editOutput = function(id) {
+/* ========= EDIT / DELETE HANDLERS ========= */
+/* Output */
+window.editOutput = function(id) {
       const e = outputEntries.find(x => x.id === id);
       if (!e) return;
-      editOutputId = id;
-      closeAllDrawers();
+  editOutputId = id;
+  closeAllDrawers();
       entryTypeLabel.textContent = e.type || "";
-      dateTimeInput.value = e.time || nowLocalDatetimeValue();
-      assistSelect.value = e.assist || "unassisted";
+  dateTimeInput.value = e.time || nowLocalDatetimeValue();
+  assistSelect.value = e.assist || "unassisted";
       amountInput.value = e.amount || "";
       colorInput.value = e.color || "";
       bloodSelect.value = e.blood || "no";
       painSelect.value = e.pain || "0";
       notesInput.value = e.notes || "";
-      formCard.classList.add("active");
-      saveOutputBtn.textContent = "Update Entry";
-    };
+  formCard.classList.add("active");
+  saveOutputBtn.textContent = "Update Entry";
+};
 
     window.deleteOutput = function(id) {
       if (!confirm("Delete this output entry?")) return;
       outputEntries = outputEntries.filter(x => x.id !== id);
-      saveArr("outputEntries", outputEntries);
-      renderOutputTable();
-    };
+      const result = DataService.saveArr("outputEntries", outputEntries);
+      if (result.success) {
+  renderOutputTable();
+        DataService.showSuccess("Entry deleted");
+      }
+};
 
 /* Meds */
 window.editMed = function(id){
@@ -2023,11 +2458,14 @@ window.editMed = function(id){
   medCard.classList.add("active");
   medSaveBtn.textContent = "Update Med Entry";
 };
-window.deleteMed = function(id){
-  if(!confirm("Delete this medication entry?")) return;
-  medEntries = medEntries.filter(x=>x.id!==id);
-  saveArr("medEntries", medEntries);
+    window.deleteMed = function(id) {
+      if (!confirm("Delete this medication entry?")) return;
+      medEntries = medEntries.filter(x => x.id !== id);
+      const result = DataService.saveArr("medEntries", medEntries);
+      if (result.success) {
   renderMedTable();
+        DataService.showSuccess("Medication entry deleted");
+      }
 };
 
 /* Oxygen */
@@ -2045,165 +2483,195 @@ window.editOxy = function(id){
   oxyCard.classList.add("active");
   oxySaveBtn.textContent = "Update Oxygen Entry";
 };
-window.deleteOxy = function(id){
-  if(!confirm("Delete this oxygen entry?")) return;
-  oxyEntries = oxyEntries.filter(x=>x.id!==id);
-  saveArr("oxyEntries", oxyEntries);
+    window.deleteOxy = function(id) {
+      if (!confirm("Delete this oxygen entry?")) return;
+      oxyEntries = oxyEntries.filter(x => x.id !== id);
+      const result = DataService.saveArr("oxyEntries", oxyEntries);
+      if (result.success) {
   renderOxyTable();
+        DataService.showSuccess("Oxygen entry deleted");
+      }
 };
 
 /* Meals */
-window.editMeal = function(id){
-  const e = mealEntries.find(x=>x.id===id);
-  if(!e) return;
+    window.editMeal = function(id) {
+      const e = mealEntries.find(x => x.id === id);
+      if (!e) return;
   editMealId = id;
   closeAllDrawers();
   mealDateTimeInput.value = e.time || nowLocalDatetimeValue();
-  mealTypeSelect.value    = e.mealType || "Dinner";
+      mealTypeSelect.value = e.mealType || "Dinner";
   mealTextureSelect.value = e.texture || "Regular";
   mealPercentSelect.value = e.portion || "0%";
-  mealNauseaSelect.value  = e.nausea || "No";
-  mealNotesInput.value    = e.notes || "";
+      mealNauseaSelect.value = e.nausea || "No";
+      mealNotesInput.value = e.notes || "";
   mealCard.classList.add("active");
   mealSaveBtn.textContent = "Update Meal Entry";
 };
-window.deleteMeal = function(id){
-  if(!confirm("Delete this meal entry?")) return;
-  mealEntries = mealEntries.filter(x=>x.id!==id);
-  saveArr("mealEntries", mealEntries);
+
+    window.deleteMeal = function(id) {
+      if (!confirm("Delete this meal entry?")) return;
+      mealEntries = mealEntries.filter(x => x.id !== id);
+      const result = DataService.saveArr("mealEntries", mealEntries);
+      if (result.success) {
   renderMealTable();
+        DataService.showSuccess("Meal entry deleted");
+      }
 };
 
 /* Vitals */
-window.editVital = function(id){
-  const e = vitalEntries.find(x=>x.id===id);
-  if(!e) return;
+    window.editVital = function(id) {
+      const e = vitalEntries.find(x => x.id === id);
+      if (!e) return;
   editVitalId = id;
   closeAllDrawers();
   vitalDateTimeInput.value = e.time || nowLocalDatetimeValue();
-  vitalSysInput.value      = e.sys || "";
-  vitalDiaInput.value      = e.dia || "";
-  vitalPulseInput.value    = e.pulse || "";
-  vitalRRInput.value       = e.rr || "";
-  vitalSpO2Input.value     = e.spO2 || "";
-  vitalPosSelect.value     = e.position || "Sitting";
+      vitalSysInput.value = e.sys || "";
+      vitalDiaInput.value = e.dia || "";
+      vitalPulseInput.value = e.pulse || "";
+      vitalRRInput.value = e.rr || "";
+      vitalSpO2Input.value = e.spO2 || "";
+      vitalPosSelect.value = e.position || "Sitting";
   vitalFastingSelect.value = e.timing || "Fasting / before meal";
-  vitalNotesInput.value    = e.notes || "";
+      vitalNotesInput.value = e.notes || "";
   vitalsCard.classList.add("active");
   vitalSaveBtn.textContent = "Update Vitals Entry";
 };
-window.deleteVital = function(id){
-  if(!confirm("Delete this vitals entry?")) return;
-  vitalEntries = vitalEntries.filter(x=>x.id!==id);
-  saveArr("vitalEntries", vitalEntries);
+
+    window.deleteVital = function(id) {
+      if (!confirm("Delete this vitals entry?")) return;
+      vitalEntries = vitalEntries.filter(x => x.id !== id);
+      const result = DataService.saveArr("vitalEntries", vitalEntries);
+      if (result.success) {
   renderVitalTable();
+        DataService.showSuccess("Vitals entry deleted");
+      }
 };
 
 /* Sleep */
-window.editSleep = function(id){
-  const e = sleepEntries.find(x=>x.id===id);
-  if(!e) return;
+    window.editSleep = function(id) {
+      const e = sleepEntries.find(x => x.id === id);
+      if (!e) return;
   editSleepId = id;
   closeAllDrawers();
-  sleepStartInput.value    = e.start || nowLocalDatetimeValue();
-  sleepEndInput.value      = e.end || "";
-  sleepTotalInput.value    = e.total || "";
+      sleepStartInput.value = e.start || nowLocalDatetimeValue();
+      sleepEndInput.value = e.end || "";
+      sleepTotalInput.value = e.total || "";
   sleepQualitySelect.value = e.quality || "Good / mostly calm";
-  sleepAssistSelect.value  = e.assist || "No help needed";
-  sleepNotesInput.value    = e.notes || "";
+      sleepAssistSelect.value = e.assist || "No help needed";
+      sleepNotesInput.value = e.notes || "";
   sleepCard.classList.add("active");
   sleepSaveBtn.textContent = "Update Sleep Entry";
 };
-window.deleteSleep = function(id){
-  if(!confirm("Delete this sleep entry?")) return;
-  sleepEntries = sleepEntries.filter(x=>x.id!==id);
-  saveArr("sleepEntries", sleepEntries);
+
+    window.deleteSleep = function(id) {
+      if (!confirm("Delete this sleep entry?")) return;
+      sleepEntries = sleepEntries.filter(x => x.id !== id);
+      const result = DataService.saveArr("sleepEntries", sleepEntries);
+      if (result.success) {
   renderSleepTable();
+        DataService.showSuccess("Sleep entry deleted");
+      }
 };
 
 /* Activity */
-window.editAct = function(id){
-  const e = actEntries.find(x=>x.id===id);
-  if(!e) return;
+    window.editAct = function(id) {
+      const e = actEntries.find(x => x.id === id);
+      if (!e) return;
   editActId = id;
   closeAllDrawers();
-  actDateTimeInput.value   = e.time || nowLocalDatetimeValue();
-  actTypeInput.value       = e.activity || "";
-  actAssistSelect.value    = e.assist || "Independent";
-  actDurationInput.value   = e.duration || "";
+      actDateTimeInput.value = e.time || nowLocalDatetimeValue();
+      actTypeInput.value = e.activity || "";
+      actAssistSelect.value = e.assist || "Independent";
+      actDurationInput.value = e.duration || "";
   actToleranceSelect.value = e.tolerance || "Okay";
-  actNotesInput.value      = e.notes || "";
+      actNotesInput.value = e.notes || "";
   actCard.classList.add("active");
-  actSaveBtn.textContent   = "Update Activity Entry";
-};
-window.deleteAct = function(id){
-  if(!confirm("Delete this activity entry?")) return;
-  actEntries = actEntries.filter(x=>x.id!==id);
-  saveArr("actEntries", actEntries);
+      actSaveBtn.textContent = "Update Activity Entry";
+    };
+
+    window.deleteAct = function(id) {
+      if (!confirm("Delete this activity entry?")) return;
+      actEntries = actEntries.filter(x => x.id !== id);
+      const result = DataService.saveArr("actEntries", actEntries);
+      if (result.success) {
   renderActTable();
+        DataService.showSuccess("Activity entry deleted");
+      }
 };
 
-    /* ========= NEW ENTRY HANDLERS ========= */
-    /* OUTPUT new */
-    let currentOutputType = "";
+/* ========= NEW ENTRY HANDLERS ========= */
+/* OUTPUT new */
+let currentOutputType = "";
     urineBtn.addEventListener("click", () => {
-      closeAllDrawers();
-      editOutputId = null;
-      currentOutputType = "urine";
-      entryTypeLabel.textContent = "Urine";
-      dateTimeInput.value = nowLocalDatetimeValue();
-      assistSelect.value = "unassisted";
+  closeAllDrawers();
+  editOutputId = null;
+  currentOutputType = "urine";
+  entryTypeLabel.textContent = "Urine";
+  dateTimeInput.value = nowLocalDatetimeValue();
+  assistSelect.value = "unassisted";
       amountInput.value = "";
       colorInput.value = "";
       bloodSelect.value = "no";
       painSelect.value = "0";
       notesInput.value = "";
-      formCard.classList.add("active");
-      saveOutputBtn.textContent = "Save Entry";
-    });
+  formCard.classList.add("active");
+  saveOutputBtn.textContent = "Save Entry";
+});
 
     stoolBtn.addEventListener("click", () => {
-      closeAllDrawers();
-      editOutputId = null;
-      currentOutputType = "stool";
-      entryTypeLabel.textContent = "Stool";
-      dateTimeInput.value = nowLocalDatetimeValue();
-      assistSelect.value = "unassisted";
+  closeAllDrawers();
+  editOutputId = null;
+  currentOutputType = "stool";
+  entryTypeLabel.textContent = "Stool";
+  dateTimeInput.value = nowLocalDatetimeValue();
+  assistSelect.value = "unassisted";
       amountInput.value = "";
       colorInput.value = "";
       bloodSelect.value = "no";
       painSelect.value = "0";
       notesInput.value = "";
-      formCard.classList.add("active");
-      saveOutputBtn.textContent = "Save Entry";
-    });
+  formCard.classList.add("active");
+  saveOutputBtn.textContent = "Save Entry";
+});
 
     cancelOutputBtn.addEventListener("click", () => {
-      formCard.classList.remove("active");
-    });
+  formCard.classList.remove("active");
+});
 
     saveOutputBtn.addEventListener("click", () => {
-      const newData = {
-        id: editOutputId || newId(),
+      // Validate datetime
+      const dateValidation = ValidationService.validateDateTime(dateTimeInput.value, true);
+      if (!dateValidation.isValid) {
+        DataService.showError(dateValidation.error);
+        return;
+      }
+
+  const newData = {
+    id: editOutputId || newId(),
         time: dateTimeInput.value,
         type: currentOutputType || entryTypeLabel.textContent || "",
-        assist: assistSelect.value,
-        amount: amountInput.value,
-        color: colorInput.value,
+    assist: assistSelect.value,
+        amount: amountInput.value.trim(),
+        color: colorInput.value.trim(),
         blood: bloodSelect.value,
         pain: painSelect.value,
-        notes: notesInput.value
+        notes: notesInput.value.trim()
       };
 
       if (editOutputId) {
         outputEntries = outputEntries.map(x => x.id === editOutputId ? newData : x);
-      } else {
-        outputEntries.push(newData);
+  } else {
+    outputEntries.push(newData);
+  }
+      
+      const result = DataService.saveArr("outputEntries", outputEntries);
+      if (result.success) {
+  renderOutputTable();
+  formCard.classList.remove("active");
+        DataService.showSuccess("Output entry saved");
       }
-      saveArr("outputEntries", outputEntries);
-      renderOutputTable();
-      formCard.classList.remove("active");
-    });
+});
 
 /* MEDS new */
 openMedBtn.addEventListener("click", ()=>{
@@ -2221,24 +2689,48 @@ openMedBtn.addEventListener("click", ()=>{
 medCancelBtn.addEventListener("click", ()=>{
   medCard.classList.remove("active");
 });
-medSaveBtn.addEventListener("click", ()=>{
+    medSaveBtn.addEventListener("click", () => {
+      // Validate medication entry
+      const validation = ValidationService.validateMedication(
+        medChosenName.value,
+        medDoseInput.value,
+        medDateTimeInput.value,
+        medEntries.filter(e => e.id !== editMedId) // Exclude current entry if editing
+      );
+
+      // Show errors - block save if critical
+      if (validation.errors.length > 0) {
+        validation.errors.forEach(err => DataService.showError(err));
+        return;
+      }
+
+      // Show warnings but allow save
+      if (validation.warnings.length > 0) {
+        validation.warnings.forEach(warn => DataService.showWarning(warn));
+      }
+
   const newData = {
     id: editMedId || newId(),
-    time:   medDateTimeInput.value,
-    name:   medChosenName.value,
-    category: medCategory.value,
-    dose:   medDoseInput.value,
-    reason: medReasonInput.value,
-    notes:  medNotesInput.value
-  };
-  if(editMedId){
-    medEntries = medEntries.map(x=> x.id===editMedId ? newData : x);
+        time: medDateTimeInput.value,
+        name: medChosenName.value.trim(),
+        category: medCategory.value.trim(),
+        dose: medDoseInput.value.trim(),
+        reason: medReasonInput.value.trim(),
+        notes: medNotesInput.value.trim()
+      };
+
+      if (editMedId) {
+        medEntries = medEntries.map(x => x.id === editMedId ? newData : x);
   } else {
     medEntries.push(newData);
   }
-  saveArr("medEntries", medEntries);
+
+      const result = DataService.saveArr("medEntries", medEntries);
+      if (result.success) {
   renderMedTable();
   medCard.classList.remove("active");
+        DataService.showSuccess("Medication entry saved");
+      }
 });
 addMedNameBtn.addEventListener("click", ()=>{
   const custom = prompt("Medication name?");
@@ -2264,25 +2756,36 @@ openOxyBtn.addEventListener("click", ()=>{
 oxyCancelBtn.addEventListener("click", ()=>{
   oxyCard.classList.remove("active");
 });
-oxySaveBtn.addEventListener("click", ()=>{
-  const newData = {
-    id: editOxyId || newId(),
-    time: oxyDateTimeInput.value,
-    flow: oxyFlowInput.value,
-    method: oxyMethodSelect.value,
-    duration: oxyDurationInput.value,
-    reason: oxyReasonInput.value,
-    relief: oxyReliefInput.value
-  };
-  if(editOxyId){
-    oxyEntries = oxyEntries.map(x=> x.id===editOxyId ? newData : x);
-  } else {
-    oxyEntries.push(newData);
-  }
-  saveArr("oxyEntries", oxyEntries);
-  renderOxyTable();
-  oxyCard.classList.remove("active");
-});
+    oxySaveBtn.addEventListener("click", () => {
+      const dateValidation = ValidationService.validateDateTime(oxyDateTimeInput.value, true);
+      if (!dateValidation.isValid) {
+        DataService.showError(dateValidation.error);
+        return;
+      }
+
+      const newData = {
+        id: editOxyId || newId(),
+        time: oxyDateTimeInput.value,
+        flow: oxyFlowInput.value.trim(),
+        method: oxyMethodSelect.value,
+        duration: oxyDurationInput.value.trim(),
+        reason: oxyReasonInput.value.trim(),
+        relief: oxyReliefInput.value.trim()
+      };
+
+      if (editOxyId) {
+        oxyEntries = oxyEntries.map(x => x.id === editOxyId ? newData : x);
+      } else {
+        oxyEntries.push(newData);
+      }
+
+      const result = DataService.saveArr("oxyEntries", oxyEntries);
+      if (result.success) {
+        renderOxyTable();
+        oxyCard.classList.remove("active");
+        DataService.showSuccess("Oxygen entry saved");
+      }
+    });
 
 /* MEALS new */
 openMealBtn.addEventListener("click", ()=>{
@@ -2300,25 +2803,36 @@ openMealBtn.addEventListener("click", ()=>{
 mealCancelBtn.addEventListener("click", ()=>{
   mealCard.classList.remove("active");
 });
-mealSaveBtn.addEventListener("click", ()=>{
-  const newData = {
-    id: editMealId || newId(),
-    time:    mealDateTimeInput.value,
-    mealType: mealTypeSelect.value,
-    texture: mealTextureSelect.value,
-    portion: mealPercentSelect.value,
-    nausea:  mealNauseaSelect.value,
-    notes:   mealNotesInput.value
-  };
-  if(editMealId){
-    mealEntries = mealEntries.map(x=> x.id===editMealId ? newData : x);
-  } else {
-    mealEntries.push(newData);
-  }
-  saveArr("mealEntries", mealEntries);
-  renderMealTable();
-  mealCard.classList.remove("active");
-});
+    mealSaveBtn.addEventListener("click", () => {
+      const dateValidation = ValidationService.validateDateTime(mealDateTimeInput.value, true);
+      if (!dateValidation.isValid) {
+        DataService.showError(dateValidation.error);
+        return;
+      }
+
+      const newData = {
+        id: editMealId || newId(),
+        time: mealDateTimeInput.value,
+        mealType: mealTypeSelect.value,
+        texture: mealTextureSelect.value,
+        portion: mealPercentSelect.value,
+        nausea: mealNauseaSelect.value,
+        notes: mealNotesInput.value.trim()
+      };
+
+      if (editMealId) {
+        mealEntries = mealEntries.map(x => x.id === editMealId ? newData : x);
+      } else {
+        mealEntries.push(newData);
+      }
+
+      const result = DataService.saveArr("mealEntries", mealEntries);
+      if (result.success) {
+        renderMealTable();
+        mealCard.classList.remove("active");
+        DataService.showSuccess("Meal entry saved");
+      }
+    });
 
 /* VITALS new */
 openVitalBtn.addEventListener("click", ()=>{
@@ -2339,27 +2853,64 @@ openVitalBtn.addEventListener("click", ()=>{
 vitalCancelBtn.addEventListener("click", ()=>{
   vitalsCard.classList.remove("active");
 });
-vitalSaveBtn.addEventListener("click", ()=>{
+    vitalSaveBtn.addEventListener("click", () => {
+      // Validate datetime
+      const dateValidation = ValidationService.validateDateTime(vitalDateTimeInput.value, true);
+      if (!dateValidation.isValid) {
+        DataService.showError(dateValidation.error);
+        return;
+      }
+
+      // Validate vitals
+      const vitalValidation = ValidationService.validateVitals(
+        vitalSysInput.value,
+        vitalDiaInput.value,
+        vitalPulseInput.value,
+        vitalRRInput.value,
+        vitalSpO2Input.value
+      );
+
+      // Show critical errors - require confirmation
+      if (vitalValidation.errors.length > 0) {
+        const criticalMsg = vitalValidation.errors.join("\n") + 
+          "\n\nDo you still want to save this entry?";
+        if (!confirm(criticalMsg)) {
+          return;
+        }
+        // Still show the errors
+        vitalValidation.errors.forEach(err => DataService.showError(err));
+      }
+
+      // Show warnings
+      if (vitalValidation.warnings.length > 0) {
+        vitalValidation.warnings.forEach(warn => DataService.showWarning(warn));
+      }
+
   const newData = {
     id: editVitalId || newId(),
     time: vitalDateTimeInput.value,
-    sys:  vitalSysInput.value,
-    dia:  vitalDiaInput.value,
-    pulse:vitalPulseInput.value,
-    rr:   vitalRRInput.value,
-    spO2: vitalSpO2Input.value,
+        sys: vitalSysInput.value.trim(),
+        dia: vitalDiaInput.value.trim(),
+        pulse: vitalPulseInput.value.trim(),
+        rr: vitalRRInput.value.trim(),
+        spO2: vitalSpO2Input.value.trim(),
     position: vitalPosSelect.value,
-    timing:   vitalFastingSelect.value,
-    notes: vitalNotesInput.value
+        timing: vitalFastingSelect.value,
+        notes: vitalNotesInput.value.trim()
   };
-  if(editVitalId){
-    vitalEntries = vitalEntries.map(x=> x.id===editVitalId ? newData : x);
+
+      if (editVitalId) {
+        vitalEntries = vitalEntries.map(x => x.id === editVitalId ? newData : x);
   } else {
     vitalEntries.push(newData);
   }
-  saveArr("vitalEntries", vitalEntries);
+
+      const result = DataService.saveArr("vitalEntries", vitalEntries);
+      if (result.success) {
   renderVitalTable();
   vitalsCard.classList.remove("active");
+        DataService.showSuccess("Vitals entry saved");
+      }
 });
 
 /* SLEEP new */
@@ -2378,25 +2929,44 @@ openSleepBtn.addEventListener("click", ()=>{
 sleepCancelBtn.addEventListener("click", ()=>{
   sleepCard.classList.remove("active");
 });
-sleepSaveBtn.addEventListener("click", ()=>{
-  const newData = {
-    id: editSleepId || newId(),
-    start:   sleepStartInput.value,
-    end:     sleepEndInput.value,
-    total:   sleepTotalInput.value,
-    quality: sleepQualitySelect.value,
-    assist:  sleepAssistSelect.value,
-    notes:   sleepNotesInput.value
-  };
-  if(editSleepId){
-    sleepEntries = sleepEntries.map(x=> x.id===editSleepId ? newData : x);
-  } else {
-    sleepEntries.push(newData);
-  }
-  saveArr("sleepEntries", sleepEntries);
-  renderSleepTable();
-  sleepCard.classList.remove("active");
-});
+    sleepSaveBtn.addEventListener("click", () => {
+      const startValidation = ValidationService.validateDateTime(sleepStartInput.value, true);
+      if (!startValidation.isValid) {
+        DataService.showError("Start time: " + startValidation.error);
+        return;
+      }
+
+      if (sleepEndInput.value) {
+        const endValidation = ValidationService.validateDateTime(sleepEndInput.value, true);
+        if (!endValidation.isValid) {
+          DataService.showError("End time: " + endValidation.error);
+          return;
+        }
+      }
+
+      const newData = {
+        id: editSleepId || newId(),
+        start: sleepStartInput.value,
+        end: sleepEndInput.value,
+        total: sleepTotalInput.value.trim(),
+        quality: sleepQualitySelect.value,
+        assist: sleepAssistSelect.value,
+        notes: sleepNotesInput.value.trim()
+      };
+
+      if (editSleepId) {
+        sleepEntries = sleepEntries.map(x => x.id === editSleepId ? newData : x);
+      } else {
+        sleepEntries.push(newData);
+      }
+
+      const result = DataService.saveArr("sleepEntries", sleepEntries);
+      if (result.success) {
+        renderSleepTable();
+        sleepCard.classList.remove("active");
+        DataService.showSuccess("Sleep entry saved");
+      }
+    });
 
 /* ACTIVITY new */
 openActBtn.addEventListener("click", ()=>{
@@ -2414,54 +2984,65 @@ openActBtn.addEventListener("click", ()=>{
 actCancelBtn.addEventListener("click", ()=>{
   actCard.classList.remove("active");
 });
-actSaveBtn.addEventListener("click", ()=>{
-  const newData = {
-    id: editActId || newId(),
-    time: actDateTimeInput.value,
-    activity: actTypeInput.value,
-    assist: actAssistSelect.value,
-    duration: actDurationInput.value,
-    tolerance: actToleranceSelect.value,
-    notes: actNotesInput.value
-  };
-  if(editActId){
-    actEntries = actEntries.map(x=> x.id===editActId ? newData : x);
-  } else {
-    actEntries.push(newData);
-  }
-  saveArr("actEntries", actEntries);
-  renderActTable();
-  actCard.classList.remove("active");
-});
+    actSaveBtn.addEventListener("click", () => {
+      const dateValidation = ValidationService.validateDateTime(actDateTimeInput.value, true);
+      if (!dateValidation.isValid) {
+        DataService.showError(dateValidation.error);
+        return;
+      }
 
-    /* ========= CSV EXPORT HELPERS ========= */
+      const newData = {
+        id: editActId || newId(),
+        time: actDateTimeInput.value,
+        activity: actTypeInput.value.trim(),
+        assist: actAssistSelect.value,
+        duration: actDurationInput.value.trim(),
+        tolerance: actToleranceSelect.value,
+        notes: actNotesInput.value.trim()
+      };
+
+      if (editActId) {
+        actEntries = actEntries.map(x => x.id === editActId ? newData : x);
+      } else {
+        actEntries.push(newData);
+      }
+
+      const result = DataService.saveArr("actEntries", actEntries);
+      if (result.success) {
+        renderActTable();
+        actCard.classList.remove("active");
+        DataService.showSuccess("Activity entry saved");
+      }
+    });
+
+/* ========= CSV EXPORT HELPERS ========= */
     function csvEscape(v) {
       return `"${(v ?? "").toString().replace(/"/g, '""')}"`;
-    }
+}
 
     function exportSectionCSV(fnameBase, headerLabelRow, headers, rows, mapFn) {
-      const ts = fileStamp();
-      const filename = `${fnameBase}_as_of_${ts}.csv`;
+  const ts = fileStamp();
+  const filename = `${fnameBase}_as_of_${ts}.csv`;
 
-      const csvLines = [];
-      csvLines.push(csvEscape(headerLabelRow));
-      csvLines.push(""); // blank line
+  const csvLines = [];
+  csvLines.push(csvEscape(headerLabelRow));
+  csvLines.push(""); // blank line
       csvLines.push(headers.map(h => csvEscape(h)).join(","));
 
       rows.forEach(r => {
-        const mapped = mapFn(r);
+    const mapped = mapFn(r);
         const line = headers.map(h => csvEscape(mapped[h] ?? "")).join(",");
-        csvLines.push(line);
-      });
+    csvLines.push(line);
+  });
 
       const blob = new Blob([csvLines.join("\n")], { type: "text/csv" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = filename;
-      a.click();
-      URL.revokeObjectURL(url);
-    }
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+}
 
 /* Per-section export buttons */
 exportOutputBtn.addEventListener("click", ()=>{
@@ -2649,118 +3230,118 @@ exportActBtn.addEventListener("click", ()=>{
   );
 });
 
-    /* ========= EXPORT ALL SUMMARY ========= */
+/* ========= EXPORT ALL SUMMARY ========= */
     function buildSummaryRows() {
-      let summary = [];
+  let summary = [];
 
       outputEntries.forEach(r => {
-        summary.push({
-          t: r.time || "",
-          category: "Output",
+    summary.push({
+      t: r.time || "",
+      category: "Output",
           summary: `${r.type || ""} ${r.amount || ""} ${r.color || ""} assist:${r.assist || ""} pain:${r.pain || ""} blood:${r.blood || ""}`,
           notes: r.notes || ""
-        });
-      });
+    });
+  });
 
       medEntries.forEach(r => {
-        summary.push({
-          t: r.time || "",
-          category: "Medication",
+    summary.push({
+      t: r.time || "",
+      category: "Medication",
           summary: `${r.name || ""} (${r.category || ""}) ${r.dose || ""} for ${r.reason || ""}`,
           notes: r.notes || ""
-        });
-      });
+    });
+  });
 
       oxyEntries.forEach(r => {
-        summary.push({
-          t: r.time || "",
-          category: "Oxygen",
+    summary.push({
+      t: r.time || "",
+      category: "Oxygen",
           summary: `${r.flow || ""} L/min ${r.method || ""} x${r.duration || ""}min for ${r.reason || ""}`,
           notes: r.relief || ""
-        });
-      });
+    });
+  });
 
       mealEntries.forEach(r => {
-        summary.push({
-          t: r.time || "",
-          category: "Meal",
+    summary.push({
+      t: r.time || "",
+      category: "Meal",
           summary: `${r.mealType || ""}, ${r.texture || ""}, ate ${r.portion || ""}, nausea:${r.nausea || ""}`,
           notes: r.notes || ""
-        });
-      });
+    });
+  });
 
       vitalEntries.forEach(r => {
-        summary.push({
-          t: r.time || "",
-          category: "Vitals",
+    summary.push({
+      t: r.time || "",
+      category: "Vitals",
           summary: `BP ${r.sys || ""}/${r.dia || ""}, HR ${r.pulse || ""}, RR ${r.rr || ""}, SpO2 ${r.spO2 || ""}, ${r.position || ""}, ${r.timing || ""}`,
           notes: r.notes || ""
-        });
-      });
+    });
+  });
 
       sleepEntries.forEach(r => {
-        summary.push({
-          t: r.start || "",
-          category: "Sleep",
+    summary.push({
+      t: r.start || "",
+      category: "Sleep",
           summary: `${r.total || ""} hrs, quality:${r.quality || ""}, assist:${r.assist || ""}`,
           notes: r.notes || `(end ${r.end || ""})`
-        });
-      });
+    });
+  });
 
       actEntries.forEach(r => {
-        summary.push({
-          t: r.time || "",
-          category: "Activity",
+    summary.push({
+      t: r.time || "",
+      category: "Activity",
           summary: `${r.activity || ""}, assist:${r.assist || ""}, ${r.duration || ""} min, tol:${r.tolerance || ""}`,
           notes: r.notes || ""
-        });
-      });
+    });
+  });
 
-      // sort ascending by time-ish string
+  // sort ascending by time-ish string
       summary.sort((a, b) => (a.t || "").localeCompare(b.t || ""));
-      return summary;
-    }
+  return summary;
+}
 
     exportAllBtn.addEventListener("click", () => {
-      const rows = buildSummaryRows();
-      const ts = fileStamp();
-      const filename = `care_summary_as_of_${ts}.csv`;
+  const rows = buildSummaryRows();
+  const ts = fileStamp();
+  const filename = `care_summary_as_of_${ts}.csv`;
 
-      const csvLines = [];
-      csvLines.push(csvEscape(`Full care summary export as of ${niceNowStamp()}`));
-      csvLines.push("");
+  const csvLines = [];
+  csvLines.push(csvEscape(`Full care summary export as of ${niceNowStamp()}`));
+  csvLines.push("");
       csvLines.push(["Time", "Category", "Summary", "Notes"]
         .map(h => csvEscape(h)).join(","));
 
       rows.forEach(r => {
-        const line = [
-          csvEscape(r.t),
-          csvEscape(r.category),
-          csvEscape(r.summary),
-          csvEscape(r.notes)
-        ].join(",");
-        csvLines.push(line);
-      });
+    const line = [
+      csvEscape(r.t),
+      csvEscape(r.category),
+      csvEscape(r.summary),
+      csvEscape(r.notes)
+    ].join(",");
+    csvLines.push(line);
+  });
 
       const blob = new Blob([csvLines.join("\n")], { type: "text/csv" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = filename;
-      a.click();
-      URL.revokeObjectURL(url);
-    });
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(url);
+});
 
-    /* ========= Initial render ========= */
-    renderChips();
-    renderOutputTable();
-    renderMedTable();
-    renderOxyTable();
-    renderMealTable();
-    renderVitalTable();
-    renderSleepTable();
-    renderActTable();
-  </script>
+/* ========= Initial render ========= */
+renderChips();
+renderOutputTable();
+renderMedTable();
+renderOxyTable();
+renderMealTable();
+renderVitalTable();
+renderSleepTable();
+renderActTable();
+</script>
 
 </body>
 </html>
